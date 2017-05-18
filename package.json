@@ -1,0 +1,30 @@
+{
+  "name": "rebilly-js-sdk",
+  "version": "0.0.1",
+  "description": "Official JavaScript SDK of Rebilly",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Teknologica/js-sdk.git"
+  },
+  "keywords": [
+    "js",
+    "sdk",
+    "rebilly"
+  ],
+  "author": "Andrei Moldoveanu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Teknologica/js-sdk/issues"
+  },
+  "homepage": "https://github.com/Teknologica/js-sdk#readme",
+  "devDependencies": {
+    "axios": "^0.16.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "webpack": "^2.5.1"
+  }
+}
