@@ -1,7 +1,7 @@
 {
   "name": "rebilly-js-sdk",
   "version": "0.0.1",
-  "description": "Official JavaScript SDK of Rebilly",
+  "description": "JavaScript SDK for Rebilly.com",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,9 +22,11 @@
   },
   "homepage": "https://github.com/Teknologica/js-sdk#readme",
   "devDependencies": {
-    "axios": "^0.16.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "webpack": "^2.5.1"
+  },
+  "dependencies": {
+    "axios": "^0.16.2"
   }
 }
