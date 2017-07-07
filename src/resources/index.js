@@ -1,7 +1,7 @@
 import CustomersResource from './customers-resource';
 
 const resources = {
-    CustomersResource
+    CustomersResource,
 };
 
 export default resources;
