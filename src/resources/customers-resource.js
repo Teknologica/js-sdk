@@ -2,32 +2,32 @@ export default function CustomersResource({apiHandler}) {
     const customers = apiHandler.for('customers');
     const leadSources = apiHandler.for('customers/{id}/lead-source');
 
-    function get({id = null}) {
-        return customers.get({id});
+    async function get({id = null}) {
+        return await customers.get({id});
     }
 
-    function getAll() {
-        return customers.get();
+    async function getAll() {
+        return await customers.get();
     }
 
-    function create({id = null} = {}) {
-        return customers.create({id, checkExisting: true});
+    async function create({id = null} = {}) {
+        return await customers.create({id, checkExisting: true});
     }
 
-    function update({id = null}) {
-        return customers.put({id});
+    async function update({id = null}) {
+        return await customers.put({id});
     }
 
-    function getLeadSource({id = null}) {
-        return leadSources.get({id});
+    async function getLeadSource({id = null}) {
+        return await leadSources.get({id});
     }
 
-    function createLeadSource() {
-        return leadSources.put({id});
+    async function createLeadSource({id = null}) {
+        return await leadSources.put({id});
     }
 
-    function deleteLeadSource() {
-        return leadSources.delete({id});
+    async function deleteLeadSource({id = null}) {
+        return await leadSources.delete({id});
     }
 
     return {
