@@ -1,34 +1,40 @@
 import createPathInterpolator from './create-path-interpolator';
-/**
- *
- * @param axios
- * @param options
- * @returns {ApiHandler}
- * @constructor
- */
-export default function ApiHandler({axios, options}) {
+
+export default class ApiHandler {
+    constructor({axios, options}) {
+        this.axios = axios;
+        this.options = options;
+    }
 
     /**
-     * Creates an instanced path mediator for a resource path
-     * @param resourcePath string
-     * @returns {{get: (function(*=): (Promise|V|*)), post: (function(*=, *=)), put: (function(*=, *=)), patch: (function(*=, *=)), delete: (function(*=): boolean), create: (function(*=, *=))}}
+     * Create request method delegates for a specific resource path
+     * @param resourcePath
+     * @returns {{get: (function(*=): (Promise|V|*)), post: (function(*=)), put: (function(*=)), patch: (function(*=)), delete: (function(*=): boolean), create: (function({data: *, checkExisting?: *, params?: *}))}}
      */
-    const pathMediator = (resourcePath = null) => {
+    for(resourcePath = null) {
         const interpolator = createPathInterpolator(resourcePath);
 
-        const get = (params) => axios.get(interpolator(params));
+        const prepareParameters = (params) => {
+            const {data = null, ...attributes} = params;
+            if (data) {
+                return [interpolator(attributes), data];
+            }
+            return [interpolator(params)];
+        };
 
-        const post = (params, payload = null) => axios.post(interpolator(params), payload);
+        const get = (params) => this.axios.get(...prepareParameters(params));
 
-        const put = (params, payload = null) => axios.put(interpolator(params), payload);
+        const post = (params) => this.axios.post(...prepareParameters(params));
 
-        const patch = (params, payload = null) => axios.patch(interpolator(params), payload);
+        const put = (params) => this.axios.put(...prepareParameters(params));
 
-        const del = (params) => axios.delete(interpolator(params));
+        const patch = (params) => this.axios.patch(...prepareParameters(params));
 
-        const create = (params, payload = null) => {
+        const del = (params) => this.axios.delete(...prepareParameters(params));
+
+        const create = ({data, checkExisting = false, ...params}) => {
             //missing get/post/put logic
-            return axios.get(interpolator(params));
+            return this.axios.get(interpolator(params));
         };
 
         return {
@@ -38,10 +44,6 @@ export default function ApiHandler({axios, options}) {
             patch,
             delete: del,
             create
-        };
-    };
-
-    this.prototype.for = pathMediator;
-
-    return this;
+        }
+    }
 };

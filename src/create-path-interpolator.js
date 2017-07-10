@@ -30,10 +30,6 @@ export default function createPathInterpolator(resourcePath) {
         };
     }
 
-    //when the URL has no slugs the interpolator expects only one key and concatenates it to the base path,
-    //e.g. resource.get({id: 'acme0001'}) -> /resource/acme0001
-    return (params) => {
-        const [identifier] = Object.keys(params);
-        return `${resourcePath}/${identifier}`;
-    };
+    //if there are no slugs expect the URL to remain as-is
+    return () => resourcePath;
 }
