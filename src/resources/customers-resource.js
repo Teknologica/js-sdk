@@ -1,34 +1,31 @@
-export default class CustomersResource {
-    constructor({apiHandler}) {
-        this.customersHandler = apiHandler.for('customers/{id}');
-        this.leadSourcesHandler = apiHandler.for('customers/{id}/lead-source');
-    }
+export default function CustomersResource({apiHandler}) {
+    return {
+        async get({id}) {
+            return await apiHandler.get(`customers/${id}`);
+        },
 
-    async get({id}) {
-        return await this.customersHandler.get({id});
-    }
+        async getAll() {
+            return await apiHandler.get(`customers`);
+        },
 
-    async getAll() {
-        return await this.customersHandler.get();
-    }
+        async create({id = '', data}) {
+            return await apiHandler.create(`customers/${id}`, data);
+        },
 
-    async create({id = null, data}) {
-        return await this.customersHandler.create({id, data, checkExisting: true});
-    }
+        async update({id, data}) {
+            return await apiHandler.put(`customers/${id}`, data);
+        },
 
-    async update({id, data}) {
-        return await this.customersHandler.put({id, data});
-    }
+        async getLeadSource({id}) {
+            return await apiHandler.get(`customers/${id}/lead-source`);
+        },
 
-    async getLeadSource({id}) {
-        return await this.leadSourcesHandler.get({id});
-    }
+        async createLeadSource({id = '', data}) {
+            return await apiHandler.put(`customers/${id}/lead-source`, data);
+        },
 
-    async createLeadSource({id, data}) {
-        return await this.leadSourcesHandler.put({id, data});
-    }
-
-    async deleteLeadSource({id}) {
-        return await this.leadSourcesHandler.delete({id});
-    }
+        async deleteLeadSource({id}) {
+            return await apiHandler.delete(`customers/${id}/lead-source`);
+        }
+    };
 };

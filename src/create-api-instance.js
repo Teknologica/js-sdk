@@ -39,5 +39,17 @@ export default function createApiInstance({apiHandler}) {
         users: new resources.CustomersResource({apiHandler}),
         websites: new resources.CustomersResource({apiHandler}),
         webhooks: new resources.CustomersResource({apiHandler}),
+
+        //expose apiHandler methods to the API instance
+        addRequestInterceptor: apiHandler.addRequestInterceptor,
+        removeRequestInterceptor: apiHandler.removeRequestInterceptor,
+        addResponseInterceptor: apiHandler.addResponseInterceptor,
+        removeResponseInterceptor: apiHandler.removeResponseInterceptor,
+        setTimeout: apiHandler.setTimeout,
+        setProxyAgent: apiHandler.setProxyAgent,
+        setSessionToken: apiHandler.setSessionToken,
+        setApiConsumer: apiHandler.setApiConsumer,
+        setEndpoints: apiHandler.setEndpoints,
+        getCancellationToken: apiHandler.getCancellationToken,
     };
 }

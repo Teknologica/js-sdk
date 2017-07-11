@@ -4,7 +4,11 @@ import ApiHandler from './api-handler';
 import createApiInstance from './create-api-instance';
 
 const baseApiVersion = '2.1';
-const baseTimeoutMs = 1000;
+const baseEndpoints = {
+    live: 'https://api.rebilly.com',
+    sandbox: 'https://api-sandbox.rebilly.com'
+};
+const baseTimeoutMs = 6000;
 
 /**
  * Create an instance of RebillyAPI
@@ -17,10 +21,11 @@ const baseTimeoutMs = 1000;
 export default function RebillyAPI({apiKey = null, version = baseApiVersion, sandbox = false, timeout = baseTimeoutMs} = {}) {
     /**
      * Internal configuration options
-     * @type {{version: string, apiKey: string, apiVersion: string, isSandbox: boolean, requestTimeout: number, jwt: string|null}}
+     * @type {{version: string, apiKey: string|null, apiVersion: string, isSandbox: boolean, requestTimeout: number, jwt: string|null}}
      */
     const options = {
         version: libraryVersion,
+        apiEndpoints: baseEndpoints,
         apiKey: apiKey,
         apiVersion: version,
         isSandbox: sandbox,
