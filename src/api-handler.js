@@ -1,3 +1,6 @@
+import Member from './member';
+import Collection from './collection';
+
 export default class ApiHandler {
     /**
      * Create an instance of the Rebilly API handler.
@@ -97,24 +100,94 @@ export default class ApiHandler {
         };
     }
 
+    /**
+     * Update the endpoints URL for live, sandbox or both environments in the current API instance's active URL.
+     * @param live {string}
+     * @param sandbox
+     * @example
+     * const api = new RebillyAPI();
+     * api.setEndpoints({live: 'https://api-test.rebilly.com'});
+     */
+    setEndpoints({live = null, sandbox = null}) {
+        if (live) {
+            this.options.apiEndpoints.live = live;
+        }
+        if (sandbox) {
+            this.options.apiEndpoints.sandbox = sandbox;
+        }
+        //after changing the endpoints, update the Axios instance URL too
+        this.instance.defaults.baseURL = this.getBaseURL();
+    }
+
+    getCancellationToken() {
+        throw 'Method not implemented';
+    }
+
+    addRequestInterceptor() {
+        throw 'Method not implemented';
+    }
+
+    removeRequestInterceptor() {
+        throw 'Method not implemented';
+    }
+
+    addResponseInterceptor() {
+        throw 'Method not implemented';
+    }
+
+    removeResponseInterceptor() {
+        throw 'Method not implemented';
+    }
+
+    /**
+     * Wraps an Axios request to handle both the response and errors and return wrapped objects.
+     * @param request {Promise}
+     * @param isCollection {boolean} defines whether the request is done to a collection or a member of the API
+     * @returns {Promise.<*>}
+     */
+    async wrapRequest(request, {isCollection = false} = {}) {
+        try {
+            const response = await request;
+            return this.processResponse(response, isCollection)
+        }
+        catch(error) {
+            return this.processError(error);
+        }
+    }
+
+    processResponse(response, isCollection) {
+        if (isCollection) {
+            return new Collection(response);
+        }
+        return new Member(response);
+    }
+
+    processError(error) {
+        throw 'Method not implemented';
+    }
+
     get(url) {
-        return this.axios.get(url);
+        return this.wrapRequest(this.axios.get(url));
+    }
+
+    getAll(url) {
+        return this.wrapRequest(this.axios.get(url), {isCollection: true});
     }
 
     post(url, data) {
-        return this.axios.post(url, data);
+        return this.wrapRequest(this.axios.post(url, data));
     }
 
     put(url, data) {
-        return this.axios.put(url, data);
+        return this.wrapRequest(this.axios.put(url, data));
     }
 
     patch(url, data) {
-        return this.axios.patch(url, data);
+        return this.wrapRequest(this.axios.patch(url, data));
     }
 
     delete(url) {
-        return this.axios.delete(url);
+        return this.wrapRequest(this.axios.delete(url));
     }
 
     create(url, data) {
@@ -125,5 +198,4 @@ export default class ApiHandler {
             //otherwise process
         }
     }
-
 };

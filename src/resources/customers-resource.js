@@ -5,7 +5,7 @@ export default function CustomersResource({apiHandler}) {
         },
 
         async getAll() {
-            return await apiHandler.get(`customers`);
+            return await apiHandler.getAll(`customers`);
         },
 
         async create({id = '', data}) {
