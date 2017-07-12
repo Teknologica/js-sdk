@@ -19,6 +19,7 @@ import PayPalAccountsResource from './paypal-accounts-resource';
 import PlansResource from './plans-resource';
 import ProductsResource from './products-resource';
 import ProfileResource from './profile-resource';
+import WebhooksResource from './webhooks-resource';
 
 const resources = {
     ApiKeysResource,
@@ -41,7 +42,8 @@ const resources = {
     PayPalAccountsResource,
     PlansResource,
     ProductsResource,
-    ProfileResource
+    ProfileResource,
+    WebhooksResource
 };
 
 export default resources;
