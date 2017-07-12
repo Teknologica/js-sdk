@@ -14,10 +14,6 @@ export default function WebhooksResource({apiHandler}) {
 
         async update({id, data}) {
             return await apiHandler.put(`webhooks/${id}`, data);
-        },
-
-        async preview({data}) {
-            return await apiHandler.post(`previews/webhooks`, data);
         }
     };
 };

@@ -1,3 +1,4 @@
+import AccountsResource from './account-resource';
 import ApiKeysResource from './api-keys-resource';
 import BankAccountsResource from './bank-accounts-resource';
 import BlacklistsResource from './blacklists-resource';
@@ -5,8 +6,10 @@ import CheckoutPagesResource from './checkout-pages-resource';
 import CouponsResource from './coupons-resource';
 import CredentialHashesResource from './credential-hashes-resource';
 import CustomersResource from './customers-resource';
+import CustomEventsResource from './custom-events-resource';
 import CustomFieldsResource from './custom-fields-resource';
 import DisputesResource from './disputes-resource';
+import EventsResource from './events-resource';
 import GatewayAccountsResource from './gateway-accounts-resource';
 import InvoicesResource from './invoices-resource';
 import LayoutsResource from './layouts-resource';
@@ -17,11 +20,22 @@ import PaymentCardsResource from './payment-cards-resource';
 import PaymentTokensResource from './payment-tokens-resource';
 import PayPalAccountsResource from './paypal-accounts-resource';
 import PlansResource from './plans-resource';
+import PreviewsResource from './previews-resource';
 import ProductsResource from './products-resource';
 import ProfileResource from './profile-resource';
+import SessionsResource from './sessions-resource';
+import ShippingZonesResource from './shipping-zones-resource';
+import StatusResource from './status-resource';
+import SubscriptionsResource from './subscriptions-resource';
+import TrackingResource from './tracking-resource';
+import TransactionsResource from './transactions-resource';
+import ThreeDSecureResource from './three-d-secure-resource';
+import UsersResource from './users-resource';
 import WebhooksResource from './webhooks-resource';
+import WebsitesResource from './websites-resource';
 
 const resources = {
+    AccountsResource,
     ApiKeysResource,
     BankAccountsResource,
     BlacklistsResource,
@@ -29,8 +43,10 @@ const resources = {
     CouponsResource,
     CredentialHashesResource,
     CustomersResource,
+    CustomEventsResource,
     CustomFieldsResource,
     DisputesResource,
+    EventsResource,
     GatewayAccountsResource,
     InvoicesResource,
     LayoutsResource,
@@ -41,9 +57,19 @@ const resources = {
     PaymentTokensResource,
     PayPalAccountsResource,
     PlansResource,
+    PreviewsResource,
     ProductsResource,
     ProfileResource,
-    WebhooksResource
+    SessionsResource,
+    ShippingZonesResource,
+    StatusResource,
+    SubscriptionsResource,
+    TrackingResource,
+    TransactionsResource,
+    ThreeDSecureResource,
+    UsersResource,
+    WebhooksResource,
+    WebsitesResource
 };
 
 export default resources;
