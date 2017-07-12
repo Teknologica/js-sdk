@@ -1,11 +1,11 @@
 export default function CustomersResource({apiHandler}) {
     return {
-        async get({id}) {
-            return await apiHandler.get(`customers/${id}`);
-        },
-
         async getAll() {
             return await apiHandler.getAll(`customers`);
+        },
+
+        async get({id}) {
+            return await apiHandler.get(`customers/${id}`);
         },
 
         async create({id = '', data}) {
