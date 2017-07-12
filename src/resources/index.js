@@ -14,6 +14,7 @@ import ListsResource from './lists-resource';
 import NotesResource from './notes-resource';
 import OrganizationsResource from './organizations-resource';
 import PaymentCardsResource from './payment-cards-resource';
+import WebhooksResource from './webhooks-resource';
 
 const resources = {
     ApiKeysResource,
@@ -31,7 +32,8 @@ const resources = {
     ListsResource,
     NotesResource,
     OrganizationsResource,
-    PaymentCardsResource
+    PaymentCardsResource,
+    WebhooksResource
 };
 
 export default resources;

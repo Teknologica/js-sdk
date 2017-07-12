@@ -38,7 +38,7 @@ export default function createApiInstance({apiHandler}) {
         threeDSecure: new resources.CustomersResource({apiHandler}),
         users: new resources.CustomersResource({apiHandler}),
         websites: new resources.CustomersResource({apiHandler}),
-        webhooks: new resources.CustomersResource({apiHandler}),
+        webhooks: new resources.WebhooksResource({apiHandler}),
 
         //expose apiHandler methods to the API instance
         addRequestInterceptor: apiHandler.addRequestInterceptor,
