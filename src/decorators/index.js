@@ -5,9 +5,17 @@
  * @constructor
  */
 function JSONExport(type) {
+    /**
+     * Get a mutable JSON object representation of the Collection or Member data.
+     * @param target {Collection|Member}
+     */
     return (target) => {
         target.getJSON = () => {
-            console.log(`return JSON for ${type}`);
+            const clone = (data) => JSON.parse(JSON.stringify(data));
+            if (type === 'Collection') {
+                return clone(target.items);
+            }
+            return clone(target.fields);
         }
     }
 }
