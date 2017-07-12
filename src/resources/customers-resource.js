@@ -20,7 +20,7 @@ export default function CustomersResource({apiHandler}) {
             return await apiHandler.get(`customers/${id}/lead-source`);
         },
 
-        async createLeadSource({id = '', data}) {
+        async createLeadSource({id, data}) {
             return await apiHandler.put(`customers/${id}/lead-source`, data);
         },
 
