@@ -3,7 +3,7 @@ import resources from './resources';
 export default function createApiInstance({apiHandler}) {
     return {
         account: new resources.CustomersResource({apiHandler}),
-        apiKeys: new resources.CustomersResource({apiHandler}),
+        apiKeys: new resources.ApiKeysResource({apiHandler}),
         bankAccounts: new resources.CustomersResource({apiHandler}),
         blacklists: new resources.CustomersResource({apiHandler}),
         checkoutPages: new resources.CustomersResource({apiHandler}),
