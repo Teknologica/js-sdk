@@ -14,6 +14,11 @@ import ListsResource from './lists-resource';
 import NotesResource from './notes-resource';
 import OrganizationsResource from './organizations-resource';
 import PaymentCardsResource from './payment-cards-resource';
+import PaymentTokensResource from './payment-tokens-resource';
+import PayPalAccountsResource from './paypal-accounts-resource';
+import PlansResource from './plans-resource';
+import ProductsResource from './products-resource';
+import ProfileResource from './profile-resource';
 
 const resources = {
     ApiKeysResource,
@@ -31,7 +36,12 @@ const resources = {
     ListsResource,
     NotesResource,
     OrganizationsResource,
-    PaymentCardsResource
+    PaymentCardsResource,
+    PaymentTokensResource,
+    PayPalAccountsResource,
+    PlansResource,
+    ProductsResource,
+    ProfileResource
 };
 
 export default resources;
