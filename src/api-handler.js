@@ -155,6 +155,12 @@ export default class ApiHandler {
         }
     }
 
+    /**
+     * Creates a Member or Collection from the response based on the type flag `isCollection`.
+     * @param response {Object} raw API response
+     * @param isCollection {boolean}
+     * @returns {Member|Collection}
+     */
     processResponse(response, isCollection) {
         if (isCollection) {
             return new Collection(response);

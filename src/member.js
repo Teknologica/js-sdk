@@ -1,9 +1,18 @@
 import {JSONExport} from './decorators';
+import deepFreeze from './deep-freeze';
 
+/**
+ * A single entity member.
+ * @typedef Member
+ * @prop response {Object}
+ * @prop fields {Object}
+ * @prop getJSON {Function: Object}
+ */
 @JSONExport('Member')
 export default class Member {
     constructor({data, status, statusText, headers, config}) {
         this.response = {status, statusText, headers, config};
-        this.fields = Object.freeze(data);
+        this.fields = {...data};
+        deepFreeze(this);
     }
 }
