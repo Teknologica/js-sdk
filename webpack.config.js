@@ -1,30 +1,41 @@
 var webpack = require('webpack');
+var path = require('path');
+
+const rules = [
+    {test: /\.js$/, use: 'babel-loader'}
+];
 
 var nodeConfig = {
     entry: './src/index.js',
     target: 'node',
     output: {
-        path: './dist',
+        path: path.resolve(__dirname, './dist'),
         filename: 'bundle.js'
     },
     module: {
-        rules: [
-            {test: /\.js$/, use: 'babel-loader'}
-        ]
-    }
+        rules
+    },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: process.env.NODE_ENV === 'production'
+        })
+    ]
 };
 
 var browserConfig = {
     entry: './src/index.js',
     output: {
-        path: './dist',
+        path: path.resolve(__dirname, './dist'),
         filename: 'bundle.node.js'
     },
     module: {
-        rules: [
-            {test: /\.js$/, use: 'babel-loader'}
-        ]
-    }
+        rules
+    },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: process.env.NODE_ENV === 'production'
+        })
+    ]
 };
 
 module.exports = (env = {}) => [nodeConfig, browserConfig];

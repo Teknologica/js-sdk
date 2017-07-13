@@ -5,11 +5,13 @@ import BlacklistsResource from './blacklists-resource';
 import CheckoutPagesResource from './checkout-pages-resource';
 import CouponsResource from './coupons-resource';
 import CredentialHashesResource from './credential-hashes-resource';
+import CustomerAuthenticationResource from './customer-authentication-resource';
 import CustomersResource from './customers-resource';
 import CustomEventsResource from './custom-events-resource';
 import CustomFieldsResource from './custom-fields-resource';
 import DisputesResource from './disputes-resource';
 import EventsResource from './events-resource';
+import FilesResource from './files-resource';
 import GatewayAccountsResource from './gateway-accounts-resource';
 import InvoicesResource from './invoices-resource';
 import LayoutsResource from './layouts-resource';
@@ -42,11 +44,13 @@ const resources = {
     CheckoutPagesResource,
     CouponsResource,
     CredentialHashesResource,
+    CustomerAuthenticationResource,
     CustomersResource,
     CustomEventsResource,
     CustomFieldsResource,
     DisputesResource,
     EventsResource,
+    FilesResource,
     GatewayAccountsResource,
     InvoicesResource,
     LayoutsResource,

@@ -200,8 +200,8 @@ export default class ApiHandler {
         return this.wrapRequest(this.axios.get(url));
     }
 
-    getAll(url) {
-        return this.wrapRequest(this.axios.get(url), {isCollection: true});
+    getAll(url, params) {
+        return this.wrapRequest(this.axios.get(url, params), {isCollection: true});
     }
 
     post(url, data) {

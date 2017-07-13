@@ -1,7 +1,11 @@
 export default function BankAccountsResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`bank-accounts`);
+        async getAll({limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`bank-accounts`, params);
         },
 
         async get({id}) {

@@ -1,7 +1,11 @@
 export default function ApiKeysResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`api-keys`);
+        async getAll({limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`api-keys`, params);
         },
 
         async get({id}) {
