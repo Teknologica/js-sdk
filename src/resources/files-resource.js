@@ -8,8 +8,16 @@ export default function FilesResource({apiHandler}) {
             return await apiHandler.get(`files/${id}`);
         },
 
-        async upload({data}) {
-            return await apiHandler.post(`files`, data);
+        async upload({fileObject, fileDefinition = {description: '', tags: ''}}) {
+            const file = await apiHandler.post(`files`, fileObject);
+            const params = {
+                name: fileObject.name,
+                extension: file.extension,
+                description: fileDefinition.description,
+                tags: fileDefinition.tags,
+                url: ''
+            };
+            return await this.update({id: file.id, data: params});
         },
 
         async update({id, data}) {
@@ -17,6 +25,7 @@ export default function FilesResource({apiHandler}) {
         },
 
         async delete({id}) {
+
             return await apiHandler.delete(`files/${id}`);
         }
     };
