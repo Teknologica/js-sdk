@@ -1,3 +1,9 @@
+/**
+ *
+ * @param apiHandler {ApiHandler}
+ * @returns {*}
+ * @constructor
+ */
 export default function CheckoutPagesResource({apiHandler}) {
     return {
         async getAll() {

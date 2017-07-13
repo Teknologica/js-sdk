@@ -1,10 +1,11 @@
 import Member from './member';
 import Collection from './collection';
+import Errors from './errors';
 
 export default class ApiHandler {
     /**
      * Create an instance of the Rebilly API handler.
-     * @param axios {axios}
+     * @param axios {Object}
      * @param options {*} configuration options
      */
     constructor({axios, options}) {
@@ -168,8 +169,31 @@ export default class ApiHandler {
         return new Member(response);
     }
 
+    /**
+     * Throws an instance of a Rebilly Error from the base Axios error.
+     * @param error {RebillyError}
+     */
     processError(error) {
-        throw 'Method not implemented';
+        if (error.response) {
+            switch (Number(error.response.status)) {
+                case 401: //forbidden
+                    throw new Errors.RebillyRequestError(error);
+                case 404: //not found
+                    throw new Errors.RebillyRequestError(error);
+                case 409: //invalid operation
+                    throw new Errors.RebillyRequestError(error);
+                case 422: //validation error
+                    throw new Errors.RebillyValidationError(error);
+                default:
+                    throw new Errors.RebillyRequestError(error);
+            }
+        }
+        else if (error.request) { //5xx errors
+            throw new Errors.RebillyRequestError(error);
+        }
+        else {
+            //unexpected case
+        }
     }
 
     get(url) {
