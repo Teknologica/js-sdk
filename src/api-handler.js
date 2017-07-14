@@ -125,20 +125,38 @@ export default class ApiHandler {
         throw 'Method not implemented';
     }
 
-    addRequestInterceptor() {
-        throw 'Method not implemented';
+    /**
+     * Adds a request interceptor to the current API instance.
+     * @param thenDelegate {Function} defines the delegate logic to run when the request is completed
+     * @param catchDelegate {Function} (optional) defines a callback to run before the catch block of the request is executed for this interceptor
+     */
+    addRequestInterceptor({thenDelegate, catchDelegate = () => {}}) {
+        this.instance.interceptors.request.use(thenDelegate, catchDelegate);
     }
 
-    removeRequestInterceptor() {
-        throw 'Method not implemented';
+    /**
+     * Removes a specific request interceptor from the current API instance.
+     * @param interceptor {Function} defines the interceptor delegate to remove
+     */
+    removeRequestInterceptor(interceptor) {
+        this.instance.interceptors.request.eject(interceptor);
     }
 
-    addResponseInterceptor() {
-        throw 'Method not implemented';
+    /**
+     * Adds a request response to the current API instance.
+     * @param thenDelegate {Function} defines the delegate logic to run before the response is completed
+     * @param catchDelegate {Function} (optional) defines a callback to run before the catch block of the response is executed for this interceptor
+     */
+    addResponseInterceptor({thenDelegate, catchDelegate = () => {}}) {
+        this.instance.interceptors.response.use(thenDelegate, catchDelegate);
     }
 
-    removeResponseInterceptor() {
-        throw 'Method not implemented';
+    /**
+     * Removes a specific response interceptor from the current API instance.
+     * @param interceptor {Function} defines the interceptor delegate to remove
+     */
+    removeResponseInterceptor(interceptor) {
+        this.instance.interceptors.response.eject(interceptor);
     }
 
     /**
@@ -172,7 +190,7 @@ export default class ApiHandler {
 
     /**
      * Throws an instance of a Rebilly Error from the base Axios error.
-     * @param error {RebillyError}
+     * @param error {Object}
      */
     processError(error) {
         if (error.response) {
