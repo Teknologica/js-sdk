@@ -1,13 +1,12 @@
 {
   "name": "rebilly-js-sdk",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "JavaScript SDK for Rebilly.com",
   "browser": "./dist/bundle.js",
   "main": "./dist/bundle.node.js",
   "scripts": {
-    "clean": "rimraf dist && webpack --env production",
-    "dev": "rimraf dist && webpack --env dev",
-    "build": "npm run clean",
+    "clean": "rimraf dist",
+    "build": "npm run clean && webpack --env production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
