@@ -217,27 +217,27 @@ export default class ApiHandler {
     }
 
     get(url) {
-        return this.wrapRequest(this.axios.get(url));
+        return this.wrapRequest(this.instance.get(url));
     }
 
     getAll(url, params) {
-        return this.wrapRequest(this.axios.get(url, {params}), {isCollection: true});
+        return this.wrapRequest(this.instance.get(url, {params}), {isCollection: true});
     }
 
     post(url, data) {
-        return this.wrapRequest(this.axios.post(url, data));
+        return this.wrapRequest(this.instance.post(url, data));
     }
 
     put(url, data) {
-        return this.wrapRequest(this.axios.put(url, data));
+        return this.wrapRequest(this.instance.put(url, data));
     }
 
     patch(url, data) {
-        return this.wrapRequest(this.axios.patch(url, data));
+        return this.wrapRequest(this.instance.patch(url, data));
     }
 
     delete(url) {
-        return this.wrapRequest(this.axios.delete(url));
+        return this.wrapRequest(this.instance.delete(url));
     }
 
     create(url, data) {
