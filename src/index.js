@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import axios from 'axios';
 import libraryVersion from '../version';
 import ApiHandler from './api-handler';
