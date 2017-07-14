@@ -39,7 +39,7 @@ export default class ApiHandler {
      */
     getBaseURL() {
         const url = this.options.isSandbox ? this.options.apiEndpoints.sandbox : this.options.apiEndpoints.live;
-        return `${url}/v${this.options.version}`;
+        return `${url}/v${this.options.apiVersion}`;
     }
 
     /**
