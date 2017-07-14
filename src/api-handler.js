@@ -34,11 +34,12 @@ export default class ApiHandler {
     }
 
     /**
-     * Get the base URL for API calls for the current environment selection (live/sandbox).
+     * Get the base URL for API calls for the current environment selection (live/sandbox) including the version.
      * @returns {string}
      */
     getBaseURL() {
-        return this.options.isSandbox ? this.options.apiEndpoints.sandbox : this.options.apiEndpoints.live;
+        const url = this.options.isSandbox ? this.options.apiEndpoints.sandbox : this.options.apiEndpoints.live;
+        return `${url}/v${this.options.version}`;
     }
 
     /**
@@ -177,22 +178,23 @@ export default class ApiHandler {
         if (error.response) {
             switch (Number(error.response.status)) {
                 case 401: //forbidden
-                    throw new Errors.RebillyRequestError(error);
+                    throw new Errors.RebillyForbiddenError(error);
                 case 404: //not found
-                    throw new Errors.RebillyRequestError(error);
+                    throw new Errors.RebillyNotFoundError(error);
                 case 409: //invalid operation
-                    throw new Errors.RebillyRequestError(error);
+                    throw new Errors.RebillyInvalidOperationError(error);
                 case 422: //validation error
                     throw new Errors.RebillyValidationError(error);
                 default:
+                    //for anything else we will use the default error
                     throw new Errors.RebillyRequestError(error);
             }
         }
-        else if (error.request) { //5xx errors
+        else if (error.request) { //5xx errors without a response
             throw new Errors.RebillyRequestError(error);
         }
         else {
-            //unexpected case
+            throw new Errors.RebillyRequestError(error);
         }
     }
 
@@ -201,7 +203,7 @@ export default class ApiHandler {
     }
 
     getAll(url, params) {
-        return this.wrapRequest(this.axios.get(url, params), {isCollection: true});
+        return this.wrapRequest(this.axios.get(url, {params}), {isCollection: true});
     }
 
     post(url, data) {
