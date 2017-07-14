@@ -2,7 +2,8 @@
   "name": "rebilly-js-sdk",
   "version": "0.0.3",
   "description": "JavaScript SDK for Rebilly.com",
-  "main": "src/index.js",
+  "browser": "./dist/bundle.js",
+  "main": "./dist/bundle.node.js",
   "scripts": {
     "clean": "rimraf dist && webpack --env production",
     "dev": "rimraf dist && webpack --env dev",
