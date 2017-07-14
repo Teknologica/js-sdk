@@ -12,7 +12,7 @@ module.exports = (env = {}) => {
         target: 'node',
         output: {
             path: path.resolve(__dirname, './dist'),
-            filename: 'bundle.js'
+            filename: 'bundle.node.js'
         },
         module: {
             rules
@@ -24,7 +24,7 @@ module.exports = (env = {}) => {
         entry: './src/index.js',
         output: {
             path: path.resolve(__dirname, './dist'),
-            filename: 'bundle.node.js'
+            filename: 'bundle.js'
         },
         module: {
             rules
