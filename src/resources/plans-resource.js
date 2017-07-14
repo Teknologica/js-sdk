@@ -1,7 +1,15 @@
 export default function PlansResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`plans`);
+        async getAll({limit = null, offset = null, sort = null, filter = '', q = '', criteria = ''}) {
+            const params = {
+                limit,
+                offset,
+                sort,
+                filter,
+                q,
+                criteria
+            };
+            return await apiHandler.getAll(`plans`, params);
         },
 
         async get({id}) {

@@ -1,7 +1,15 @@
 export default function WebsitesResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`websites`);
+        async getAll({limit = null, offset = null, sort = null, filter = '', q = '', criteria = ''}) {
+            const params = {
+                limit,
+                offset,
+                sort,
+                filter,
+                q,
+                criteria
+            };
+            return await apiHandler.getAll(`websites`, params);
         },
 
         async get({id}) {

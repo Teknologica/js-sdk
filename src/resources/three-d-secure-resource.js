@@ -1,7 +1,11 @@
 export default function ThreeDSecureResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`3dsecure`);
+        async getAll({limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`3dsecure`, params);
         },
 
         async get({id}) {

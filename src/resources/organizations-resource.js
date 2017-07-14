@@ -1,7 +1,13 @@
 export default function OrganizationsResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`organizations`);
+        async getAll({limit = null, offset = null, sort = null, q = ''}) {
+            const params = {
+                limit,
+                offset,
+                sort,
+                q
+            };
+            return await apiHandler.getAll(`organizations`, params);
         },
 
         async get({id}) {

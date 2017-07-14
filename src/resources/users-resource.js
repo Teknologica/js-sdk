@@ -1,7 +1,14 @@
 export default function UsersResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`users`);
+        async getAll({limit = null, offset = null, sort = null, filter = '', q = ''}) {
+            const params = {
+                limit,
+                offset,
+                sort,
+                filter,
+                q
+            };
+            return await apiHandler.getAll(`users`, params);
         },
 
         async get({id}) {
