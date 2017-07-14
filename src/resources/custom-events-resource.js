@@ -1,7 +1,12 @@
 export default function CustomEventsResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`custom-events`);
+        async getAll({limit = null, offset = null, sort = null}) {
+            const params = {
+                limit,
+                offset,
+                sort
+            };
+            return await apiHandler.getAll(`custom-events`, params);
         },
 
         async get({id}) {
@@ -40,8 +45,12 @@ export default function CustomEventsResource({apiHandler}) {
             return await apiHandler.get(`custom-events/${id}/rules/versions/${version}`);
         },
 
-        async getAllScheduled() {
-            return await apiHandler.getAll(`queue/custom-events`);
+        async getAllScheduled({limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`queue/custom-events`, params);
         },
 
         async getScheduled({id}) {

@@ -1,7 +1,14 @@
 export default function BlacklistsResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`blacklists`);
+        async getAll({limit = null, offset = null, sort = null, q = '', filter = ''}) {
+            const params = {
+                limit,
+                offset,
+                sort,
+                q,
+                filter
+            };
+            return await apiHandler.getAll(`blacklists`, params);
         },
 
         async get({id}) {

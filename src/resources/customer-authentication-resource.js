@@ -1,15 +1,19 @@
 export default function CustomerAuthenticationResource({apiHandler}) {
     return {
-        async getAllOptions() {
+        async getAuthOptions() {
             return await apiHandler.getAll(`authentication-options`);
         },
 
-        async updateOptions({data}) {
+        async updateAuthOptions({data}) {
             return await apiHandler.put(`authentication-options`, data);
         },
 
-        async getAllAuthTokens() {
-            return await apiHandler.getAll(`authentication-tokens`);
+        async getAllAuthTokens({limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`authentication-tokens`, params);
         },
 
         async verify({token}) {
@@ -24,8 +28,12 @@ export default function CustomerAuthenticationResource({apiHandler}) {
             return await apiHandler.delete(`authentication-tokens/${token}`);
         },
 
-        async getAllCredentials() {
-            return await apiHandler.getAll(`credentials`);
+        async getAllCredentials({limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`credentials`, params);
         },
 
         async getCredential({id}) {
@@ -44,8 +52,12 @@ export default function CustomerAuthenticationResource({apiHandler}) {
             return await apiHandler.delete(`credentials/${id}`);
         },
 
-        async getAllResetPasswordToken() {
-            return await apiHandler.getAll(`password-tokens`);
+        async getAllResetPasswordToken({limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`password-tokens`, params);
         },
 
         async getResetPasswordToken({id}) {
