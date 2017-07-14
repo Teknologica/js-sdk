@@ -18,11 +18,8 @@ module.exports = (env = {}) => {
             rules
         },
         plugins: [
-            new webpack.optimize.UglifyJsPlugin({
-                compress: false
-            })
-        ],
-        devtool: env.production ? 'source-map' : 'cheap-eval-source-map'
+            new webpack.optimize.UglifyJsPlugin()
+        ]
     }, {
         entry: './src/index.js',
         output: {
@@ -33,10 +30,7 @@ module.exports = (env = {}) => {
             rules
         },
         plugins: [
-            new webpack.optimize.UglifyJsPlugin({
-                compress: false
-            })
-        ],
-        devtool: env.production ? 'source-map' : 'cheap-eval-source-map'
+            new webpack.optimize.UglifyJsPlugin()
+        ]
     }]
 };
