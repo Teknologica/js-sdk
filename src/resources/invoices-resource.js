@@ -1,7 +1,16 @@
 export default function InvoicesResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`invoices`);
+        async getAll({limit = null, offset = null, sort = null, expand = '', filter = '', q = '', criteria = ''}) {
+            const params = {
+                limit,
+                offset,
+                sort,
+                expand,
+                filter,
+                q,
+                criteria
+            };
+            return await apiHandler.getAll(`invoices`, params);
         },
 
         async get({id}) {

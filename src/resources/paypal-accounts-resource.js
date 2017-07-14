@@ -1,7 +1,14 @@
 export default function PayPalAccountsResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`paypal-accounts`);
+        async getAll({limit = null, offset = null, sort = null, filter = '', q = ''}) {
+            const params = {
+                limit,
+                offset,
+                sort,
+                filter,
+                q
+            };
+            return await apiHandler.getAll(`paypal-accounts`, params);
         },
 
         async get({id}) {

@@ -6,8 +6,15 @@
  */
 export default function CheckoutPagesResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`checkout-pages`);
+        async getAll({limit = null, offset = null, sort = null, expand = '', q = ''}) {
+            const params = {
+                limit,
+                offset,
+                sort,
+                expand,
+                q
+            };
+            return await apiHandler.getAll(`checkout-pages`, params);
         },
 
         async get({id}) {

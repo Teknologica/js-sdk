@@ -1,7 +1,16 @@
 export default function CustomersResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`customers`);
+        async getAll({limit = null, offset = null, sort = null, expand = '', filter = '', q = '', criteria = ''}) {
+            const params = {
+                limit,
+                offset,
+                sort,
+                expand,
+                filter,
+                q,
+                criteria
+            };
+            return await apiHandler.getAll(`customers`, params);
         },
 
         async get({id}) {

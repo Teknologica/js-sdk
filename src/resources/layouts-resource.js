@@ -1,7 +1,11 @@
 export default function LayoutsResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`layouts`);
+        async getAll({limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`layouts`, params);
         },
 
         async get({id}) {

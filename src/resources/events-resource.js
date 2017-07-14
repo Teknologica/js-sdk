@@ -1,7 +1,11 @@
 export default function EventsResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`events`);
+        async getAll({limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`events`, params);
         },
 
         async get({eventType}) {
@@ -20,8 +24,12 @@ export default function EventsResource({apiHandler}) {
             return await apiHandler.put(`events/${eventType}/rules`, data);
         },
 
-        async getRulesHistory({eventType}) {
-            return await apiHandler.getAll(`events/${eventType}/rules/history`);
+        async getRulesHistory({eventType, limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`events/${eventType}/rules/history`, params);
         },
 
         async getRulesVersionNumber({eventType, version}) {

@@ -1,7 +1,13 @@
 export default function PaymentCardsResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`payment-cards`);
+        async getAll({limit = null, offset = null, sort = null, q = ''}) {
+            const params = {
+                limit,
+                offset,
+                sort,
+                q
+            };
+            return await apiHandler.getAll(`payment-cards`, params);
         },
 
         async get({id}) {
@@ -20,8 +26,14 @@ export default function PaymentCardsResource({apiHandler}) {
             return await apiHandler.post(`payment-cards/${id}/deactivation`);
         },
 
-        async getAllMigratable() {
-            return await apiHandler.getAll(`payment-cards-migrations`);
+        async getAllMigratable({limit = null, offset = null, sort = null, filter = ''}) {
+            const params = {
+                limit,
+                offset,
+                sort,
+                filter
+            };
+            return await apiHandler.getAll(`payment-cards-migrations`, params);
         },
 
         async migrate({data}) {

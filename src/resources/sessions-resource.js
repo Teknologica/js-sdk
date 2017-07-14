@@ -1,7 +1,11 @@
 export default function SessionsResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`sessions`);
+        async getAll({limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`sessions`, params);
         },
 
         async get({id}) {

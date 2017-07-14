@@ -1,7 +1,11 @@
 export default function NotesResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`notes`);
+        async getAll({limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`notes`, params);
         },
 
         async get({id}) {

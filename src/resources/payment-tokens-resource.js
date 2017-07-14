@@ -1,7 +1,11 @@
 export default function PaymentTokensResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`tokens`);
+        async getAll({limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`tokens`, params);
         },
 
         async get({token}) {

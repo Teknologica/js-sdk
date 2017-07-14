@@ -1,7 +1,16 @@
 export default function TransactionsResource({apiHandler}) {
     return {
-        async getAll() {
-            return await apiHandler.getAll(`transactions`);
+        async getAll({limit = null, offset = null, sort = null, expand = '', filter = '', q = '', criteria = ''}) {
+            const params = {
+                limit,
+                offset,
+                sort,
+                expand,
+                filter,
+                q,
+                criteria
+            };
+            return await apiHandler.getAll(`transactions`, params);
         },
 
         async get({id}) {

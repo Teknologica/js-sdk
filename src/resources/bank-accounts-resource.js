@@ -1,9 +1,10 @@
 export default function BankAccountsResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null}) {
+        async getAll({limit = null, offset = null, sort = null}) {
             const params = {
                 limit,
-                offset
+                offset,
+                sort
             };
             return await apiHandler.getAll(`bank-accounts`, params);
         },
