@@ -1,6 +1,5 @@
 export default class RebillyError extends Error {
-    constructor({config, name, response = null, request = null, message = null}) {
-        let message = message || 'Request Error';
+    constructor({config, name, response = null, request = null, message = 'Request Error'}) {
         if (response && response.data && response.data.error) {
             message = response.data.error;
         }
