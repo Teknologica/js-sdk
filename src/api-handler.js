@@ -1,35 +1,28 @@
+import axios from 'axios';
 import Member from './member';
 import Collection from './collection';
 import Errors from './errors';
 
-export default class ApiHandler {
-    /**
-     * Create an instance of the Rebilly API handler.
-     * @param axios {Object}
-     * @param options {*} configuration options
-     */
-    constructor({axios, options}) {
-        this.axios = axios;
-        this.options = options;
-        this.instance = this.createInstance();
-    }
+export default function createApiHandler({options}) {
+
+    const instance = createInstance();
 
     /**
      * Create an Axios instance for Rebilly.
      */
-    createInstance() {
-        return this.axios.create(this.getInstanceOptions());
+    function createInstance() {
+        return axios.create(getInstanceOptions());
     }
 
     /**
      * Generate the minimum configuration options for the current Axios instance.
      * @returns {{baseURL: {string}, timeout: {number}, headers: {Object}}}
      */
-    getInstanceOptions() {
+    function getInstanceOptions() {
         return {
-            baseURL: this.getBaseURL(),
-            timeout: this.options.requestTimeout,
-            headers: this.getRequestHeaders()
+            baseURL: getBaseURL(),
+            timeout: options.requestTimeout,
+            headers: getRequestHeaders()
         }
     }
 
@@ -37,20 +30,20 @@ export default class ApiHandler {
      * Get the base URL for API calls for the current environment selection (live/sandbox) including the version.
      * @returns {string}
      */
-    getBaseURL() {
-        const url = this.options.isSandbox ? this.options.apiEndpoints.sandbox : this.options.apiEndpoints.live;
-        return `${url}/v${this.options.apiVersion}`;
+    function getBaseURL() {
+        const url = options.isSandbox ? options.apiEndpoints.sandbox : options.apiEndpoints.live;
+        return `${url}/v${options.apiVersion}`;
     }
 
     /**
      * Generate the request headers at instantiation with the `REB-API-KEY` if present.
      * @returns {Object}
      */
-    getRequestHeaders() {
-        if (this.options.apiKey) {
+    function getRequestHeaders() {
+        if (options.apiKey) {
             return {
-                'REB-API-KEY': this.options.apiKey
-            }
+                'REB-API-KEY': options.apiKey
+            };
         }
         return {};
     }
@@ -59,9 +52,9 @@ export default class ApiHandler {
      * Define the default timeout delay in milliseconds for the current API instance.
      * @param timeout number timeout delay in milliseconds
      */
-    setTimeout(timeout) {
-        this.options.requestTimeout = Number(timeout);
-        this.instance.defaults.timeout = this.options.requestTimeout;
+    function setTimeout(timeout) {
+        options.requestTimeout = Number(timeout);
+        instance.defaults.timeout = options.requestTimeout;
     }
 
     /**
@@ -71,20 +64,20 @@ export default class ApiHandler {
      * const api = new RebillyAPI();
      * api.setApiConsumer('Acme Application v1.0.1');
      */
-    setApiConsumer(consumerId) {
-        this.instance.defaults.headers.common['REB-API-CONSUMER'] = consumerId;
+    function setApiConsumer(consumerId) {
+        instance.defaults.headers.common['REB-API-CONSUMER'] = consumerId;
     }
 
     /**
      * Use a JWT session token to identify API request. This removes the private API key header if present.
      * @param token string
      */
-    setSessionToken(token) {
-        console.warn(this.options, this);
-        this.options.apiKey = null;
-        this.options.jwt = token;
-        delete this.instance.defaults.headers.common['REB-API-KEY'];
-        this.instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    function setSessionToken(token) {
+        console.warn(options, this);
+        options.apiKey = null;
+        options.jwt = token;
+        delete instance.defaults.headers.common['REB-API-KEY'];
+        instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
 
     /**
@@ -95,8 +88,8 @@ export default class ApiHandler {
      * @prop auth.username {string}
      * @prop auth.password {string}
      */
-    setProxyAgent({host, port, auth}) {
-        this.instance.defaults.proxy = {
+    function setProxyAgent({host, port, auth}) {
+        instance.defaults.proxy = {
             host,
             port,
             auth
@@ -111,18 +104,18 @@ export default class ApiHandler {
      * const api = new RebillyAPI();
      * api.setEndpoints({live: 'https://api-test.rebilly.com'});
      */
-    setEndpoints({live = null, sandbox = null}) {
+    function setEndpoints({live = null, sandbox = null}) {
         if (live) {
-            this.options.apiEndpoints.live = live;
+            options.apiEndpoints.live = live;
         }
         if (sandbox) {
-            this.options.apiEndpoints.sandbox = sandbox;
+            options.apiEndpoints.sandbox = sandbox;
         }
         //after changing the endpoints, update the Axios instance URL too
-        this.instance.defaults.baseURL = this.getBaseURL();
+        instance.defaults.baseURL = getBaseURL();
     }
 
-    getCancellationToken() {
+    function getCancellationToken() {
         throw 'Method not implemented';
     }
 
@@ -131,16 +124,16 @@ export default class ApiHandler {
      * @param thenDelegate {Function} defines the delegate logic to run when the request is completed
      * @param catchDelegate {Function} (optional) defines a callback to run before the catch block of the request is executed for this interceptor
      */
-    addRequestInterceptor({thenDelegate, catchDelegate = () => {}}) {
-        this.instance.interceptors.request.use(thenDelegate, catchDelegate);
+    function addRequestInterceptor({thenDelegate, catchDelegate = () => {}}) {
+        instance.interceptors.request.use(thenDelegate, catchDelegate);
     }
 
     /**
      * Removes a specific request interceptor from the current API instance.
      * @param interceptor {Function} defines the interceptor delegate to remove
      */
-    removeRequestInterceptor(interceptor) {
-        this.instance.interceptors.request.eject(interceptor);
+    function removeRequestInterceptor(interceptor) {
+        instance.interceptors.request.eject(interceptor);
     }
 
     /**
@@ -148,16 +141,16 @@ export default class ApiHandler {
      * @param thenDelegate {Function} defines the delegate logic to run before the response is completed
      * @param catchDelegate {Function} (optional) defines a callback to run before the catch block of the response is executed for this interceptor
      */
-    addResponseInterceptor({thenDelegate, catchDelegate = () => {}}) {
-        this.instance.interceptors.response.use(thenDelegate, catchDelegate);
+    function addResponseInterceptor({thenDelegate, catchDelegate = () => {}}) {
+        instance.interceptors.response.use(thenDelegate, catchDelegate);
     }
 
     /**
      * Removes a specific response interceptor from the current API instance.
      * @param interceptor {Function} defines the interceptor delegate to remove
      */
-    removeResponseInterceptor(interceptor) {
-        this.instance.interceptors.response.eject(interceptor);
+    function removeResponseInterceptor(interceptor) {
+        instance.interceptors.response.eject(interceptor);
     }
 
     /**
@@ -166,13 +159,13 @@ export default class ApiHandler {
      * @param isCollection {boolean} defines whether the request is done to a collection or a member of the API
      * @returns {Promise.<*>}
      */
-    async wrapRequest(request, {isCollection = false} = {}) {
+    async function wrapRequest(request, {isCollection = false} = {}) {
         try {
             const response = await request;
-            return this.processResponse(response, isCollection)
+            return processResponse(response, isCollection)
         }
         catch(error) {
-            return this.processError(error);
+            return processError(error);
         }
     }
 
@@ -182,7 +175,7 @@ export default class ApiHandler {
      * @param isCollection {boolean}
      * @returns {Member|Collection}
      */
-    processResponse(response, isCollection) {
+    function processResponse(response, isCollection) {
         if (isCollection) {
             return new Collection(response);
         }
@@ -193,7 +186,7 @@ export default class ApiHandler {
      * Throws an instance of a Rebilly Error from the base Axios error.
      * @param error {Object}
      */
-    processError(error) {
+    function processError(error) {
         if (error.response) {
             switch (Number(error.response.status)) {
                 case 401: //forbidden
@@ -217,31 +210,31 @@ export default class ApiHandler {
         }
     }
 
-    get(url) {
-        return this.wrapRequest(this.instance.get(url));
+    function get(url) {
+        return wrapRequest(instance.get(url));
     }
 
-    getAll(url, params) {
-        return this.wrapRequest(this.instance.get(url, {params}), {isCollection: true});
+    function getAll(url, params) {
+        return wrapRequest(instance.get(url, {params}), {isCollection: true});
     }
 
-    post(url, data) {
-        return this.wrapRequest(this.instance.post(url, data));
+    function post(url, data) {
+        return wrapRequest(instance.post(url, data));
     }
 
-    put(url, data) {
-        return this.wrapRequest(this.instance.put(url, data));
+    function put(url, data) {
+        return wrapRequest(instance.put(url, data));
     }
 
-    patch(url, data) {
-        return this.wrapRequest(this.instance.patch(url, data));
+    function patch(url, data) {
+        return wrapRequest(instance.patch(url, data));
     }
 
-    delete(url) {
-        return this.wrapRequest(this.instance.delete(url));
+    function del(url) {
+        return wrapRequest(instance.delete(url));
     }
 
-    create(url, data) {
+    function create(url, data) {
         if (true) {
             //check if ID exists, throw error
         }
@@ -249,4 +242,24 @@ export default class ApiHandler {
             //otherwise process
         }
     }
+
+    return {
+        addRequestInterceptor,
+        removeRequestInterceptor,
+        addResponseInterceptor,
+        removeResponseInterceptor,
+        setTimeout,
+        setProxyAgent,
+        setSessionToken,
+        setApiConsumer,
+        setEndpoints,
+        getCancellationToken,
+        get,
+        getAll,
+        post,
+        put,
+        patch,
+        delete: del,
+        create
+    };
 };

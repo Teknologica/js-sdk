@@ -47,9 +47,6 @@ export default function createApiInstance({apiHandler}) {
         removeResponseInterceptor: apiHandler.removeResponseInterceptor,
         setTimeout: apiHandler.setTimeout,
         setProxyAgent: apiHandler.setProxyAgent,
-        /**
-         * @borrows ApiHandler.setSessionToken as setSessionToken
-         */
         setSessionToken: apiHandler.setSessionToken,
         setApiConsumer: apiHandler.setApiConsumer,
         setEndpoints: apiHandler.setEndpoints,
