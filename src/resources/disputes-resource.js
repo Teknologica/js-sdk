@@ -18,7 +18,7 @@ export default function DisputesResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`disputes/${id}`, data);
+            return await apiHandler.create(`disputes/${id}`, id, data);
         },
 
         async update({id, data}) {

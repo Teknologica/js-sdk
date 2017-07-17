@@ -15,7 +15,7 @@ export default function OrganizationsResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`organizations/${id}`, data);
+            return await apiHandler.create(`organizations/${id}`, id, data);
         },
 
         async update({id, data}) {

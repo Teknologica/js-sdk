@@ -17,7 +17,7 @@ export default function WebsitesResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`websites/${id}`, data);
+            return await apiHandler.create(`websites/${id}`, id, data);
         },
 
         async update({id, data}) {

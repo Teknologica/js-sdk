@@ -18,7 +18,7 @@ export default function SubscriptionsResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`subscriptions/${id}`, data);
+            return await apiHandler.create(`subscriptions/${id}`, id, data);
         },
 
         async update({id, data}) {

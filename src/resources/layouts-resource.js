@@ -13,7 +13,7 @@ export default function LayoutsResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`layouts/${id}`, data);
+            return await apiHandler.create(`layouts/${id}`, id, data);
         },
 
         async update({id, data}) {

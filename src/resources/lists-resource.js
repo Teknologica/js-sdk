@@ -17,7 +17,7 @@ export default function ListsResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`lists/${id}`, data);
+            return await apiHandler.create(`lists/${id}`, id, data);
         },
 
         async update({id, data}) {

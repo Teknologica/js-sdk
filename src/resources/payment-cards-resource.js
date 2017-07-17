@@ -15,7 +15,7 @@ export default function PaymentCardsResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`payment-cards/${id}`, data);
+            return await apiHandler.create(`payment-cards/${id}`, id, data);
         },
 
         async authorize({id, data}) {

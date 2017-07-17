@@ -17,7 +17,7 @@ export default function PlansResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`plans/${id}`, data);
+            return await apiHandler.create(`plans/${id}`, id, data);
         },
 
         async update({id, data}) {

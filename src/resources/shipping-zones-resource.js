@@ -15,7 +15,7 @@ export default function ShippingZonesResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`shipping-zones/${id}`, data);
+            return await apiHandler.create(`shipping-zones/${id}`, id, data);
         },
 
         async update({id, data}) {

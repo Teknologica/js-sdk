@@ -15,7 +15,7 @@ export default function CouponsResource({apiHandler}) {
         },
 
         async create({redemptionCode = '', data}) {
-            return await apiHandler.create(`coupons/${redemptionCode}`, data);
+            return await apiHandler.create(`coupons/${redemptionCode}`, id, data);
         },
 
         async update({redemptionCode, data}) {

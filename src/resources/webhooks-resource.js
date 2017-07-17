@@ -13,7 +13,7 @@ export default function WebhooksResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`webhooks/${id}`, data);
+            return await apiHandler.create(`webhooks/${id}`, id, data);
         },
 
         async update({id, data}) {

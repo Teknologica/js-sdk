@@ -13,7 +13,7 @@ export default function SessionsResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`sessions/${id}`, data);
+            return await apiHandler.create(`sessions/${id}`, id, data);
         },
 
         async update({id, data}) {

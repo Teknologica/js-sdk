@@ -13,7 +13,7 @@ export default function NotesResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`notes/${id}`, data);
+            return await apiHandler.create(`notes/${id}`, id, data);
         },
 
         async update({id, data}) {

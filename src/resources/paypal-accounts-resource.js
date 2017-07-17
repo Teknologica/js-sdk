@@ -16,7 +16,7 @@ export default function PayPalAccountsResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`paypal-accounts/${id}`, data);
+            return await apiHandler.create(`paypal-accounts/${id}`, id, data);
         },
 
         async activate({id, data}) {

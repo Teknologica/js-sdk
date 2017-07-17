@@ -16,7 +16,7 @@ export default function UsersResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`users/${id}`, data);
+            return await apiHandler.create(`users/${id}`, id, data);
         },
 
         async update({id = '', data}) {

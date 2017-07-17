@@ -18,7 +18,7 @@ export default function InvoicesResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`invoices/${id}`, data);
+            return await apiHandler.create(`invoices/${id}`, id, data);
         },
 
         async update({id, data}) {

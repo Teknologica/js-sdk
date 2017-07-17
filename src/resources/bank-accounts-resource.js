@@ -14,7 +14,7 @@ export default function BankAccountsResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`bank-accounts/${id}`, data);
+            return await apiHandler.create(`bank-accounts/${id}`, id, data);
         },
 
         async deactivate({id}) {

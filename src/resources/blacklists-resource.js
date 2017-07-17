@@ -16,7 +16,7 @@ export default function BlacklistsResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`blacklists/${id}`, data);
+            return await apiHandler.create(`blacklists/${id}`, id, data);
         },
 
         async delete({id}) {

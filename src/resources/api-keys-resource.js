@@ -14,7 +14,7 @@ export default function ApiKeysResource({apiHandler}) {
         },
 
         async create({data}) {
-            return await apiHandler.create(`api-keys`, data);
+            return await apiHandler.create(`api-keys`, id, data);
         },
 
         async update({id, data}) {

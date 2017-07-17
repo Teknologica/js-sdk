@@ -41,7 +41,7 @@ export default function CustomerAuthenticationResource({apiHandler}) {
         },
 
         async createCredential({id = '', data}) {
-            return await apiHandler.create(`credentials/${id}`, data);
+            return await apiHandler.create(`credentials/${id}`, id, data);
         },
 
         async updateCredential({id, data}) {

@@ -16,7 +16,7 @@ export default function ProductsResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`products/${id}`, data);
+            return await apiHandler.create(`products/${id}`, id, data);
         },
 
         async update({id, data}) {

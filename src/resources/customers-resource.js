@@ -18,7 +18,7 @@ export default function CustomersResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`customers/${id}`, data);
+            return await apiHandler.create(`customers/${id}`, id, data);
         },
 
         async update({id, data}) {

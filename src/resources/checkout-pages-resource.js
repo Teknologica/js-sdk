@@ -1,9 +1,3 @@
-/**
- *
- * @param apiHandler {ApiHandler}
- * @returns {*}
- * @constructor
- */
 export default function CheckoutPagesResource({apiHandler}) {
     return {
         async getAll({limit = null, offset = null, sort = null, expand = '', q = ''} = {}) {
@@ -22,7 +16,7 @@ export default function CheckoutPagesResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`checkout-pages/${id}`, data);
+            return await apiHandler.create(`checkout-pages/${id}`, id, data);
         },
 
         async update({id, data}) {

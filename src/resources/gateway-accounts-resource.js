@@ -17,7 +17,7 @@ export default function GatewayAccountsResource({apiHandler}) {
         },
 
         async create({id = '', data}) {
-            return await apiHandler.create(`gateway-accounts/${id}`, data);
+            return await apiHandler.create(`gateway-accounts/${id}`, id, data);
         },
 
         async update({id, data}) {
