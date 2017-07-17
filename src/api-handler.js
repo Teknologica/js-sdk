@@ -1,8 +1,9 @@
+import axios from 'axios';
 import Member from './member';
 import Collection from './collection';
 import Errors from './errors';
 
-export default function ApiHandler({axios, options}) {
+export default function ApiHandler({options}) {
     /**
      * Create an instance of the Rebilly API handler.
      * @param axios {Object}
@@ -14,8 +15,6 @@ export default function ApiHandler({axios, options}) {
     //     const instance = this.createInstance();
     // }
 
-    const axios = axios;
-    const options = options;
     const instance = this.createInstance();
 
     /**

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import libraryVersion from '../version';
 import ApiHandler from './api-handler';
 import createApiInstance from './create-api-instance';
@@ -33,6 +32,6 @@ export default function RebillyAPI({apiKey = null, version = baseApiVersion, san
         jwt: null
     };
 
-    const apiHandler = new ApiHandler({axios, options});
+    const apiHandler = new ApiHandler({options});
     return createApiInstance({apiHandler});
 }
