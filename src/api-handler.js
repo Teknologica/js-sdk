@@ -16,7 +16,7 @@ export default function ApiHandler({options}) {
     // }
 
     const configOptions = options;
-    const instance = this.prototype.createInstance();
+    const instance = createInstance();
 
     /**
      * Create an Axios instance for Rebilly.
