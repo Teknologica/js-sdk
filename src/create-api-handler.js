@@ -4,7 +4,6 @@ import Collection from './collection';
 import Errors from './errors';
 
 export default function createApiHandler({options}) {
-
     const instance = createInstance();
 
     /**
@@ -16,7 +15,7 @@ export default function createApiHandler({options}) {
 
     /**
      * Generate the minimum configuration options for the current Axios instance.
-     * @returns {{baseURL: {string}, timeout: {number}, headers: {Object}}}
+     * @returns {Object}
      */
     function getInstanceOptions() {
         return {
@@ -73,7 +72,6 @@ export default function createApiHandler({options}) {
      * @param token string
      */
     function setSessionToken(token) {
-        console.warn(options, this);
         options.apiKey = null;
         options.jwt = token;
         delete instance.defaults.headers.common['REB-API-KEY'];

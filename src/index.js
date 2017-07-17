@@ -1,5 +1,5 @@
 import libraryVersion from '../version';
-import ApiHandler from './api-handler';
+import createApiHandler from './api-handler';
 import createApiInstance from './create-api-instance';
 
 const baseApiVersion = '2.1';
@@ -32,6 +32,6 @@ export default function RebillyAPI({apiKey = null, version = baseApiVersion, san
         jwt: null
     };
 
-    const apiHandler = new ApiHandler({options});
+    const apiHandler = createApiHandler({options});
     return createApiInstance({apiHandler});
 }

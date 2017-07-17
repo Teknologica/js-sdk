@@ -9,13 +9,14 @@ import deepFreeze from './deep-freeze';
  * @prop getJSON {Function: Object}
  */
 export default class Member {
-    constructor({data, status, statusText, headers, config}) {
-        this.response = {status, statusText, headers, config};
+    constructor({data, status, statusText, headers}) {
+        this.response = {status, statusText, headers};
         this.fields = {...data};
         deepFreeze(this);
     }
 
     /**
+     * Returns a mutable JSON representation of the Member.
      * @returns {Object}
      */
     getJSON() {
