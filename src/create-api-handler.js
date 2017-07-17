@@ -238,9 +238,11 @@ export default function createApiHandler({options}) {
         }
         else {
             try {
-                const response = await wrapRequest(instance.get(url));
-                console.warn('response', response);
-                throw new Error('Member already exists. Please use a different ID.');
+                const item = await wrapRequest(instance.get(url));
+                console.warn('item', item);
+                if (item.response.status === 200) {
+                    throw new Errors.RebillyInvalidOperationError({message: 'Member already exists. Please use a different ID.'})
+                }
             }
             catch(error) {
                 console.warn('catch', error)
