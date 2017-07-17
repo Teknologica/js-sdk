@@ -15,7 +15,8 @@ export default function ApiHandler({options}) {
         //     this.instance = this.createInstance();
     // }
 
-    const instance = this.createInstance();
+    const configOptions = options;
+    const instance = this.prototype.createInstance();
 
     /**
      * Create an Axios instance for Rebilly.
@@ -31,7 +32,7 @@ export default function ApiHandler({options}) {
     this.prototype.getInstanceOptions = function() {
         return {
             baseURL: this.getBaseURL(),
-            timeout: options.requestTimeout,
+            timeout: configOptions.requestTimeout,
             headers: this.getRequestHeaders()
         }
     }
@@ -41,8 +42,8 @@ export default function ApiHandler({options}) {
      * @returns {string}
      */
     this.prototype.getBaseURL = function() {
-        const url = options.isSandbox ? options.apiEndpoints.sandbox : options.apiEndpoints.live;
-        return `${url}/v${options.apiVersion}`;
+        const url = configOptions.isSandbox ? configOptions.apiEndpoints.sandbox : configOptions.apiEndpoints.live;
+        return `${url}/v${configOptions.apiVersion}`;
     }
 
     /**
@@ -50,9 +51,9 @@ export default function ApiHandler({options}) {
      * @returns {Object}
      */
     this.prototype.getRequestHeaders = function() {
-        if (options.apiKey) {
+        if (configOptions.apiKey) {
             return {
-                'REB-API-KEY': options.apiKey
+                'REB-API-KEY': configOptions.apiKey
             }
         }
         return {};
@@ -63,8 +64,8 @@ export default function ApiHandler({options}) {
      * @param timeout number timeout delay in milliseconds
      */
     this.prototype.setTimeout = function(timeout) {
-        options.requestTimeout = Number(timeout);
-        instance.defaults.timeout = options.requestTimeout;
+        configOptions.requestTimeout = Number(timeout);
+        instance.defaults.timeout = configOptions.requestTimeout;
     }
 
     /**
@@ -83,9 +84,9 @@ export default function ApiHandler({options}) {
      * @param token string
      */
     this.prototype.setSessionToken = function(token) {
-        console.warn(options, this);
-        options.apiKey = null;
-        options.jwt = token;
+        console.warn(configOptions, this);
+        configOptions.apiKey = null;
+        configOptions.jwt = token;
         delete instance.defaults.headers.common['REB-API-KEY'];
         instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
@@ -116,10 +117,10 @@ export default function ApiHandler({options}) {
      */
     this.prototype.setEndpoints = function({live = null, sandbox = null}) {
         if (live) {
-            options.apiEndpoints.live = live;
+            configOptions.apiEndpoints.live = live;
         }
         if (sandbox) {
-            options.apiEndpoints.sandbox = sandbox;
+            configOptions.apiEndpoints.sandbox = sandbox;
         }
         //after changing the endpoints, update the Axios instance URL too
         instance.defaults.baseURL = this.getBaseURL();
