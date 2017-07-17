@@ -4,8 +4,8 @@ import createApiInstance from './create-api-instance';
 
 const baseApiVersion = '2.1';
 const baseEndpoints = {
-    live: 'https://api.dev-local.rebilly.com',
-    sandbox: 'https://api-sandbox.dev-local.rebilly.com'
+    live: 'http://api.dev-local.rebilly.com',
+    sandbox: 'http://api-sandbox.dev-local.rebilly.com'
 };
 const baseTimeoutMs = 6000;
 
