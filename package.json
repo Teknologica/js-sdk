@@ -1,9 +1,9 @@
 {
   "name": "rebilly-js-sdk",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "JavaScript SDK for Rebilly.com",
-  "browser": "./dist/bundle.js",
-  "main": "./dist/bundle.node.js",
+  "browser": "./dist/rebilly-js-sdk.js",
+  "main": "./dist/rebilly-js-sdk.node.js",
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && webpack",
