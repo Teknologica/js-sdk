@@ -1,6 +1,6 @@
 export default function CouponsResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null, sort = null, filter = ''}) {
+        async getAll({limit = null, offset = null, sort = null, filter = ''} = {}) {
             const params = {
                 limit,
                 offset,
@@ -22,7 +22,7 @@ export default function CouponsResource({apiHandler}) {
             return await apiHandler.put(`coupons/${redemptionCode}`, data);
         },
 
-        async getAllRedemptions({limit = null, offset = null, sort = null, filter = ''}) {
+        async getAllRedemptions({limit = null, offset = null, sort = null, filter = ''} = {}) {
             const params = {
                 limit,
                 offset,

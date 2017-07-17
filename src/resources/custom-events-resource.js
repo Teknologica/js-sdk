@@ -1,6 +1,6 @@
 export default function CustomEventsResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null, sort = null}) {
+        async getAll({limit = null, offset = null, sort = null} = {}) {
             const params = {
                 limit,
                 offset,
@@ -21,8 +21,8 @@ export default function CustomEventsResource({apiHandler}) {
             return await apiHandler.delete(`custom-events/${id}`);
         },
 
-        async getAllRules({id}) {
-            return await apiHandler.getAll(`custom-events/${id}/rules`);
+        async getRules({id}) {
+            return await apiHandler.get(`custom-events/${id}/rules`);
         },
 
         async createRules({id, data}) {
@@ -33,8 +33,12 @@ export default function CustomEventsResource({apiHandler}) {
             return await apiHandler.put(`custom-events/${id}/rules`, data);
         },
 
-        async getRulesHistory({id}) {
-            return await apiHandler.getAll(`custom-events/${id}/rules/history`);
+        async getRulesHistory({id, limit = null, offset = null} = {}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`custom-events/${id}/rules/history`, params);
         },
 
         async getRulesVersionNumber({id, version}) {
@@ -45,7 +49,7 @@ export default function CustomEventsResource({apiHandler}) {
             return await apiHandler.get(`custom-events/${id}/rules/versions/${version}`);
         },
 
-        async getAllScheduled({limit = null, offset = null}) {
+        async getAllScheduled({limit = null, offset = null}  = {}) {
             const params = {
                 limit,
                 offset

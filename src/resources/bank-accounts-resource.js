@@ -1,6 +1,6 @@
 export default function BankAccountsResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null, sort = null}) {
+        async getAll({limit = null, offset = null, sort = null} = {}) {
             const params = {
                 limit,
                 offset,

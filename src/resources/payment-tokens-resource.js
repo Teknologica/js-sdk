@@ -1,6 +1,6 @@
 export default function PaymentTokensResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null}) {
+        async getAll({limit = null, offset = null} = {}) {
             const params = {
                 limit,
                 offset

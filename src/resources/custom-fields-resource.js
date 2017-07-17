@@ -1,6 +1,6 @@
 export default function CustomFieldsResource({apiHandler}) {
     return {
-        async getAll({resource, limit = null, offset = null}) {
+        async getAll({resource, limit = null, offset = null} = {}) {
             const params = {
                 limit,
                 offset
