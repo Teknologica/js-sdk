@@ -10,9 +10,9 @@ export default function ApiHandler({options}) {
      * @param options {*} configuration options
      */
     // constructor({axios, options}) {
-    //     const axios = axios;
-    //     const options = options;
-    //     const instance = this.createInstance();
+        //     this.axios = axios;
+        //     this.options = options;
+        //     this.instance = this.createInstance();
     // }
 
     const instance = this.createInstance();
@@ -21,7 +21,7 @@ export default function ApiHandler({options}) {
      * Create an Axios instance for Rebilly.
      */
     this.prototype.createInstance = function() {
-        return axios.create(this.getInstanceOptions());
+        return axios.create(this.getInstanceOptions().bind(this));
     }
 
     /**
