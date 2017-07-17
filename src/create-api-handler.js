@@ -233,7 +233,7 @@ export default function createApiHandler({options}) {
     }
 
     async function create(url, id, data) {
-        if (id !== '') {
+        if (id === '') {
             return wrapRequest(instance.post(url, data));
         }
         else {
