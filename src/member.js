@@ -1,9 +1,9 @@
-import {JSONExport} from './decorators';
 import deepFreeze from './deep-freeze';
 
 /**
- * A single entity member.
+ * A single read-only entity member.
  * @typedef Member
+ * @readonly
  * @prop response {Object}
  * @prop fields {Object}
  * @prop getJSON {Function: Object}
@@ -15,7 +15,10 @@ export default class Member {
         deepFreeze(this);
     }
 
+    /**
+     * @returns {Object}
+     */
     getJSON() {
-        return JSON.parse(JSON.stringify(this.fields));
+        return JSON.parse(JSON.stringify({fields: this.fields}));
     }
 }

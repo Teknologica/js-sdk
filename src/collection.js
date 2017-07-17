@@ -1,11 +1,11 @@
 import Member from './member';
 import paginationHeaders from './pagination-headers';
-import {JSONExport} from './decorators';
 import deepFreeze from './deep-freeze';
 
 /**
- * A collection of entity members.
+ * A collection of read-only entity members.
  * @typedef Collection
+ * @readonly
  * @prop limit {number}
  * @prop offset {number}
  * @prop total {number}
@@ -26,7 +26,10 @@ export default class Collection {
         deepFreeze(this);
     }
 
+    /**
+     * @returns {Object}
+     */
     getJSON() {
-        return JSON.parse(JSON.stringify(this.items));
+        return JSON.parse(JSON.stringify({items: this.items}));
     }
 }
