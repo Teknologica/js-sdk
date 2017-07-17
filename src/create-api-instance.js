@@ -1,5 +1,10 @@
 import resources from './resources';
 
+/**
+ *
+ * @param apiHandler
+ * @returns {Object}
+ */
 export default function createApiInstance({apiHandler}) {
     return {
         account: new resources.AccountsResource({apiHandler}),

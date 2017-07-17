@@ -3,6 +3,11 @@ import Member from './member';
 import Collection from './collection';
 import Errors from './errors';
 
+/**
+ * Creates an API handler for the current instance with the provided options.
+ * @param options
+ * @returns {{addRequestInterceptor: addRequestInterceptor, removeRequestInterceptor: removeRequestInterceptor, addResponseInterceptor: addResponseInterceptor, removeResponseInterceptor: removeResponseInterceptor, setTimeout: setTimeout, setProxyAgent: setProxyAgent, setSessionToken: setSessionToken, setApiConsumer: setApiConsumer, setEndpoints: setEndpoints, getCancellationToken: getCancellationToken, get: get, getAll: getAll, post: post, put: put, patch: patch, delete: del, create: create}}
+ */
 export default function createApiHandler({options}) {
     const instance = createInstance();
 
@@ -191,6 +196,8 @@ export default function createApiHandler({options}) {
                     throw new Errors.RebillyForbiddenError(error);
                 case 404: //not found
                     throw new Errors.RebillyNotFoundError(error);
+                case 405: //method not allowed
+                    throw new Errors.RebillyMethodNotAllowedError(error);
                 case 409: //invalid operation
                     throw new Errors.RebillyInvalidOperationError(error);
                 case 422: //validation error

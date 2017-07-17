@@ -30,12 +30,20 @@ class RebillyForbiddenError extends RebillyError {
     }
 }
 
+class RebillyMethodNotAllowedError extends RebillyError {
+    constructor(error) {
+        super({...error, name: 'RebillyMethodNotAllowedError'});
+    }
+}
+
 const Errors = {
+    RebillyError,
     RebillyRequestError,
     RebillyValidationError,
     RebillyNotFoundError,
     RebillyInvalidOperationError,
     RebillyForbiddenError,
+    RebillyMethodNotAllowedError
 };
 
 export default Errors;
