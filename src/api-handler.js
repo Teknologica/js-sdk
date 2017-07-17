@@ -79,7 +79,7 @@ export default class ApiHandler {
      * Use a JWT session token to identify API request. This removes the private API key header if present.
      * @param token string
      */
-    setSessionToken(token) {
+    setSessionToken = (token) => {
         console.warn(this.options, this);
         this.options.apiKey = null;
         this.options.jwt = token;

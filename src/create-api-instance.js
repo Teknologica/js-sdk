@@ -50,6 +50,6 @@ export default function createApiInstance({apiHandler}) {
         setSessionToken: apiHandler.setSessionToken,
         setApiConsumer: apiHandler.setApiConsumer,
         setEndpoints: apiHandler.setEndpoints,
-        getCancellationToken: apiHandler.getCancellationToken,
+        getCancellationToken: apiHandler.getCancellationToken
     };
 }
