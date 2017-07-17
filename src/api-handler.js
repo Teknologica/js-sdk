@@ -80,6 +80,7 @@ export default class ApiHandler {
      * @param token string
      */
     setSessionToken(token) {
+        console.warn(this.options, this);
         this.options.apiKey = null;
         this.options.jwt = token;
         delete this.instance.defaults.headers.common['REB-API-KEY'];
