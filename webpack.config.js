@@ -34,7 +34,11 @@ module.exports = (env = {}) => {
             rules
         },
         plugins: [
-            new webpack.optimize.UglifyJsPlugin()
+            new webpack.optimize.UglifyJsPlugin({
+                mangle: {
+                    except: ['Collection', 'Member']
+                }
+            })
         ]
     }]
 };
