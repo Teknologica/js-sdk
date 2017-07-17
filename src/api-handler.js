@@ -1,47 +1,34 @@
-import axios from 'axios';
 import Member from './member';
 import Collection from './collection';
 import Errors from './errors';
 
-export default function ApiHandler({options}) {
+export default class ApiHandler {
     /**
      * Create an instance of the Rebilly API handler.
      * @param axios {Object}
      * @param options {*} configuration options
      */
-    // constructor({axios, options}) {
-        //     this.axios = axios;
-        //     this.options = options;
-        //     this.instance = this.createInstance();
-    // }
-
-
-    const getInstanceOptions = function() {
-            return {
-                baseURL: this.getBaseURL(),
-                timeout: configOptions.requestTimeout,
-                headers: this.getRequestHeaders()
-            }
-        }
-        
-    const configOptions = options;
-    const instance = axios.create(getInstanceOptions().bind(this));
+    constructor({axios, options}) {
+        this.axios = axios;
+        this.options = options;
+        this.instance = this.createInstance();
+    }
 
     /**
      * Create an Axios instance for Rebilly.
      */
-    this.prototype.createInstance = function() {
-        return axios.create(this.getInstanceOptions().bind(this));
+    createInstance() {
+        return this.axios.create(this.getInstanceOptions());
     }
 
     /**
      * Generate the minimum configuration options for the current Axios instance.
      * @returns {{baseURL: {string}, timeout: {number}, headers: {Object}}}
      */
-    this.prototype.getInstanceOptions = function() {
+    getInstanceOptions() {
         return {
             baseURL: this.getBaseURL(),
-            timeout: configOptions.requestTimeout,
+            timeout: this.options.requestTimeout,
             headers: this.getRequestHeaders()
         }
     }
@@ -50,19 +37,19 @@ export default function ApiHandler({options}) {
      * Get the base URL for API calls for the current environment selection (live/sandbox) including the version.
      * @returns {string}
      */
-    this.prototype.getBaseURL = function() {
-        const url = configOptions.isSandbox ? configOptions.apiEndpoints.sandbox : configOptions.apiEndpoints.live;
-        return `${url}/v${configOptions.apiVersion}`;
+    getBaseURL() {
+        const url = this.options.isSandbox ? this.options.apiEndpoints.sandbox : this.options.apiEndpoints.live;
+        return `${url}/v${this.options.apiVersion}`;
     }
 
     /**
      * Generate the request headers at instantiation with the `REB-API-KEY` if present.
      * @returns {Object}
      */
-    this.prototype.getRequestHeaders = function() {
-        if (configOptions.apiKey) {
+    getRequestHeaders() {
+        if (this.options.apiKey) {
             return {
-                'REB-API-KEY': configOptions.apiKey
+                'REB-API-KEY': this.options.apiKey
             }
         }
         return {};
@@ -72,9 +59,9 @@ export default function ApiHandler({options}) {
      * Define the default timeout delay in milliseconds for the current API instance.
      * @param timeout number timeout delay in milliseconds
      */
-    this.prototype.setTimeout = function(timeout) {
-        configOptions.requestTimeout = Number(timeout);
-        instance.defaults.timeout = configOptions.requestTimeout;
+    setTimeout(timeout) {
+        this.options.requestTimeout = Number(timeout);
+        this.instance.defaults.timeout = this.options.requestTimeout;
     }
 
     /**
@@ -84,20 +71,20 @@ export default function ApiHandler({options}) {
      * const api = new RebillyAPI();
      * api.setApiConsumer('Acme Application v1.0.1');
      */
-    this.prototype.setApiConsumer = function(consumerId) {
-        instance.defaults.headers.common['REB-API-CONSUMER'] = consumerId;
+    setApiConsumer(consumerId) {
+        this.instance.defaults.headers.common['REB-API-CONSUMER'] = consumerId;
     }
 
     /**
      * Use a JWT session token to identify API request. This removes the private API key header if present.
      * @param token string
      */
-    this.prototype.setSessionToken = function(token) {
-        console.warn(configOptions, this);
-        configOptions.apiKey = null;
-        configOptions.jwt = token;
-        delete instance.defaults.headers.common['REB-API-KEY'];
-        instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    setSessionToken(token) {
+        console.warn(this.options, this);
+        this.options.apiKey = null;
+        this.options.jwt = token;
+        delete this.instance.defaults.headers.common['REB-API-KEY'];
+        this.instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
 
     /**
@@ -108,8 +95,8 @@ export default function ApiHandler({options}) {
      * @prop auth.username {string}
      * @prop auth.password {string}
      */
-    this.prototype.setProxyAgent = function({host, port, auth}) {
-        instance.defaults.proxy = {
+    setProxyAgent({host, port, auth}) {
+        this.instance.defaults.proxy = {
             host,
             port,
             auth
@@ -124,18 +111,18 @@ export default function ApiHandler({options}) {
      * const api = new RebillyAPI();
      * api.setEndpoints({live: 'https://api-test.rebilly.com'});
      */
-    this.prototype.setEndpoints = function({live = null, sandbox = null}) {
+    setEndpoints({live = null, sandbox = null}) {
         if (live) {
-            configOptions.apiEndpoints.live = live;
+            this.options.apiEndpoints.live = live;
         }
         if (sandbox) {
-            configOptions.apiEndpoints.sandbox = sandbox;
+            this.options.apiEndpoints.sandbox = sandbox;
         }
         //after changing the endpoints, update the Axios instance URL too
-        instance.defaults.baseURL = this.getBaseURL();
+        this.instance.defaults.baseURL = this.getBaseURL();
     }
 
-    this.prototype.getCancellationToken = function() {
+    getCancellationToken() {
         throw 'Method not implemented';
     }
 
@@ -144,16 +131,16 @@ export default function ApiHandler({options}) {
      * @param thenDelegate {Function} defines the delegate logic to run when the request is completed
      * @param catchDelegate {Function} (optional) defines a callback to run before the catch block of the request is executed for this interceptor
      */
-    this.prototype.addRequestInterceptor = function({thenDelegate, catchDelegate = () => {}}) {
-        instance.interceptors.request.use(thenDelegate, catchDelegate);
+    addRequestInterceptor({thenDelegate, catchDelegate = () => {}}) {
+        this.instance.interceptors.request.use(thenDelegate, catchDelegate);
     }
 
     /**
      * Removes a specific request interceptor from the current API instance.
      * @param interceptor {Function} defines the interceptor delegate to remove
      */
-    this.prototype.removeRequestInterceptor = function(interceptor) {
-        instance.interceptors.request.eject(interceptor);
+    removeRequestInterceptor(interceptor) {
+        this.instance.interceptors.request.eject(interceptor);
     }
 
     /**
@@ -161,16 +148,16 @@ export default function ApiHandler({options}) {
      * @param thenDelegate {Function} defines the delegate logic to run before the response is completed
      * @param catchDelegate {Function} (optional) defines a callback to run before the catch block of the response is executed for this interceptor
      */
-    this.prototype.addResponseInterceptor = function({thenDelegate, catchDelegate = () => {}}) {
-        instance.interceptors.response.use(thenDelegate, catchDelegate);
+    addResponseInterceptor({thenDelegate, catchDelegate = () => {}}) {
+        this.instance.interceptors.response.use(thenDelegate, catchDelegate);
     }
 
     /**
      * Removes a specific response interceptor from the current API instance.
      * @param interceptor {Function} defines the interceptor delegate to remove
      */
-    this.prototype.removeResponseInterceptor = function(interceptor) {
-        instance.interceptors.response.eject(interceptor);
+    removeResponseInterceptor(interceptor) {
+        this.instance.interceptors.response.eject(interceptor);
     }
 
     /**
@@ -179,7 +166,7 @@ export default function ApiHandler({options}) {
      * @param isCollection {boolean} defines whether the request is done to a collection or a member of the API
      * @returns {Promise.<*>}
      */
-    this.prototype.wrapRequest = async function(request, {isCollection = false} = {}) {
+    async wrapRequest(request, {isCollection = false} = {}) {
         try {
             const response = await request;
             return this.processResponse(response, isCollection)
@@ -195,7 +182,7 @@ export default function ApiHandler({options}) {
      * @param isCollection {boolean}
      * @returns {Member|Collection}
      */
-    this.prototype.processResponse = function(response, isCollection) {
+    processResponse(response, isCollection) {
         if (isCollection) {
             return new Collection(response);
         }
@@ -206,7 +193,7 @@ export default function ApiHandler({options}) {
      * Throws an instance of a Rebilly Error from the base Axios error.
      * @param error {Object}
      */
-    this.prototype.processError = function(error) {
+    processError(error) {
         if (error.response) {
             switch (Number(error.response.status)) {
                 case 401: //forbidden
@@ -230,31 +217,31 @@ export default function ApiHandler({options}) {
         }
     }
 
-    this.prototype.get = function(url) {
-        return this.wrapRequest(instance.get(url));
+    get(url) {
+        return this.wrapRequest(this.instance.get(url));
     }
 
-    this.prototype.getAll = function(url, params) {
-        return this.wrapRequest(instance.get(url, {params}), {isCollection: true});
+    getAll(url, params) {
+        return this.wrapRequest(this.instance.get(url, {params}), {isCollection: true});
     }
 
-    this.prototype.post = function(url, data) {
-        return this.wrapRequest(instance.post(url, data));
+    post(url, data) {
+        return this.wrapRequest(this.instance.post(url, data));
     }
 
-    this.prototype.put = function(url, data) {
-        return this.wrapRequest(instance.put(url, data));
+    put(url, data) {
+        return this.wrapRequest(this.instance.put(url, data));
     }
 
-    this.prototype.patch = function(url, data) {
-        return this.wrapRequest(instance.patch(url, data));
+    patch(url, data) {
+        return this.wrapRequest(this.instance.patch(url, data));
     }
 
-    this.prototype.delete = function(url) {
-        return this.wrapRequest(instance.delete(url));
+    delete(url) {
+        return this.wrapRequest(this.instance.delete(url));
     }
 
-    this.prototype.create = function(url, data) {
+    create(url, data) {
         if (true) {
             //check if ID exists, throw error
         }
