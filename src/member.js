@@ -8,7 +8,6 @@ import deepFreeze from './deep-freeze';
  * @prop fields {Object}
  * @prop getJSON {Function: Object}
  */
-@JSONExport('Member')
 export default class Member {
     constructor({data, status, statusText, headers, config}) {
         this.response = {status, statusText, headers, config};

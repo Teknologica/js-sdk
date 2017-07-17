@@ -18,7 +18,6 @@ import deepFreeze from './deep-freeze';
  * const rawData = customers.getJSON();
  * const totalCount = customers.total;
  */
-@JSONExport('Collection')
 export default class Collection {
     constructor({data, status, statusText, headers, config}) {
         Object.keys(paginationHeaders).forEach(header => this[header] = headers[paginationHeaders[header]]);
