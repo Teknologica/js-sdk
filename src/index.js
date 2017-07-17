@@ -1,6 +1,7 @@
 import libraryVersion from '../version';
 import createApiHandler from './create-api-handler';
 import createApiInstance from './create-api-instance';
+import Errors from './errors';
 
 const baseApiVersion = '2.1';
 const baseEndpoints = {
@@ -34,4 +35,6 @@ export default function RebillyAPI({apiKey = null, version = baseApiVersion, san
 
     const apiHandler = createApiHandler({options});
     return createApiInstance({apiHandler});
-}
+};
+
+export {Errors as RebillyErrors};
