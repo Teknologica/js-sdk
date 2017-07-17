@@ -252,7 +252,7 @@ export default function createApiHandler({options}) {
                 }
             }
             catch(error) {
-                console.warn('catch', error)
+                console.warn('catch', error.name, error)
             }
         }
     }
