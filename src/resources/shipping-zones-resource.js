@@ -1,6 +1,6 @@
 export default function ShippingZonesResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null, sort = null, filter = ''}) {
+        async getAll({limit = null, offset = null, sort = null, filter = ''} = {}) {
             const params = {
                 limit,
                 offset,

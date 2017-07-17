@@ -1,6 +1,6 @@
 export default function SubscriptionsResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null, sort = null, expand = '', filter = '', q = '', criteria = ''}) {
+        async getAll({limit = null, offset = null, sort = null, expand = '', filter = '', q = '', criteria = ''} = {}) {
             const params = {
                 limit,
                 offset,

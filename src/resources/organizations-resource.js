@@ -1,6 +1,6 @@
 export default function OrganizationsResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null, sort = null, q = ''}) {
+        async getAll({limit = null, offset = null, sort = null, q = ''} = {}) {
             const params = {
                 limit,
                 offset,

@@ -1,6 +1,6 @@
 export default function EventsResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null}) {
+        async getAll({limit = null, offset = null} = {}) {
             const params = {
                 limit,
                 offset
@@ -12,8 +12,8 @@ export default function EventsResource({apiHandler}) {
             return await apiHandler.get(`events/${eventType}`);
         },
 
-        async getAllRules({eventType}) {
-            return await apiHandler.getAll(`events/${eventType}/rules`);
+        async getRules({eventType}) {
+            return await apiHandler.get(`events/${eventType}/rules`);
         },
 
         async createRules({eventType, data}) {
@@ -24,7 +24,7 @@ export default function EventsResource({apiHandler}) {
             return await apiHandler.put(`events/${eventType}/rules`, data);
         },
 
-        async getRulesHistory({eventType, limit = null, offset = null}) {
+        async getRulesHistory({eventType, limit = null, offset = null} = {}) {
             const params = {
                 limit,
                 offset
