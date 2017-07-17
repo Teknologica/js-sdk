@@ -14,4 +14,8 @@ export default class Member {
         this.fields = {...data};
         deepFreeze(this);
     }
+
+    getJSON() {
+        return JSON.parse(JSON.stringify(this.fields));
+    }
 }

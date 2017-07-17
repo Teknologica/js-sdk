@@ -25,4 +25,8 @@ export default class Collection {
         this.items = data.map(member => new Member({data: member, status, statusText, headers, config}));
         deepFreeze(this);
     }
+
+    getJSON() {
+        return JSON.parse(JSON.stringify(this.items));
+    }
 }
