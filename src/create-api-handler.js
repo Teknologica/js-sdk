@@ -232,13 +232,13 @@ export default function createApiHandler({options}) {
         return wrapRequest(instance.delete(url));
     }
 
-    function create(url, id, data) {
+    async function create(url, id, data) {
         if (id !== '') {
             return wrapRequest(instance.post(url, data));
         }
         else {
-            const item = wrapRequest(instance.get(url));
-            console.warn(item)
+            const item = await wrapRequest(instance.get(url));
+            console.warn('item',item)
         }
     }
 
