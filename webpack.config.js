@@ -12,9 +12,9 @@ module.exports = (env = {}) => {
         target: 'node',
         output: {
             path: path.resolve(__dirname, './dist'),
-            filename: 'bundle.node.js',
+            filename: 'rebilly-js-sdk.node.js',
             libraryTarget: 'commonjs2',
-            library: 'rebillyjs'
+            library: 'rebilly-js-sdk'
         },
         module: {
             rules
@@ -26,9 +26,9 @@ module.exports = (env = {}) => {
         entry: './src/index.js',
         output: {
             path: path.resolve(__dirname, './dist'),
-            filename: 'bundle.js',
+            filename: 'rebilly-js-sdk.js',
             libraryTarget: 'umd',
-            library: 'rebillyjs'
+            library: 'rebilly-js-sdk'
         },
         module: {
             rules
