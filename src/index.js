@@ -1,5 +1,5 @@
 import libraryVersion from '../version';
-import createApiHandler from './api-handler';
+import createApiHandler from './create-api-handler';
 import createApiInstance from './create-api-instance';
 
 const baseApiVersion = '2.1';
