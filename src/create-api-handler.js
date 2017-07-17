@@ -244,8 +244,14 @@ export default function createApiHandler({options}) {
             return wrapRequest(instance.post(url, data));
         }
         else {
-            const item = await wrapRequest(instance.get(url));
-            console.warn('item',item)
+            try {
+                const response = await wrapRequest(instance.get(url));
+                console.warn('response', response);
+                throw new Error('Member already exists. Please use a different ID.');
+            }
+            catch(error) {
+                console.warn('catch', error)
+            }
         }
     }
 
