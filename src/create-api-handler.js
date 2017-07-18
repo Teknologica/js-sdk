@@ -9,13 +9,29 @@ import Errors from './errors';
  * @returns {{addRequestInterceptor: addRequestInterceptor, removeRequestInterceptor: removeRequestInterceptor, addResponseInterceptor: addResponseInterceptor, removeResponseInterceptor: removeResponseInterceptor, setTimeout: setTimeout, setProxyAgent: setProxyAgent, setSessionToken: setSessionToken, setApiConsumer: setApiConsumer, setEndpoints: setEndpoints, getCancellationToken: getCancellationToken, get: get, getAll: getAll, post: post, put: put, patch: patch, delete: del, create: create}}
  */
 export default function createApiHandler({options}) {
-    const instance = createInstance();
+    let instance = createInstance();
 
     /**
      * Create an Axios instance for Rebilly.
      */
     function createInstance() {
         return axios.create(getInstanceOptions());
+    }
+
+    /**
+     * Get the current Axios instance for this API handler.
+     * @returns {Object} axios instance
+     */
+    function getInstance() {
+        return instance;
+    }
+
+    /**
+     * Set the current Axios instance for this API handler.
+     * @param newInstance {Object}
+     */
+    function setInstance(newInstance) {
+        instance = newInstance;
     }
 
     /**
@@ -261,6 +277,8 @@ export default function createApiHandler({options}) {
     }
 
     return {
+        getInstance,
+        setInstance,
         addRequestInterceptor,
         removeRequestInterceptor,
         addResponseInterceptor,
