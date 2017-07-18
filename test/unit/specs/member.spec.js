@@ -21,5 +21,11 @@ describe('when I get member', () => {
     it('should return a plain JSON object defining fields as an object, when using getJSON', () => {
         expect(customer.getJSON().fields).to.be.an('object');
     });
+    it('should be immutable', () => {
+        expect(customer.fields.firstName).to.be.frozen;
+    });
+    it('should return a mutable JSON object when requested', () => {
+        expect(customer.getJSON()).to.not.be.frozen;
+    });
 });
 

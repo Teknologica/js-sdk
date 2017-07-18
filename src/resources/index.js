@@ -36,7 +36,7 @@ import UsersResource from './users-resource';
 import WebhooksResource from './webhooks-resource';
 import WebsitesResource from './websites-resource';
 
-const resources = {
+const Resources = {
     AccountsResource,
     ApiKeysResource,
     BankAccountsResource,
@@ -76,4 +76,4 @@ const resources = {
     WebsitesResource
 };
 
-export default resources;
+export default Resources;
