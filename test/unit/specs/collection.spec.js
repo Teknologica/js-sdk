@@ -30,4 +30,10 @@ describe('when I get a collection', () => {
     it('should return a plain JSON object defining items as an array, when using getJSON', () => {
         expect(customers.getJSON().items).to.be.an('array');
     });
+    it('should be immutable', () => {
+        expect(customers.limit).to.be.frozen;
+    });
+    it('should return a mutable JSON object when requested', () => {
+        expect(customers.getJSON()).to.not.be.frozen;
+    });
 });
