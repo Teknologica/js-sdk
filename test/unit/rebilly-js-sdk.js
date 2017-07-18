@@ -36,3 +36,5 @@ export default function RebillyAPI({apiKey = null, version = baseApiVersion, san
     const apiHandler = createApiTestHandler({options});
     return createApiInstance({apiHandler});
 };
+
+export {Errors as RebillyErrors};

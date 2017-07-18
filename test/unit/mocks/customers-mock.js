@@ -1,11 +1,6 @@
-import paginationHeaders from '../../../src/pagination-headers';
+import {createMockHeaders} from '../utils';
 
 export default function customersMock({adapter}) {
-    const headers = {
-        [paginationHeaders.limit]: 100,
-        [paginationHeaders.offset]: 0,
-        [paginationHeaders.total]: 2,
-    };
     const customers = [
         {
             "id": "f9171662-0585-44ac-a8a1-874c8de9db85",
@@ -74,8 +69,9 @@ export default function customersMock({adapter}) {
             }
         }
     ];
-    adapter.onGet('/customers').reply(200, customers, headers);
-    adapter.onGet(/customers\/.+[^/]/).reply((config) => {
-        return [200, customers[0], headers];
-    });
+    const headers = createMockHeaders({total: customers.length});
+
+    adapter
+        .onGet('/customers').reply(200, customers, headers)
+        .onGet('/customers/f9171662-0585-44ac-a8a1-874c8de9db85').reply((config) => [200, customers[0]]);
 }
