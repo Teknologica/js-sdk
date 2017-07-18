@@ -7,11 +7,10 @@ import mocks from './mocks';
 export default function createApiTestHandler({options}) {
     const apiHandler = createApiHandler({options});
     //get the api handler instance
-    let instance = apiHandler.getInstance();
+    const instance = apiHandler.getInstance();
+    //setup an adapter on the current instance
     const adapter = new MockAdapter(instance);
     //set up mocks on the current adapter
-    Object.keys(mocks).forEach(key => mocks[key]({adapter}));
-    //set back instance for the API handler to the mock'ed one
-    apiHandler.setInstance(instance);
+    Object.values(mocks).forEach(mock => mock({adapter}));
     return apiHandler;
 };
