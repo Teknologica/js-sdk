@@ -5,8 +5,8 @@ import Errors from './errors';
 
 const baseApiVersion = '2.1';
 const baseEndpoints = {
-    live: 'http://api.dev-local.rebilly.com',
-    sandbox: 'http://api-sandbox.dev-local.rebilly.com'
+    live: 'https://api.rebilly.com',
+    sandbox: 'https://api-sandbox.rebilly.com'
 };
 const baseTimeoutMs = 6000;
 

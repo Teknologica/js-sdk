@@ -56,7 +56,7 @@ export default function createApiHandler({options}) {
     }
 
     /**
-     * Generate the request headers at instantiation with the `REB-API-KEY` if present.
+     * Generate the request headers at instantiation with the `REB-APIKEY` if present.
      * @returns {Object}
      */
     function getRequestHeaders() {
