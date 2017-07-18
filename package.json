@@ -5,15 +5,15 @@
   "main": "./dist/rebilly-js-sdk.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npm run clean && webpack --env build",
-    "build:ci": "npm run clean && webpack -p",
-    "postinstall": "npm run build",
+    "build:prod": "npm run clean && webpack --env=prod",
+    "build:dev": "npm run clean && webpack --env=dev",
+    "postinstall": "npm run build:prod",
     "test": "mocha --compilers js:babel-core/register --require babel-polyfill --colors ./test/unit/specs/*.spec.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Teknologica/js-sdk.git"
-  },
+},
   "keywords": [
     "js",
     "sdk",

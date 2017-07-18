@@ -2,26 +2,34 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = (env = {}) => {
-    return  {
+    const isProd = env === 'prod';
+    return {
         entry: './src/index.js',
-        devtool: 'source-map',//,
         output: {
             path: path.resolve(__dirname, './dist'),
             filename: 'rebilly-js-sdk.js',
             library: 'rebilly-js-sdk',
             libraryTarget: 'umd',
-            umdNamedDefine: true,
-            sourceMapFilename:'[file].map'
+            umdNamedDefine: true
         },
         module: {
             rules: [{test: /\.js$/, use: 'babel-loader'}]
         },
         plugins: [
             new webpack.optimize.UglifyJsPlugin({
-                mangle: {
-                    except: ['Collection', 'Member']
-                }
+                beautify: !isProd,
+                mangle: !isProd ? false : {
+                    except: ['Collection', 'Member'],
+                    screw_ie8: true,
+                    keep_fnames: true
+                },
+                compress: !isProd ? false : {
+                    screw_ie8: true
+                },
+                comments: false,
+                sourceMap: isProd
             })
-        ]
-    }
+        ],
+        devtool: 'source-map',
+    };
 };
