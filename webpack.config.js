@@ -33,30 +33,3 @@ module.exports = (env = {}) => {
         devtool: 'source-map',
     };
 };
-
-
-// module.exports = [
-//     "cheap-eval-source-map",
-//     "cheap-module-eval-source-map",
-//     "cheap-module-source-map",
-//     "cheap-source-map",
-//     "eval",
-//     "eval-source-map",
-//     "hidden-source-map",
-//     "inline-source-map",
-//     "nosources-source-map",
-//     "source-map",
-// ].map(devtool => ({
-//     entry: './src/index.js',
-//     module: {
-//         rules: [{test: /\.js$/, use: 'babel-loader'}]
-//     },
-//     output: {
-//         path: path.join(__dirname, "js"),
-//         filename: `./[name]-${devtool}.js`,
-//     },
-//     devtool,
-//     plugins: [
-//         new webpack.optimize.CommonsChunkPlugin(["manifest"]),
-//     ],
-// }));
