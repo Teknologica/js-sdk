@@ -5,7 +5,7 @@
   "main": "./dist/rebilly-js-sdk.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build:dist": "npm run clean && webpack --env=prod",
+    "build:prod": "npm run clean && webpack --env=prod",
     "build:dev": "npm run clean && webpack --env=dev",
     "postinstall": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"

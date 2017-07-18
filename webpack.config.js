@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = (env = {}) => {
-    console.warn(env);
+    const isProd = env === 'prod';
     return {
         entry: './src/index.js',
         output: {
@@ -17,13 +17,13 @@ module.exports = (env = {}) => {
         },
         plugins: [
             new webpack.optimize.UglifyJsPlugin({
-                beautify: false,
-                mangle: {
+                beautify: !isProd,
+                mangle: !isProd ? false : {
                     except: ['Collection', 'Member'],
                     screw_ie8: true,
                     keep_fnames: true
                 },
-                compress: {
+                compress: !isProd ? false : {
                     screw_ie8: true
                 },
                 comments: false,
