@@ -2,8 +2,8 @@ import RebillyAPI from '../../src';
 import apiKey from './api-key';
 
 const endpoints = {
-    live: 'api.dev-local.rebilly.com',
-    sandbox: 'api-sandbox.dev-local.rebilly.com'
+    live: 'http://api.dev-local.rebilly.com',
+    sandbox: 'http://api-sandbox.dev-local.rebilly.com'
 };
 
 const liveApi = new RebillyAPI({apiKey: apiKey.live});
