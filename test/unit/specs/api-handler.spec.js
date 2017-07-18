@@ -2,6 +2,7 @@ import chai from 'chai';
 import createApiTestHandler from '../create-api-test-handler';
 
 const expect = chai.expect;
+//options should perhaps be moved to a beforeEach block, so that they are reset to their initial value before each test is run
 const options = {
     version: 1,
     apiEndpoints: {live: '', sandbox: ''},
@@ -31,5 +32,18 @@ describe('when I use an API handler', () => {
         expect(apiHandler.getInstance().defaults.headers.common['Authorization']).to.equal(`Bearer ${token}`);
         expect(options.apiKey).to.be.null;
         expect(options.jwt).to.equal(token);
+    });
+    it('should alloq the proxy agent to be set', () => {
+        const params = {host: 'testHost', port: 888, auth: {key: 'foo', value: 'bar'}};
+        apiHandler.setProxyAgent(params);
+        expect(apiHandler.getInstance().defaults.proxy).to.deep.equal(params);
+    });
+    it('should allow the endpoints to be set', () => {
+        apiHandler.setEndpoints({live: 'live-endpoint.rebilly.com', sandbox: 'sandbox-endpoint.rebilly.com'});
+        expect(apiHandler.getInstance().defaults.baseURL).to.equal('live-endpoint.rebilly.com/v1');
+        options.apiVersion = 2;
+        options.isSandbox = true;
+        apiHandler.setEndpoints({live: 'live-endpoint.rebilly.com', sandbox: 'sandbox-endpoint.rebilly.com'});
+        expect(apiHandler.getInstance().defaults.baseURL).to.equal('sandbox-endpoint.rebilly.com/v2');
     });
 });
