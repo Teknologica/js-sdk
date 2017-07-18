@@ -246,13 +246,16 @@ export default function createApiHandler({options}) {
         else {
             try {
                 const item = await wrapRequest(instance.get(url));
-                console.warn('item', item);
                 if (item.response.status === 200) {
-                    throw new Errors.RebillyInvalidOperationError({message: 'Member already exists. Please use a different ID.'})
+                    throw new Errors.RebillyInvalidOperationError({message: 'Member already exists. Please use a different ID.'});
                 }
             }
             catch(error) {
-                console.warn('catch', error.name, error)
+                console.warn('catch', error.name, error);
+                if (error.name === 'RebillyNotFoundError') {
+                    return wrapRequest(instance.put(url, data));
+                }
+                return error;
             }
         }
     }
