@@ -1,5 +1,6 @@
 import chai from 'chai';
 import createApiTestHandler from '../create-api-test-handler';
+import createApiInstance from '../../../src/create-api-instance';
 
 const expect = chai.expect;
 //options should perhaps be moved to a beforeEach block, so that they are reset to their initial value before each test is run
@@ -13,6 +14,7 @@ const options = {
     jwt: null
 };
 const apiHandler = createApiTestHandler({options});
+const apiInstance = createApiInstance({apiHandler});
 
 describe('when I use an API handler', () => {
     it('should allow the timeout to be set to a different value', () => {
@@ -28,7 +30,7 @@ describe('when I use an API handler', () => {
     it('should set the Authorization token and delete the API key', () => {
         const token = '12345678';
         apiHandler.setSessionToken(token);
-        expect(apiHandler.getInstance().defaults.headers.common['REB-API-KEY']).to.be.undefined;
+        expect(apiHandler.getInstance().defaults.headers.common['REB-APIKEY']).to.be.undefined;
         expect(apiHandler.getInstance().defaults.headers.common['Authorization']).to.equal(`Bearer ${token}`);
         expect(options.apiKey).to.be.null;
         expect(options.jwt).to.equal(token);
