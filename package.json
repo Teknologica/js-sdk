@@ -5,15 +5,15 @@
   "main": "./dist/rebilly-js-sdk.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npm run clean && webpack --env build",
-    "build:ci": "npm run clean && webpack -p",
+    "build:dist": "npm run clean && webpack --env=prod",
+    "build:dev": "npm run clean && webpack --env=dev",
     "postinstall": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Teknologica/js-sdk.git"
-  },
+},
   "keywords": [
     "js",
     "sdk",
