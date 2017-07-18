@@ -27,7 +27,7 @@ module.exports = (env = {}) => {
                     screw_ie8: true
                 },
                 comments: false,
-                sourceMap: true
+                sourceMap: isProd
             })
         ],
         devtool: 'source-map',
