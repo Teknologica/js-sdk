@@ -62,7 +62,7 @@ export default function createApiHandler({options}) {
     function getRequestHeaders() {
         if (options.apiKey) {
             return {
-                'REB-API-KEY': options.apiKey
+                'REB-APIKEY': options.apiKey
             };
         }
         return {};
@@ -95,7 +95,7 @@ export default function createApiHandler({options}) {
     function setSessionToken(token) {
         options.apiKey = null;
         options.jwt = token;
-        delete instance.defaults.headers.common['REB-API-KEY'];
+        delete instance.defaults.headers.common['REB-APIKEY'];
         instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
 
