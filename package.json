@@ -2,11 +2,11 @@
   "name": "rebilly-js-sdk",
   "version": "0.0.20",
   "description": "JavaScript SDK for Rebilly.com",
-  "browser": "./dist/rebilly-js-sdk.js",
-  "main": "./dist/rebilly-js-sdk.node.js",
+  "main": "./dist/rebilly-js-sdk.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npm run clean && webpack",
+    "build": "npm run clean && webpack --env build",
+    "build:ci": "npm run clean && webpack -p",
     "postinstall": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

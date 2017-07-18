@@ -1,37 +1,20 @@
 var webpack = require('webpack');
 var path = require('path');
 
-const rules = [
-    {test: /\.js$/, use: 'babel-loader'}
-];
-
 module.exports = (env = {}) => {
-    console.log('env', env);
-    return [{
+    return  {
         entry: './src/index.js',
-        target: 'node',
-        output: {
-            path: path.resolve(__dirname, './dist'),
-            filename: 'rebilly-js-sdk.node.js',
-            libraryTarget: 'commonjs2',
-            library: 'rebilly-js-sdk'
-        },
-        module: {
-            rules
-        },
-        plugins: [
-            new webpack.optimize.UglifyJsPlugin()
-        ]
-    }, {
-        entry: './src/index.js',
+        devtool: 'source-map',//,
         output: {
             path: path.resolve(__dirname, './dist'),
             filename: 'rebilly-js-sdk.js',
+            library: 'rebilly-js-sdk',
             libraryTarget: 'umd',
-            library: 'rebilly-js-sdk'
+            umdNamedDefine: true,
+            sourceMapFilename:'[file].map'
         },
         module: {
-            rules
+            rules: [{test: /\.js$/, use: 'babel-loader'}]
         },
         plugins: [
             new webpack.optimize.UglifyJsPlugin({
@@ -40,5 +23,5 @@ module.exports = (env = {}) => {
                 }
             })
         ]
-    }]
+    }
 };
