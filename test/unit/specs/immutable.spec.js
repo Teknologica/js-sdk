@@ -4,7 +4,7 @@ import RebillyAPI from '../rebilly-js-sdk';
 const expect = chai.expect;
 const api = new RebillyAPI({apiKey: '00000000000000000', sandbox: true});
 
-describe('when I get a collection', () => {
+describe('when I create a collection', () => {
     let customers;
     before(async () => {
         customers = await api.customers.getAll();
@@ -17,7 +17,7 @@ describe('when I get a collection', () => {
     });
 });
 
-describe('when I get a member', () => {
+describe('when I create a member', () => {
     let customer;
     before(async () => {
         customer = await api.customers.get({id: 'f9171662-0585-44ac-a8a1-874c8de9db85'});
