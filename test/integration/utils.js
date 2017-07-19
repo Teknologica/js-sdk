@@ -12,3 +12,26 @@ export function createMerchantSignupData() {
         website:  faker.internet.url()
     })
 }
+
+export function createWebsiteCreateSuccessData() {
+    return deepFreeze({
+      name: faker.company.companyName(),
+      url: faker.internet.url(),
+      servicePhone: '12344567890',
+      serviceEmail: faker.internet.email(),
+      checkoutPageUri: "",
+      customFields: { }
+    })
+}
+
+
+export function createWebsiteCreateInvalidData() {
+  return deepFreeze({
+    name: faker.company.companyName(),
+    url: '',
+    servicePhone: '12344567890',
+    serviceEmail: faker.internet.email(),
+    checkoutPageUri: "",
+    customFields: { }
+  })
+}
