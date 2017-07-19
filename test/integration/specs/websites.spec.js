@@ -1,150 +1,108 @@
 import chai from 'chai';
 import apiInstance from '../api-instance';
-import { createWebsiteCreateSuccessData, createWebsiteCreateInvalidData } from '../utils';
+import {createWebsiteData} from '../utils';
 
 const expect = chai.expect;
 const api = apiInstance;
 
 describe('when I get a list of websites', () => {
-  let websites;
-  let error;
-  before(async () => {
-    try {
-      websites = await api.websites.getAll();
-    }
-    catch(err) {
-      error = err;
-      console.log(err);
-    }
-  });
+  let websites, error;
 
-  it('should define a property called total', () => {
-    expect(websites.total).to.not.be.undefined;
-  });
-  it('should define a property called offset', () => {
-    expect(websites.offset).to.not.be.undefined;
-  });
-  it('should define a property called limit', () => {
-    expect(websites.limit).to.not.be.undefined;
-  });
-  it('should define a property called response', () => {
-    expect(websites.response).to.not.be.undefined;
-  });
-  it('should have an array of items', () => {
+  it('I can get status code 200 and response, items property and getJSON methods if get successfully', async () => {
+    websites = await api.websites.getAll();
+    expect(websites.response.status).to.be.equal(200);
     expect(websites.items).to.be.an('array');
-  });
-  it('should have a method named getJSON', () => {
     expect(websites.getJSON).to.be.a('function');
   });
-
-  it('should return a plain JSON object defining items as an array, when using getJSON', () => {
-    expect(websites.getJSON().items).to.be.an('array');
-  });
 });
 
 
-describe('when I create a website successful', () => {
-  let website;
-  let error;
-  before(async () => {
+describe('when I create a website', () => {
+  const data = createWebsiteData();
+
+  it('I can get status code 201 and field property if create successfully', async () => {
+    const website = await api.websites.create({id: '', data: data});
+    expect(website.response.status).to.be.equal(201);
+    expect(website.fields).to.be.a('object');
+  });
+
+  it('I can get status code 422 if create website without url', async () => {
+    data.url = '';
+    let website, error;
     try {
-      const data = createWebsiteCreateSuccessData();
-      website = await api.websites.create({id:'', data: data});
+      website = await api.websites.create({id: '', data: data});
     }
-    catch(err) {
+    catch (err) {
       error = err;
-      console.log(err);
     }
+    expect(error.response.status).to.be.equal(422);
   });
 
-  it('should define a property called response', () => {
-    expect(website.response).to.not.be.undefined;
-  });
-
-  it('should define a property called fields', () => {
-    expect(website.fields).to.not.be.undefined;
-  });
-
-  it('should have a method named getJSON', () => {
-    expect(website.getJSON).to.be.a('function');
-  });
-
-  it('should return status 201 inside response', () => {
-    expect(website.response.status).to.equal('201');
-  });
-
-  it('should define a property called id inside fields', () => {
-    expect(website.fields.id).to.not.be.undefined;
-  });
-  it('should define a property called name inside fields', () => {
-    expect(website.fields.name).to.not.be.undefined;
-  });
-  it('should define a property called url inside fields', () => {
-    expect(website.fields.url).to.not.be.undefined;
-  });
-  it('should define a property called servicePhone inside fields', () => {
-    expect(website.fields.servicePhone).to.not.be.undefined;
-  });
-  it('should define a property called serviceEmail inside fields', () => {
-    expect(website.fields.serviceEmail).to.not.be.undefined;
-  });
-  it('should define a property called checkoutPageUri inside fields', () => {
-    expect(website.fields.checkoutPageUri).to.not.be.undefined;
-  });
-
-  it('should define a property called customFields inside fields', () => {
-    expect(website.fields.customFields).to.not.be.undefined;
-  });
-});
-
-
-describe('when I create a website failed because invalid data', () => {
-  let website;
-  let error;
-  before(async () => {
+  it('I can get status code 422 if create website without website name', async () => {
+    data.name = '';
+    let website, error;
     try {
-      const data = createWebsiteCreateInvalidData();
-      website = await api.websites.create({id:'', data: data});
+      website = await api.websites.create({id: '', data: data});
     }
-    catch(err) {
+    catch (err) {
       error = err;
-      console.log(err);
     }
+    expect(error.response.status).to.be.equal(422);
   });
 
-  it('should define a property called error', () => {
-    expect(website.response).to.not.be.undefined;
+  it('I can get status code 422 if create website without phone number', async () => {
+    data.servicePhone = '';
+    let website, error;
+    try {
+      website = await api.websites.create({id: '', data: data});
+    }
+    catch (err) {
+      error = err;
+    }
+    expect(error.response.status).to.be.equal(422);
   });
 
-  it('should define a property called fields', () => {
-    expect(website.fields).to.not.be.undefined;
+  it('I can get status code 422 if create website without email', async () => {
+    data.serviceEmail = '';
+    let website, error;
+    try {
+      website = await api.websites.create({id: '', data: data});
+    }
+    catch (err) {
+      error = err;
+    }
+    expect(error.response.status).to.be.equal(422);
   });
 
-  it('should have a method named getJSON', () => {
-    expect(website.getJSON).to.be.a('function');
-  });
-
-
-  it('should define a property called id inside fields', () => {
-    expect(website.fields.id).to.not.be.undefined;
-  });
-  it('should define a property called name inside fields', () => {
-    expect(website.fields.name).to.not.be.undefined;
-  });
-  it('should define a property called url inside fields', () => {
-    expect(website.fields.url).to.not.be.undefined;
-  });
-  it('should define a property called servicePhone inside fields', () => {
-    expect(website.fields.servicePhone).to.not.be.undefined;
-  });
-  it('should define a property called serviceEmail inside fields', () => {
-    expect(website.fields.serviceEmail).to.not.be.undefined;
-  });
-  it('should define a property called checkoutPageUri inside fields', () => {
-    expect(website.fields.checkoutPageUri).to.not.be.undefined;
-  });
-
-  it('should define a property called customFields inside fields', () => {
-    expect(website.fields.customFields).to.not.be.undefined;
-  });
 });
+
+describe('when I get a website', () => {
+
+  it('I can get status code 200 and field property if get successfully', async () => {
+    const website = await api.websites.get({id: '5dc8279b-0fa0-4111-99b6-d45f785d4497'});
+    expect(website.response.status).to.be.equal(200);
+    expect(website.fields).to.be.a('object');
+  });
+
+  it('I can get status code 404 if get website with wrong id', async () => {
+    let website, error;
+    try {
+      website = await api.websites.get({id: '123'});
+    }
+    catch (err) {
+      error = err;
+    }
+    expect(error.response.status).to.be.equal(404);
+  });
+
+});
+
+
+describe('when I update a website', () => {
+
+
+});
+
+
+
+
