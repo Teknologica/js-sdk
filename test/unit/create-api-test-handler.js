@@ -1,4 +1,3 @@
-import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import createApiHandler from '../../src/create-api-handler';
 import mocks from './mocks';
