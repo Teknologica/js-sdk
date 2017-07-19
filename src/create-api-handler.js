@@ -28,7 +28,7 @@ export default function createApiHandler({options}) {
 
     /**
      * Set the current Axios instance for this API handler.
-     * @param newInstance {Object}
+     * @param newInstance {Object} an Axios instance
      */
     function setInstance(newInstance) {
         instance = newInstance;

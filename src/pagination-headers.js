@@ -1,3 +1,6 @@
+/**
+ * HTTP headers used by Rebilly to define the pagination state for a request
+ */
 const paginationHeaders = {
     /**
      * Amount of records requested at once

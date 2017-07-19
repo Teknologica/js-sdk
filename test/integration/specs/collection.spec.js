@@ -35,6 +35,6 @@ describe('when I get a collection', () => {
         expect(customers.getJSON).to.be.a('function');
     });
     it('should return a plain JSON object defining items as an array, when using getJSON', () => {
-        expect(customers.getJSON().items).to.be.an('array');
+        expect(customers.getJSON().items).to.not.be.an('object');
     });
 });
