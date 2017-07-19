@@ -12,3 +12,11 @@ export function createMerchantSignupData() {
         website:  faker.internet.url()
     })
 }
+
+export function createApiKeyData(withId = false) {
+    let key = {description: faker.lorem.sentence()};
+    if (withId) {
+        key.id = faker.random.uuid();
+    }
+    return deepFreeze(key);
+}

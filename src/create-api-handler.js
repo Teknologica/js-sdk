@@ -313,7 +313,8 @@ export default function createApiHandler({options}) {
                 }
             }
             catch(error) {
-                console.warn('catch', error.name, error);
+                //TODO use a debug
+                //console.warn('catch', error.name, error);
                 if (error.name === 'RebillyNotFoundError') {
                     return wrapRequest(instance.put(url, data));
                 }

@@ -13,8 +13,8 @@ export default function ApiKeysResource({apiHandler}) {
             return await apiHandler.get(`api-keys/${id}`);
         },
 
-        async create({data}) {
-            return await apiHandler.create(`api-keys`, id, data);
+        async create({id = '', data}) {
+            return await apiHandler.create(`api-keys/${id}`, id, data);
         },
 
         async update({id, data}) {
