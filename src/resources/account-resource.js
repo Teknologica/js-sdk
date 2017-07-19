@@ -1,5 +1,6 @@
 export default function AccountResource({apiHandler}) {
     return {
+        //TODO implement auth:false flag to all these
         async signUp({data}) {
             return await apiHandler.post(`signup`, data);
         },

@@ -32,6 +32,15 @@ export function createWebsiteCreateInvalidData() {
     servicePhone: '12344567890',
     serviceEmail: faker.internet.email(),
     checkoutPageUri: "",
-    customFields: { }
+    customFields: {}
   })
+
+}
+
+export function createApiKeyData(withId = false) {
+    let key = {description: faker.lorem.sentence()};
+    if (withId) {
+        key.id = faker.random.uuid();
+    }
+    return deepFreeze(key);
 }
