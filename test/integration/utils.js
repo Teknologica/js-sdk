@@ -13,29 +13,18 @@ export function createMerchantSignupData() {
     })
 }
 
-export function createWebsiteCreateSuccessData() {
-    return deepFreeze({
-        name: faker.company.companyName(),
-        url: faker.internet.url(),
-        servicePhone: faker.phone.phoneNumberFormat(),
-        serviceEmail: faker.internet.email(),
-        checkoutPageUri: "",
-        customFields: {}
-    })
+
+export function createWebsiteData() {
+    return {
+      name: faker.company.companyName(),
+      url: faker.internet.url(),
+      servicePhone: '12344567890',
+      serviceEmail: faker.internet.email(),
+      checkoutPageUri: "",
+      customFields: {}
+    }
 }
 
-
-export function createWebsiteCreateInvalidData() {
-    return deepFreeze({
-        name: faker.company.companyName(),
-        url: '',
-        servicePhone: faker.phone.phoneNumberFormat(),
-        serviceEmail: faker.internet.email(),
-        checkoutPageUri: "",
-        customFields: {}
-    })
-
-}
 
 export function createApiKeyData(withId = false) {
     let key = {description: faker.lorem.sentence()};
