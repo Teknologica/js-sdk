@@ -16,10 +16,10 @@ describe('when using the blacklists resource', () => {
 
     it('I can create a blacklist item with an ID', async () => {
         const {id, ...data} = createBlacklistData(true);
-        const blackistItem = await apiInstance.blacklists.create({id, data});
-        expect(blackistItem.fields.id).to.be.equal(id);
+        const blacklistItem = await apiInstance.blacklists.create({id, data});
+        expect(blacklistItem.fields.id).to.be.equal(id);
         testIds.with = id;
-        expect(blackistItem.fields.value).to.be.equal(value);
+        expect(blacklistItem.fields.value).to.be.equal(data.value);
     });
 
     it('I can get a list of blacklist items', async () => {
