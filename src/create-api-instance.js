@@ -1,8 +1,8 @@
 import Resources from './resources';
 
 /**
- *
- * @param apiHandler
+ * Create an API instance using the provided API handler.
+ * @param apiHandler {Object}
  * @returns {Object}
  */
 export default function createApiInstance({apiHandler}) {

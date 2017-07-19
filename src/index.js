@@ -39,6 +39,7 @@ export default function RebillyAPI({apiKey = null, version = baseApiVersion, san
 
 /**
  * Create an instance of the experimental Rebilly API
+ * @todo implement this feature
  * @param apiKey {string}
  * @param sandbox {boolean}
  * @param timeout {number}

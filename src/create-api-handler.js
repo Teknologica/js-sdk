@@ -134,6 +134,10 @@ export default function createApiHandler({options}) {
         instance.defaults.baseURL = getBaseURL();
     }
 
+    /**
+     * Returns a cancellation token for the active instance.
+     * @ignore
+     */
     function getCancellationToken() {
         throw 'Method not implemented';
     }
@@ -231,30 +235,72 @@ export default function createApiHandler({options}) {
         }
     }
 
+    /**
+     * Trigger a GET request on the target URL and return the member received in the response.
+     * @param url {string}
+     * @returns {Member} member
+     */
     function get(url) {
         return wrapRequest(instance.get(url));
     }
 
+    /**
+     * Trigger a GET request on the target URL and return the collection received in the response.
+     * @param url {string}
+     * @param params {Object}
+     * @returns {Collection} collection
+     */
     function getAll(url, params) {
         return wrapRequest(instance.get(url, {params}), {isCollection: true});
     }
 
+    /**
+     * Trigger a POST request on the target URL with the provided data payload, and return the member received in the response.
+     * @param url {string}
+     * @param data {Object}
+     * @returns {Member} member
+     */
     function post(url, data) {
         return wrapRequest(instance.post(url, data));
     }
 
+    /**
+     * Trigger a PUT request on the target URL with the provided data payload, and return the member received in the response.
+     * @param url {string}
+     * @param data {Object}
+     * @returns {Member} member
+     */
     function put(url, data) {
         return wrapRequest(instance.put(url, data));
     }
 
+    /**
+     * Trigger a PATCH request on the target URL with the provided data payload, and return the member received in the response.
+     * @param url {string}
+     * @param data {Object}
+     * @returns {Member} member
+     */
     function patch(url, data) {
         return wrapRequest(instance.patch(url, data));
     }
 
+    /**
+     * Trigger a DELETE request on the target URL.
+     * @param url {string}
+     * @returns {null|*}
+     */
     function del(url) {
         return wrapRequest(instance.delete(url));
     }
 
+    /**
+     * Create a new member for the current resource using the data payload if no ID is provided, otherwise verify if the ID already exists and create the member with the specified ID. Throws RebillyInvalidOperationError if the ID already exists.
+     * @param url {string}
+     * @param id {string}
+     * @param data {Object}
+     * @throws Errors.RebillyInvalidOperationError
+     * @returns {Member} member
+     */
     async function create(url, id, data) {
         if (id === '') {
             return wrapRequest(instance.post(url, data));
