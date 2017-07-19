@@ -16,12 +16,12 @@ export function createMerchantSignupData() {
 
 export function createWebsiteData() {
     return {
-      name: faker.company.companyName(),
-      url: faker.internet.url(),
-      servicePhone: '12344567890',
-      serviceEmail: faker.internet.email(),
-      checkoutPageUri: "",
-      customFields: {}
+        name: faker.company.companyName(),
+        url: faker.internet.url(),
+        servicePhone: faker.phone.phoneNumberFormat(),
+        serviceEmail: faker.internet.email(),
+        checkoutPageUri: faker.lorem.slug(),
+        customFields: {}
     }
 }
 
@@ -75,4 +75,31 @@ export function createBlacklistData(withId = false) {
         blacklistItem.id = faker.random.uuid();
     }
     return deepFreeze(blacklistItem);
+}
+
+export function createPlanData(withId = false) {
+    let plan = {
+        name: faker.commerce.productName(),
+        currency: 'USD',
+        setupAmount: faker.finance.amount(),
+        recurringPeriodUnit: 'month',
+        recurringPeriodLength: 1,
+        recurringAmount: faker.finance.amount()
+    };
+    if (withId) {
+        plan.id = faker.random.uuid();
+    }
+    return deepFreeze(plan);
+}
+
+export function createCheckoutPageData(withId = false, merge = {}) {
+    let checkoutPage = {
+        uriPath: faker.lorem.slug(),
+        name: faker.lorem.words(),
+        ...merge
+    };
+    if (withId) {
+        checkoutPage.id = faker.random.uuid();
+    }
+    return deepFreeze(checkoutPage);
 }
