@@ -76,3 +76,14 @@ export function createBankAccountData(withId = false, merge = {}) {
     }
     return deepFreeze(bankAccount);
 }
+
+export function createBlacklistData(withId = false) {
+    let blacklistItem = {
+        type: 'ip-address',
+        value: faker.internet.ip()
+    };
+    if (withId) {
+        blacklistItem.id = faker.random.uuid();
+    }
+    return deepFreeze(blacklistItem);
+}
