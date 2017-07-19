@@ -9,7 +9,7 @@ export default class RebillyError extends Error {
         this.response = response;
         this.request = request;
         this.config = config;
-        this.status = response ? response.status : (request ? 500 : null);
+        this.status = response ? response.status : null;
         this.statusText = response ? response.statusText : null;
     }
 }
