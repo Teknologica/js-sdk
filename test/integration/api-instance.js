@@ -1,15 +1,9 @@
 import RebillyAPI from '../../src';
-import apiKey from './api-key';
+import dotenv from 'dotenv';
+//load env variables
+dotenv.config();
 
-const endpoints = {
-    live: 'http://api.dev-local.rebilly.com',
-    sandbox: 'http://api-sandbox.dev-local.rebilly.com'
-};
+const apiInstance = new RebillyAPI({apiKey: process.env.API_INTEGRATION_KEY, sandbox: true});
+apiInstance.setEndpoints({sandbox: process.env.API_INTEGRATION_URL});
 
-const liveApi = new RebillyAPI({apiKey: apiKey.live});
-liveApi.setEndpoints(endpoints);
-
-const sandboxApi = new RebillyAPI({apiKey: apiKey.sandbox, sandbox: true});
-sandboxApi.setEndpoints(endpoints);
-
-export default {live: liveApi, sandbox: sandboxApi};
+export default apiInstance;

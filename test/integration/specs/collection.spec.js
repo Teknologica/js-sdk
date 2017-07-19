@@ -2,7 +2,7 @@ import chai from 'chai';
 import apiInstance from '../api-instance';
 
 const expect = chai.expect;
-const api = apiInstance.sandbox;
+const api = apiInstance;
 
 describe('when I get a collection', () => {
     let customers;
