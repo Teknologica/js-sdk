@@ -51,8 +51,8 @@ describe('when using the checkout pages resource', () => {
     });
 
     it('I can update a checkout page by using its ID', async () => {
-        const {name} = createCheckoutPageData(false, sharedData);
-        const checkoutPage = await apiInstance.checkoutPages.update({id: testIds.with, data:{name}});
+        const {name} = createCheckoutPageData();
+        const checkoutPage = await apiInstance.checkoutPages.update({id: testIds.with, data: {name}});
         expect(checkoutPage.fields.name).to.be.equal(name);
     });
 
