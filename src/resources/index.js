@@ -1,4 +1,4 @@
-import AccountsResource from './account-resource';
+import AccountResource from './account-resource';
 import ApiKeysResource from './api-keys-resource';
 import BankAccountsResource from './bank-accounts-resource';
 import BlacklistsResource from './blacklists-resource';
@@ -37,7 +37,7 @@ import WebhooksResource from './webhooks-resource';
 import WebsitesResource from './websites-resource';
 
 const Resources = {
-    AccountsResource,
+    AccountResource,
     ApiKeysResource,
     BankAccountsResource,
     BlacklistsResource,

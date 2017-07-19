@@ -11,5 +11,6 @@ export default class RebillyError extends Error {
         this.config = config;
         this.status = response ? response.status : null;
         this.statusText = response ? response.statusText : null;
+        this.details = response ? (response.data && response.data.details ? response.data.details : null ) : null;
     }
 }

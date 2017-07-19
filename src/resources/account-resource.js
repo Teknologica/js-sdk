@@ -1,4 +1,4 @@
-export default function AccountsResource({apiHandler}) {
+export default function AccountResource({apiHandler}) {
     return {
         async signUp({data}) {
             return await apiHandler.post(`signup`, data);

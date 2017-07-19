@@ -7,7 +7,7 @@ import Resources from './resources';
  */
 export default function createApiInstance({apiHandler}) {
     return {
-        account: Resources.AccountsResource({apiHandler}),
+        account: Resources.AccountResource({apiHandler}),
         apiKeys: Resources.ApiKeysResource({apiHandler}),
         bankAccounts: Resources.BankAccountsResource({apiHandler}),
         blacklists: Resources.BlacklistsResource({apiHandler}),
