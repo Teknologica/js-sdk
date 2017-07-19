@@ -14,15 +14,21 @@ export function createMerchantSignupData() {
 }
 
 
-export function createWebsiteData() {
-    return {
+export function createWebsiteData(withId = false) {
+    let websites = {
       name: faker.company.companyName(),
       url: faker.internet.url(),
       servicePhone: '12344567890',
       serviceEmail: faker.internet.email(),
       checkoutPageUri: "",
       customFields: {}
+    };
+
+    if (withId) {
+      websites.id = faker.random.uuid();
     }
+
+    return deepFreeze(websites);
 }
 
 

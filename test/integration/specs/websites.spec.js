@@ -3,106 +3,53 @@ import apiInstance from '../api-instance';
 import {createWebsiteData} from '../utils';
 
 const expect = chai.expect;
-const api = apiInstance;
 
-describe('when I get a list of websites', () => {
-  let websites, error;
+describe('when using the websites resource', () => {
+  const testIds = {with: null, without: null};
 
-  it('I can get status code 200 and response, items property and getJSON methods if get successfully', async () => {
-    websites = await api.websites.getAll();
-    expect(websites.response.status).to.be.equal(200);
-    expect(websites.items).to.be.an('array');
-    expect(websites.getJSON).to.be.a('function');
-  });
-});
-
-
-describe('when I create a website', () => {
-  const data = createWebsiteData();
-
-  it('I can get status code 201 and field property if create successfully', async () => {
-    const website = await api.websites.create({id: '', data: data});
-    expect(website.response.status).to.be.equal(201);
-    expect(website.fields).to.be.a('object');
+  it('I can create a website item without an ID', async () => {
+    const data = createWebsiteData();
+    const website = await apiInstance.websites.create({data: data});
+    testIds.without = website.fields.id;
+    expect(website.fields.value).to.be.equal(data.value);
   });
 
-  it('I can get status code 422 if create website without url', async () => {
-    data.url = '';
-    let website, error;
-    try {
-      website = await api.websites.create({id: '', data: data});
-    }
-    catch (err) {
-      error = err;
-    }
-    expect(error.response.status).to.be.equal(422);
+  it('I can create a website item with an ID', async () => {
+    const {id, ...data} = createWebsiteData(true);
+    const website = await apiInstance.websites.create({id, data});
+    expect(website.fields.id).to.be.equal(id);
+    testIds.with = id;
+    expect(website.fields.value).to.be.equal(data.value);
   });
 
-  it('I can get status code 422 if create website without website name', async () => {
-    data.name = '';
-    let website, error;
-    try {
-      website = await api.websites.create({id: '', data: data});
-    }
-    catch (err) {
-      error = err;
-    }
-    expect(error.response.status).to.be.equal(422);
+  it('I can get a list of websites items', async () => {
+    const websites = await apiInstance.websites.getAll();
+    expect(websites.total).to.not.be.equal(0);
+    const [websitesItem] = websites.items;
+    expect(websitesItem.fields.id).to.not.be.undefined;
   });
 
-  it('I can get status code 422 if create website without phone number', async () => {
-    data.servicePhone = '';
-    let website, error;
-    try {
-      website = await api.websites.create({id: '', data: data});
-    }
-    catch (err) {
-      error = err;
-    }
-    expect(error.response.status).to.be.equal(422);
+  it('I can get a websites item by using its ID', async () => {
+    const websiteItem = await apiInstance.websites.get({id: testIds.with});
+    expect(websiteItem.fields.id).to.be.equal(testIds.with);
   });
 
-  it('I can get status code 422 if create website without email', async () => {
-    data.serviceEmail = '';
-    let website, error;
-    try {
-      website = await api.websites.create({id: '', data: data});
-    }
-    catch (err) {
-      error = err;
-    }
-    expect(error.response.status).to.be.equal(422);
-  });
-
-});
-
-describe('when I get a website', () => {
-
-  it('I can get status code 200 and field property if get successfully', async () => {
-    const website = await api.websites.get({id: '5dc8279b-0fa0-4111-99b6-d45f785d4497'});
+  it('I can update a website by using its ID', async () => {
+    const data = createWebsiteData();
+    const website = await apiInstance.websites.update({id: testIds.with, data: data});
+    expect(website.field.value).to.be.equal(data.value);
     expect(website.response.status).to.be.equal(200);
-    expect(website.fields).to.be.a('object');
+
   });
 
-  it('I can get status code 404 if get website with wrong id', async () => {
-    let website, error;
-    try {
-      website = await api.websites.get({id: '123'});
-    }
-    catch (err) {
-      error = err;
-    }
-    expect(error.response.status).to.be.equal(404);
+  it('I can delete the websites items I just created', async () => {
+    const firstDelete = await apiInstance.websites.delete({id: testIds.with});
+    const secondDelete = await apiInstance.websites.delete({id: testIds.without});
+    expect(firstDelete.response.status).to.be.equal(204);
+    expect(secondDelete.response.status).to.be.equal(204);
   });
-
-});
-
-
-describe('when I update a website', () => {
 
 
 });
-
-
 
 
