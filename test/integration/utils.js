@@ -111,6 +111,28 @@ export function createUserData(withId = false) {
     return deepFreeze(user);
 }
 
+
+export function createTransactionLeadSourceData() {
+  let leadSource = {
+      medium: faker.lorem.word(),
+      source: faker.internet.domainName(),
+      campaign: faker.lorem.slug(),
+      term: faker.lorem.word(),
+      content: faker.lorem.words(),
+      affiliate: faker.internet.userName(),
+      subAffiliate: faker.internet.userName(),
+      salesAgent: faker.name.firstName(),
+      clickId: "",
+      path: faker.system.filePath(),
+      ipAddress: faker.internet.ip(),
+      currency: "USD",
+      amount: 0
+  };
+
+  return deepFreeze(leadSource);
+}
+
+
 export function createApiKeyData(withId = false) {
     let key = {description: faker.lorem.sentence()};
     if (withId) {
