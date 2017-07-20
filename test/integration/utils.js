@@ -58,14 +58,12 @@ export function createWebsiteData(withId = false) {
 }
 
 export function createWebhookCredData() {
-    let webhookCred = {
+    return deepFreeze({
         host: 'google.com',
         auth: {
-          type: 'none'
+            type: 'none'
         }
-    };
-
-    return deepFreeze(webhookCred);
+    });
 }
 
 export function createWebhookData(withId = false, merge = {}) {
@@ -77,12 +75,23 @@ export function createWebhookData(withId = false, merge = {}) {
         headers: {},
         ...merge
     };
-
     if (withId) {
         webhook.id = faker.random.uuid();
     }
-
     return deepFreeze(webhook);
+}
+
+export function createEmailCredData() {
+    return deepFreeze({
+        host: process.env.TEST_SMTP_HOST,
+        port: process.env.TEST_SMTP_PORT,
+        encryption: 'ssl',
+        auth: {
+            type: 'login',
+            username: process.env.TEST_SMTP_USER,
+            password: process.env.TEST_SMTP_PASS
+        }
+    });
 }
 
 export function createUserData(withId = false) {
