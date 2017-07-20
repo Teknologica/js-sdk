@@ -22,14 +22,14 @@ describe('when using the websites resource', () => {
     expect(website.fields.value).to.be.equal(data.value);
   });
 
-  it('I can get a list of websites items', async () => {
+  it('I can get a list of website items', async () => {
     const websites = await apiInstance.websites.getAll();
     expect(websites.total).to.not.be.equal(0);
     const [websitesItem] = websites.items;
     expect(websitesItem.fields.id).to.not.be.undefined;
   });
 
-  it('I can get a websites item by using its ID', async () => {
+  it('I can get a website item by using its ID', async () => {
     const websiteItem = await apiInstance.websites.get({id: testIds.with});
     expect(websiteItem.fields.id).to.be.equal(testIds.with);
   });
@@ -42,7 +42,7 @@ describe('when using the websites resource', () => {
 
   });
 
-  it('I can delete the websites items I just created', async () => {
+  it('I can delete the website items I just created', async () => {
     const firstDelete = await apiInstance.websites.delete({id: testIds.with});
     const secondDelete = await apiInstance.websites.delete({id: testIds.without});
     expect(firstDelete.response.status).to.be.equal(204);

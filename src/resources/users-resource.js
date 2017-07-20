@@ -27,8 +27,8 @@ export default function UsersResource({apiHandler}) {
             return await apiHandler.delete(`users/${id}`);
         },
 
-        async updatePassword({id}) {
-            return await apiHandler.post(`users/${id}/password`);
+        async updatePassword({id, data}) {
+            return await apiHandler.post(`users/${id}/password`, data);
         },
 
         async resetPassword({token, data}) {

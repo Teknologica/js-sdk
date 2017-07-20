@@ -1,6 +1,8 @@
 import faker from 'faker';
 import deepFreeze from '../../src/deep-freeze';
 
+
+
 export function createMerchantSignupData() {
     return deepFreeze({
         email: faker.internet.email(),
@@ -14,7 +16,7 @@ export function createMerchantSignupData() {
 }
 
 export function createWebsiteData(withId = false) {
-    let websites = {
+    let website = {
       name: faker.company.companyName(),
       url: faker.internet.url(),
       servicePhone: faker.phone.phoneNumberFormat(),
@@ -24,11 +26,75 @@ export function createWebsiteData(withId = false) {
     };
 
     if (withId) {
-      websites.id = faker.random.uuid();
+      website.id = faker.random.uuid();
     }
 
-    return deepFreeze(websites);
+    return deepFreeze(website);
 }
+
+export function createWebhookCredData() {
+    let webhookCred = {
+        host: 'google.com',
+        auth: {
+          type: 'none'
+        }
+    };
+
+    return deepFreeze(webhookCred);
+}
+
+
+export function createWebhookData(withId = false, merge = {}) {
+    let webhook = {
+        eventsFilter: [],
+        status: 'active',
+        method: 'GET',
+        url: 'http://google.com',
+        headers: {},
+        ...merge
+    };
+
+    if (withId) {
+        webhook.id = faker.random.uuid();
+    }
+
+    return deepFreeze(webhook);
+}
+
+export function createUserData(withId = false) {
+    let user = {
+      email: faker.internet.email(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      businessPhone: faker.phone.phoneNumberFormat(),
+      mobilePhone: faker.phone.phoneNumberFormat(),
+      password: faker.internet.password() + '1',
+      permissions: [],
+      reportingCurrency: 'USD',
+      totpRequired: true,
+      totpSecret: '',
+      totpUrl: '',
+      country: 'US',
+      preferences: {}
+    };
+
+    if (withId) {
+      user.id = faker.random.uuid();
+    }
+
+    return deepFreeze(user);
+}
+
+
+export function createUserUpdatePasswdData(withId = false, merge = {}) {
+  let userUpdatePasswd = {
+      newPassword: faker.internet.password() + '1',
+      ...merge
+  };
+
+  return deepFreeze(user);
+}
+
 
 
 export function createApiKeyData(withId = false) {
