@@ -10,7 +10,7 @@ export function createMerchantSignupData() {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         businessPhone: faker.phone.phoneNumberFormat(),
-        password: faker.internet.password(),
+        password: faker.internet.password() + '2',
         website: faker.internet.url()
     })
 }
