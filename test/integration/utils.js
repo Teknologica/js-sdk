@@ -21,7 +21,7 @@ export function createWebsiteData(withId = false) {
       url: faker.internet.url(),
       servicePhone: faker.phone.phoneNumberFormat(),
       serviceEmail: faker.internet.email(),
-      checkoutPageUri: faker.lorem.slug(),
+      checkoutPageUri: faker.lorem.slug().slice(0, 29),
       customFields: {}
     };
 

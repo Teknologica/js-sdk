@@ -19,6 +19,11 @@ describe('when using the transactions resource', () => {
     expect(transaction.fields.id).to.be.equal(transactionId);
   });
 
+  it('I can get gatewayLogs by transaction ID', async () => {
+    const gatewayLogs = await apiInstance.transactions.getGatewayLogs({id: transactionId});
+    expect(gatewayLogs.fields).to.not.be.undefined;
+  });
+
 });
 
 
