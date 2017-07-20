@@ -33,10 +33,19 @@ describe('when using the transactions resource', () => {
 
   it('I can create lead source by its ID', async() => {
     const data = createTransactionLeadSourceData();
-    const leadSource = await apiInstance.transactions.createLeadSource({id:  transactionId, data: data});
+    const leadSource = await apiInstance.transactions.createLeadSource({id: transactionId, data: data});
     expect(leadSource.fields.id).to.not.be.undefined;
-    console.log(leadSource);
-    expect(leadSource.response.status).to.be.equal(201);
+    expect(leadSource.response.status).to.be.equal(200);
+  });
+
+  it('I can get a lead source by its ID', async() => {
+    const leadSource = await apiInstance.transactions.getLeadSource({id: transactionId});
+    expect(leadSource.response.status).to.be.equal(200);
+  });
+
+  it('I can delete lead source that I just created', async() => {
+    const leadSource = await apiInstance.transactions.deleteLeadSource({id: transactionId});
+    expect(leadSource.response.status).to.be.equal(204);
   });
 
 });
