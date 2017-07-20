@@ -30,6 +30,10 @@ export function generatePassword() {
     return `${(Math.random() * 99)>>0}${faker.internet.password()}`
 }
 
+export function generateSlug() {
+  return `${faker.lorem.word()}-${faker.lorem.word()}`;
+}
+
 export function createMerchantSignupData() {
     return deepFreeze({
         email: faker.internet.email(),
@@ -48,7 +52,7 @@ export function createWebsiteData(withId = false) {
       url: faker.internet.url(),
       servicePhone: faker.phone.phoneNumberFormat(),
       serviceEmail: faker.internet.email(),
-      checkoutPageUri: faker.lorem.slug().slice(0, 29),
+      checkoutPageUri: generateSlug(),
       customFields: {}
     };
     if (withId) {
