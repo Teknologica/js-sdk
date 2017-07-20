@@ -86,17 +86,6 @@ export function createUserData(withId = false) {
 }
 
 
-export function createUserUpdatePasswdData(withId = false, merge = {}) {
-  let userUpdatePasswd = {
-      newPassword: faker.internet.password() + '1',
-      ...merge
-  };
-
-  return deepFreeze(user);
-}
-
-
-
 export function createApiKeyData(withId = false) {
     let key = {description: faker.lorem.sentence()};
     if (withId) {
