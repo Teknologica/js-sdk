@@ -1,6 +1,35 @@
 import faker from 'faker';
 import deepFreeze from '../../src/deep-freeze';
 
+/**
+ * Generates a datetime value in the past by one month. Always on the first day of the month.
+ * @returns {string} an RFC3999 valid datetime
+ */
+export function generatePastAPIDatetime() {
+    const currentDate = new Date();
+    let month = currentDate.getMonth() + 1;
+    let year = currentDate.getFullYear();
+    if (month === 1) {
+        year = year - 1;
+        month = 12;
+    } else {
+        month = month - 1;
+    }
+    if (month < 10) {
+        //zero pad months
+        month = `0${month}`;
+    }
+    return `${year}-${month}-01T00:00:00+00:00`;
+}
+
+/**
+ * Generate a password that includes digits and a random alphanumeric string
+ * @returns {string} validation compliant password
+ */
+export function generatePassword() {
+    return `${(Math.random() * 99)>>0}${faker.internet.password()}`
+}
+
 export function createMerchantSignupData() {
     return deepFreeze({
         email: faker.internet.email(),
@@ -8,23 +37,23 @@ export function createMerchantSignupData() {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         businessPhone: faker.phone.phoneNumberFormat(),
-        password: faker.internet.password(),
+        password: generatePassword(),
         website: faker.internet.url()
     })
 }
 
 export function createWebsiteData(withId = false) {
     let websites = {
-      name: faker.company.companyName(),
-      url: faker.internet.url(),
-      servicePhone: faker.phone.phoneNumberFormat(),
-      serviceEmail: faker.internet.email(),
-      checkoutPageUri: faker.lorem.slug(),
-      customFields: {}
+        name: faker.company.companyName(),
+        url: faker.internet.url(),
+        servicePhone: faker.phone.phoneNumberFormat(),
+        serviceEmail: faker.internet.email(),
+        checkoutPageUri: faker.lorem.slug(),
+        customFields: {}
     };
 
     if (withId) {
-      websites.id = faker.random.uuid();
+        websites.id = faker.random.uuid();
     }
 
     return deepFreeze(websites);
@@ -107,4 +136,30 @@ export function createCheckoutPageData(withId = false, merge = {}) {
         checkoutPage.id = faker.random.uuid();
     }
     return deepFreeze(checkoutPage);
+}
+
+export function createCouponData(withRedemptionCode = false) {
+    let coupon = {
+        description: faker.hacker.phrase(),
+        issuedTime: generatePastAPIDatetime(),
+        discount: {
+            type: 'percent',
+            value: 12
+        },
+        restrictions: [{
+            type: 'discounts-per-redemption',
+            quantity: 12
+        }],
+    };
+    if (withRedemptionCode) {
+        coupon.redemptionCode = faker.random.uuid();
+    }
+    return deepFreeze(coupon);
+}
+
+export function createCouponRedemptionData(redemptionCode, customerId) {
+    return deepFreeze({
+        redemptionCode,
+        customerId
+    });
 }
