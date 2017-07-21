@@ -33,6 +33,9 @@ npm run integration
 //watch integration tests and re-run on change
 npm run integration:watch
 
+//watch a particular integration test file and re-run on change
+npm run integration:watch:only -- ./test/integration/specs/file.spec.js
+
 //generate coverage report
 npm run coverage
 ```
