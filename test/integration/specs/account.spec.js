@@ -15,4 +15,12 @@ describe('when using the account resource', () => {
         const user = await apiInstance.account.forgotPassword({data: {email}});
         expect(user.response.status).to.be.equal(204);
     });
+
+    it.skip('I can activate a user account', () => {
+       //cannot run this test as the activation link is sent by email
+    });
+
+    it.skip('I can login to my new account', () => {
+        //cannot run this test without the account being activated
+    });
 });

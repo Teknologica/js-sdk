@@ -13,8 +13,25 @@ export default function TransactionsResource({apiHandler}) {
             return await apiHandler.getAll(`transactions`, params);
         },
 
+        async getAllScheduled({limit = null, offset = null, sort = null, expand = '', filter = '', q = '', criteria = ''} = {}) {
+            const params = {
+                limit,
+                offset,
+                sort,
+                expand,
+                filter,
+                q,
+                criteria
+            };
+            return await apiHandler.getAll(`queue/payments`, params);
+        },
+
         async get({id}) {
             return await apiHandler.get(`transactions/${id}`);
+        },
+
+        async create({id = '', data}) {
+            return await apiHandler.create(`payments/${id}`, id, data);
         },
 
         async cancel({id}) {

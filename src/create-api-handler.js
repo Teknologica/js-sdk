@@ -228,6 +228,10 @@ export default function createApiHandler({options}) {
             }
         }
         else if (error.request) { //5xx errors without a response
+            if (error.code === 'ECONNABORTED') {
+                console.log(error.message);
+                throw new Errors.RebillyTimeoutError(error);
+            }
             throw new Errors.RebillyRequestError(error);
         }
         else {

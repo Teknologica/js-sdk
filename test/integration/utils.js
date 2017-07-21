@@ -2,8 +2,64 @@ import faker from 'faker';
 import deepFreeze from '../../src/deep-freeze';
 
 /**
+ * List of test payment cards
+ * @link https://help.rebilly.com/35300-rebilly-basics/sandbox-vs-live-mode
+ * @type {{approved, declined, firstApprovedSubsequentDeclined: string, timeout: string, connectionError: string, refundMorphedToVoid: string, refundDeclined: string, alternateApprovedDeclined: string, declinedAsFraud: string, suspendedPaymentFlow: string}}
+ */
+const testPaymentCards = {
+    /**
+     * @prop approved {string}
+     */
+    get approved() {
+        const cards = [
+            '4111111111111111',
+            '5555555555554444',
+            /*'378282246310005',
+            '6011111111111117',
+            '30569309025904',
+            '3530111333300000',*/
+        ];
+        return cards[Math.floor(Math.random() * cards.length)];
+    },
+    /**
+     * @prop declined {string}
+     */
+    get declined() {
+        const cards = [
+            '4000000000000002',
+            '5105105105105100',
+            /*'371449635398431',
+            '6011000990139424',
+            '38520000023237',
+            '3566002020360505',*/
+        ];
+        return cards[Math.floor(Math.random() * cards.length)];
+    },
+    firstApprovedSubsequentDeclined: '4000000000000010',
+    timeout: '4000000000000200',
+    connectionError: '4000000000001000',
+    refundMorphedToVoid: '4000000000020000',
+    refundDeclined: '4000000000100000',
+    alternateApprovedDeclined: '4000000002000000',
+    declinedAsFraud: '4000000010000000',
+    suspendedPaymentFlow: '4000000000000101'
+};
+
+/**
+ * Test bank account supported by Rebilly
+ * @link https://help.rebilly.com/35300-rebilly-basics/sandbox-vs-live-mode
+ * @type {{routingNumber: string, accountNumber: string}}
+ */
+const testBankAccount = {
+    routingNumber: '123456789',
+    accountNumber: '1234567890'
+};
+
+export {testPaymentCards, testBankAccount};
+
+/**
  * Generates a datetime value in the past by one month. Always on the first day of the month.
- * @returns {string} an RFC3999 valid datetime
+ * @returns {string} an RFC3999 valid datetime in the past
  */
 export function generatePastAPIDatetime() {
     const currentDate = new Date();
@@ -23,15 +79,36 @@ export function generatePastAPIDatetime() {
 }
 
 /**
+ * Generates a datetime value in the future by one month. Always on the first day of the month at noon.
+ * @returns {string} an RFC3999 valid datetime in the future
+ */
+export function generateFutureAPIDatetime() {
+    const currentDate = new Date();
+    let month = currentDate.getMonth() + 1;
+    let year = currentDate.getFullYear();
+    if (month === 12) {
+        year = year + 1;
+        month = 1;
+    } else {
+        month = month + 1;
+    }
+    if (month < 10) {
+        //zero pad months
+        month = `0${month}`;
+    }
+    return `${year}-${month}-01T12:00:00+00:00`;
+}
+
+/**
  * Generate a password that includes digits and a random alphanumeric string
  * @returns {string} validation compliant password
  */
 export function generatePassword() {
-    return `${(Math.random() * 99)>>0}${faker.internet.password()}`
+    return `${(Math.random() * 99) >> 0}${faker.internet.password()}`
 }
 
 export function generateSlug() {
-  return `${faker.lorem.word()}-${faker.lorem.word()}`;
+    return `${faker.lorem.word()}-${faker.lorem.word()}`;
 }
 
 export function createMerchantSignupData() {
@@ -120,9 +197,8 @@ export function createUserData(withId = false) {
     return deepFreeze(user);
 }
 
-
 export function createTransactionLeadSourceData() {
-    let leadSource = {
+    const leadSource = {
         medium: faker.lorem.word(),
         source: faker.internet.domainName(),
         campaign: faker.lorem.slug(),
@@ -131,16 +207,30 @@ export function createTransactionLeadSourceData() {
         affiliate: faker.internet.userName(),
         subAffiliate: faker.internet.userName(),
         salesAgent: faker.name.firstName(),
-        clickId: "",
+        clickId: '',
         path: faker.system.filePath(),
         ipAddress: faker.internet.ip(),
-        currency: "USD",
+        currency: 'USD',
         amount: 0
     };
-
     return deepFreeze(leadSource);
 }
 
+export function createTransactionData(withId = false, merge = {}, scheduledTransaction = false) {
+    let transaction = {
+        currency: 'USD',
+        amount: faker.finance.amount(),
+        description: faker.hacker.phrase(),
+        ...merge
+    };
+    if(scheduledTransaction) {
+        transaction.scheduledTime = generateFutureAPIDatetime();
+    }
+    if (withId) {
+        transaction.id = faker.random.uuid()
+    }
+    return deepFreeze(transaction);
+}
 
 export function createSubscriptionData(withId = false, merge = {}) {
     let subscription = {
@@ -208,8 +298,8 @@ export function createCustomerData(withId = false) {
 export function createBankAccountData(withId = false, merge = {}) {
     let bankAccount = {
         bankName: faker.finance.accountName(),
-        routingNumber: String(faker.finance.account()),
-        accountNumber: String(faker.finance.account()),
+        routingNumber: testBankAccount.routingNumber,
+        accountNumber: testBankAccount.accountNumber,
         accountType: 'checking',
         ...merge
     };
@@ -281,4 +371,53 @@ export function createCouponRedemptionData(redemptionCode, customerId) {
         redemptionCode,
         customerId
     });
+}
+
+export function createCustomEventData(withId = false) {
+    let customEvent = {
+        eventType: 'subscription-ended',
+        title: faker.lorem.words(),
+        description: faker.hacker.phrase(),
+        chronology: 'before',
+        scheduleInstruction: {
+            method: 'date-interval',
+            duration: 1,
+            unit: 'day'
+        }
+    };
+    if (withId) {
+        customEvent.id = faker.random.uuid();
+    }
+    return deepFreeze(customEvent);
+}
+
+export function createPaymentCard(withId = false, merge = {}) {
+    let paymentCard = {
+        pan: testPaymentCards.approved,
+        expYear: (new Date()).getFullYear() + 2,
+        expMonth: Math.ceil(Math.random() * 12) >> 0,
+        cvv: 123,
+        ...merge
+    };
+    if (withId) {
+        paymentCard.id = faker.random.uuid();
+    }
+    return deepFreeze(paymentCard);
+}
+
+export function createGatewayAccountData(withId = false, merge = {}) {
+    let gatewayAccount = {
+        gatewayName: 'RebillyProcessor',
+        acquirerName: 'Other',
+        merchantCategoryCode: 0,
+        acceptedCurrencies: ['USD'],
+        method: 'payment-card',
+        paymentCardSchemes: ['Visa', 'MasterCard', 'American Express', 'Discover', 'Diners Club', 'JCB'],
+        gatewayConfig: {},
+        ...merge
+    };
+    if (withId) {
+        gatewayAccount.id = faker.random.uuid();
+    }
+    return deepFreeze(gatewayAccount);
 }
