@@ -142,6 +142,42 @@ export function createTransactionLeadSourceData() {
 }
 
 
+export function createSubscriptionData(withId = false, merge = {}) {
+    let subscription = {
+        deliveryAddress: {},
+        billingAddress: {},
+        quantity: 2,
+        autopay: true,
+        startTime: faker.date.past(),
+        renewalTime: faker.date.future(),
+        customFields: {},
+        ...merge
+    };
+
+    if (withId) {
+        subscription.id = faker.random.uuid();
+    }
+    return deepFreeze(subscription);
+
+}
+
+
+export function createInvoiceData(withId = false, merge = {}) {
+    let invoice = {
+        currency: "USD",
+        billingAddress: {},
+        deliveryAddress: {},
+        "notes": "string",
+        ...merge
+    };
+
+    if (withId) {
+        invoice.id = faker.random.uuid();
+    }
+    return deepFreeze(invoice);
+
+}
+
 export function createApiKeyData(withId = false) {
     let key = {description: faker.lorem.sentence()};
     if (withId) {
@@ -149,6 +185,7 @@ export function createApiKeyData(withId = false) {
     }
     return deepFreeze(key);
 }
+
 
 export function createCustomerData(withId = false) {
     let customer = {
