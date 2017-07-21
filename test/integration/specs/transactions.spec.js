@@ -57,5 +57,4 @@ describe('when using the transactions resource', () => {
         const leadSource = await apiInstance.transactions.deleteLeadSource({id: transactionId});
         expect(leadSource.response.status).to.be.equal(204);
     });
-
 });
