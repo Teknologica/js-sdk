@@ -31,19 +31,19 @@ describe('when using the transactions resource', () => {
     expect(gatewayLogs.response.status).to.be.equal(200);
   });
 
-  it('I can create lead source by its ID', async() => {
+  it('I can create a lead source for a transaction by using its ID', async() => {
     const data = createTransactionLeadSourceData();
     const leadSource = await apiInstance.transactions.createLeadSource({id: transactionId, data: data});
     expect(leadSource.fields.id).to.not.be.undefined;
-    expect(leadSource.response.status).to.be.equal(200);
+    expect(leadSource.response.status).to.be.equal(201);
   });
 
-  it('I can get a lead source by its ID', async() => {
+  it('I can get a lead source by using the transsaction ID', async() => {
     const leadSource = await apiInstance.transactions.getLeadSource({id: transactionId});
     expect(leadSource.response.status).to.be.equal(200);
   });
 
-  it('I can delete lead source that I just created', async() => {
+  it('I can delete a lead source that I just created for a specific transaction ID', async() => {
     const leadSource = await apiInstance.transactions.deleteLeadSource({id: transactionId});
     expect(leadSource.response.status).to.be.equal(204);
   });
