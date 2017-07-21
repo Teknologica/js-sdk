@@ -16,6 +16,7 @@ describe('when using the users resource', () => {
         const user = await apiInstance.users.create({data: data});
         testIds.without = user.fields.id;
         expect(user.fields.value).to.be.equal(data.value);
+        expect(user.response.status).to.be.equal(201);
     });
 
     it('I can create a user with an ID', async () => {
@@ -24,6 +25,7 @@ describe('when using the users resource', () => {
         expect(user.fields.id).to.be.equal(id);
         testIds.with = id;
         expect(user.fields.value).to.be.equal(data.value);
+        expect(user.response.status).to.be.equal(201);
     });
 
     it('I can get a list of users', async () => {
@@ -31,11 +33,13 @@ describe('when using the users resource', () => {
         expect(user.total).to.not.be.equal(0);
         const [userItems] = user.items;
         expect(userItems.fields.id).to.not.be.undefined;
+        expect(user.response.status).to.be.equal(200);
     });
 
     it('I can get a user by using its ID', async () => {
         const user = await apiInstance.users.get({id: testIds.with});
         expect(user.fields.id).to.be.equal(testIds.with);
+        expect(user.response.status).to.be.equal(200);
     });
 
     it('I can update a user by using its ID', async () => {
@@ -45,7 +49,8 @@ describe('when using the users resource', () => {
         expect(user.response.status).to.be.equal(200);
     });
 
-    it('I can delete the user I just created', async () => {
+
+    it('I can delete the users I just created', async () => {
         const firstDelete = await apiInstance.users.delete({id: testIds.with});
         const secondDelete = await apiInstance.users.delete({id: testIds.without});
         expect(firstDelete.response.status).to.be.equal(204);

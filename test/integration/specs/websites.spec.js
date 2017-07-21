@@ -48,5 +48,4 @@ describe('when using the websites resource', () => {
         expect(firstDelete.response.status).to.be.equal(204);
         expect(secondDelete.response.status).to.be.equal(204);
     });
-
 });

@@ -10,8 +10,14 @@ describe('when using the webhooks resource', () => {
 
     before(async () => {
         const data = createWebhookCredData();
-        const WebhookCredHash = await apiInstance.credentialHashes.createWebhookCredential({data: data});
-        sharedData.credentialHash = WebhookCredHash.fields.hash;
+
+        try {
+          const WebhookCredHash = await apiInstance.credentialHashes.createWebhookCredential({data:data});
+          sharedData.credentialHash = WebhookCredHash.fields.hash;
+        }
+        catch(err) {
+          console.log(err);
+        }
     });
 
     it('I can create a webhook without an ID', async () => {
@@ -32,8 +38,8 @@ describe('when using the webhooks resource', () => {
     it('I can get a list of webhooks', async () => {
         const webhook = await apiInstance.webhooks.getAll();
         expect(webhook.total).to.not.be.equal(0);
-        const [webhookItems] = webhook.items;
-        expect(webhookItems.fields.id).to.not.be.undefined;
+        const [webhookItem] = webhook.items;
+        expect(webhookItem.fields.id).to.not.be.undefined;
     });
 
     it('I can get a webhook by using its ID', async () => {
