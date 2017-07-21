@@ -37,6 +37,10 @@ export default function TransactionsResource({apiHandler}) {
             return await apiHandler.put(`transactions/${id}/lead-source`, data);
         },
 
+        async updateLeadSource({id, data}) {
+            return await apiHandler.put(`transactions/${id}/lead-source`, data);
+        },
+
         async deleteLeadSource({id}) {
             return await apiHandler.delete(`transactions/${id}/lead-source`);
         }
