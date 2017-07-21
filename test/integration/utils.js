@@ -27,11 +27,11 @@ export function generatePastAPIDatetime() {
  * @returns {string} validation compliant password
  */
 export function generatePassword() {
-    return `${(Math.random() * 99)>>0}${faker.internet.password()}`
+    return `${(Math.random() * 99) >> 0}${faker.internet.password()}`
 }
 
 export function generateSlug() {
-  return `${faker.lorem.word()}-${faker.lorem.word()}`;
+    return `${faker.lorem.word()}-${faker.lorem.word()}`;
 }
 
 export function createMerchantSignupData() {
@@ -48,15 +48,15 @@ export function createMerchantSignupData() {
 
 export function createWebsiteData(withId = false) {
     let website = {
-      name: faker.company.companyName(),
-      url: faker.internet.url(),
-      servicePhone: faker.phone.phoneNumberFormat(),
-      serviceEmail: faker.internet.email(),
-      checkoutPageUri: generateSlug(),
-      customFields: {}
+        name: faker.company.companyName(),
+        url: faker.internet.url(),
+        servicePhone: faker.phone.phoneNumberFormat(),
+        serviceEmail: faker.internet.email(),
+        checkoutPageUri: generateSlug(),
+        customFields: {}
     };
     if (withId) {
-      website.id = faker.random.uuid();
+        website.id = faker.random.uuid();
     }
     return deepFreeze(website);
 }
@@ -100,45 +100,45 @@ export function createEmailCredData() {
 
 export function createUserData(withId = false) {
     let user = {
-      email: faker.internet.email(),
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      businessPhone: faker.phone.phoneNumberFormat(),
-      mobilePhone: faker.phone.phoneNumberFormat(),
-      password: generatePassword(),
-      permissions: [],
-      reportingCurrency: 'USD',
-      totpRequired: true,
-      totpSecret: '',
-      totpUrl: '',
-      country: 'US',
-      preferences: {}
+        email: faker.internet.email(),
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        businessPhone: faker.phone.phoneNumberFormat(),
+        mobilePhone: faker.phone.phoneNumberFormat(),
+        password: generatePassword(),
+        permissions: [],
+        reportingCurrency: 'USD',
+        totpRequired: true,
+        totpSecret: '',
+        totpUrl: '',
+        country: 'US',
+        preferences: {}
     };
     if (withId) {
-      user.id = faker.random.uuid();
+        user.id = faker.random.uuid();
     }
     return deepFreeze(user);
 }
 
 
 export function createTransactionLeadSourceData() {
-  let leadSource = {
-      medium: faker.lorem.word(),
-      source: faker.internet.domainName(),
-      campaign: faker.lorem.slug(),
-      term: faker.lorem.word(),
-      content: faker.lorem.words(),
-      affiliate: faker.internet.userName(),
-      subAffiliate: faker.internet.userName(),
-      salesAgent: faker.name.firstName(),
-      clickId: "",
-      path: faker.system.filePath(),
-      ipAddress: faker.internet.ip(),
-      currency: "USD",
-      amount: 0
-  };
+    let leadSource = {
+        medium: faker.lorem.word(),
+        source: faker.internet.domainName(),
+        campaign: faker.lorem.slug(),
+        term: faker.lorem.word(),
+        content: faker.lorem.words(),
+        affiliate: faker.internet.userName(),
+        subAffiliate: faker.internet.userName(),
+        salesAgent: faker.name.firstName(),
+        clickId: "",
+        path: faker.system.filePath(),
+        ipAddress: faker.internet.ip(),
+        currency: "USD",
+        amount: 0
+    };
 
-  return deepFreeze(leadSource);
+    return deepFreeze(leadSource);
 }
 
 
@@ -244,4 +244,22 @@ export function createCouponRedemptionData(redemptionCode, customerId) {
         redemptionCode,
         customerId
     });
+}
+
+export function createCustomEventData(withId = false) {
+    let customEvent = {
+        eventType: 'subscription-ended',
+        title: faker.lorem.words(),
+        description: faker.hacker.phrase(),
+        chronology: 'before',
+        scheduleInstruction: {
+            method: 'date-interval',
+            duration: 1,
+            unit: 'day'
+        }
+    };
+    if (withId) {
+        customEvent.id = faker.random.uuid();
+    }
+    return deepFreeze(customEvent);
 }

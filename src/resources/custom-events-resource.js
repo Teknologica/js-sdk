@@ -13,7 +13,7 @@ export default function CustomEventsResource({apiHandler}) {
             return await apiHandler.get(`custom-events/${id}`);
         },
 
-        async create({id, data}) {
+        async create({id = '', data}) {
             return await apiHandler.create(`custom-events/${id}`, id, data);
         },
 
