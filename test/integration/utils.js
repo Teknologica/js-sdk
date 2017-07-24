@@ -384,7 +384,7 @@ export function createPaymentCard(withId = false, merge = {}) {
 export function createGatewayAccountData(withId = false, merge = {}) {
     let gatewayAccount = {
         gatewayName: 'RebillyProcessor',
-        acquirerName: 'Other',
+        acquirerName: pickRandomFromList(['Other', 'RebillyProcessor', 'Bank Of Rebilly']),
         merchantCategoryCode: 0,
         acceptedCurrencies: ['USD'],
         method: 'payment-card',
