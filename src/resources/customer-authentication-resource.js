@@ -1,7 +1,7 @@
 export default function CustomerAuthenticationResource({apiHandler}) {
     return {
         async getAuthOptions() {
-            return await apiHandler.getAll(`authentication-options`);
+            return await apiHandler.get(`authentication-options`);
         },
 
         async updateAuthOptions({data}) {
@@ -37,7 +37,7 @@ export default function CustomerAuthenticationResource({apiHandler}) {
         },
 
         async getCredential({id}) {
-            return await apiHandler.getAll(`credentials/${id}`);
+            return await apiHandler.get(`credentials/${id}`);
         },
 
         async createCredential({id = '', data}) {
@@ -52,7 +52,7 @@ export default function CustomerAuthenticationResource({apiHandler}) {
             return await apiHandler.delete(`credentials/${id}`);
         },
 
-        async getAllResetPasswordToken({limit = null, offset = null} = {}) {
+        async getAllResetPasswordTokens({limit = null, offset = null} = {}) {
             const params = {
                 limit,
                 offset

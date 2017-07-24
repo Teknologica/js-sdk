@@ -398,6 +398,21 @@ export function createGatewayAccountData(withId = false, merge = {}) {
     return deepFreeze(gatewayAccount);
 }
 
+export function createCustomerCredentialsData({withId = false, customerId = ''} = {}) {
+    let credentialsData = {
+        "username": faker.internet.userName(),
+        "password": 'pa$$word',
+        "expiredTime": "2017-07-20T16:22:55Z"
+    };
+    if (withId) {
+        credentialsData.id = faker.random.uuid();
+    }
+    if (customerId) {
+        credentialsData.customerId = customerId;
+    }
+    // return deepFreeze(credentialsData);
+    return credentialsData;
+
 export function createCustomFieldData(withSchema = false) {
     let customField = {
         name: generateSlug(),

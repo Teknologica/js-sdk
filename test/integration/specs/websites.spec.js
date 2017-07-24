@@ -37,7 +37,7 @@ describe('when using the websites resource', () => {
     it('I can update a website by using its ID', async () => {
         const data = createWebsiteData();
         const website = await apiInstance.websites.update({id: testIds.with, data: data});
-        expect(website.fields.value).to.be.equal(data.value);
+        expect(website.fields.name).to.be.equal(data.name);
         expect(website.response.status).to.be.equal(200);
 
     });
