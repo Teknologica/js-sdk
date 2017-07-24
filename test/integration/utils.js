@@ -201,7 +201,7 @@ export function createUserData(withId = false) {
     return deepFreeze(user);
 }
 
-export function createTransactionLeadSourceData() {
+export function createLeadSourceData() {
     const leadSource = {
         medium: faker.lorem.word(),
         source: faker.internet.domainName(),

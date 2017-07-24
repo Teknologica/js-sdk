@@ -2,7 +2,7 @@ import chai from 'chai';
 import apiInstance from '../api-instance';
 import {
     createTransactionData,
-    createTransactionLeadSourceData,
+    createLeadSourceData,
     createWebsiteData,
     createCustomerData,
     createPaymentCard,
@@ -115,15 +115,10 @@ describe('when using the transactions resource', () => {
         const transaction = await apiInstance.transactions.refund({id: cachedTransaction.fields.id, data: {amount: cachedTransaction.fields.amount}});
         expect(transaction.fields.parentTransactionId).to.be.equal(cachedTransaction.fields.id);
         expect(transaction.response.status).to.be.equal(201);
-        try {
-
-        } catch (err) {
-            console.log(err);
-        }
     });
 
     it('I can create a lead source for a transaction by using its ID', async () => {
-        const data = createTransactionLeadSourceData();
+        const data = createLeadSourceData();
         const leadSource = await apiInstance.transactions.createLeadSource({id: testIds.with, data: data});
         cachedLeadSource = leadSource;
         expect(leadSource.fields.id).to.not.be.undefined;
@@ -132,7 +127,7 @@ describe('when using the transactions resource', () => {
     });
 
     it('I can update a lead source for a transaction by using its ID', async () => {
-        const {campaign} = createTransactionLeadSourceData();
+        const {campaign} = createLeadSourceData();
         const data = {...cachedLeadSource.fields, campaign};
         const leadSource = await apiInstance.transactions.updateLeadSource({id: testIds.with, data: data});
         expect(leadSource.fields.campaign).to.be.equal(campaign);

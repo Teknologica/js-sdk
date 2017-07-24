@@ -33,6 +33,10 @@ export default function CustomersResource({apiHandler}) {
             return await apiHandler.put(`customers/${id}/lead-source`, data);
         },
 
+        async updateLeadSource({id, data}) {
+            return await apiHandler.put(`customers/${id}/lead-source`, data);
+        },
+
         async deleteLeadSource({id}) {
             return await apiHandler.delete(`customers/${id}/lead-source`);
         }
