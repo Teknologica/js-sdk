@@ -244,7 +244,7 @@ export function createApiKeyData(withId = false) {
     return deepFreeze(key);
 }
 
-export function createCustomerData(withId = false) {
+export function createCustomerData(withId = false, merge = {}) {
     let customer = {
         primaryAddress: {
             firstName: faker.name.firstName(),
@@ -254,7 +254,8 @@ export function createCustomerData(withId = false) {
                 value: faker.internet.email(),
                 primary: true
             }]
-        }
+        },
+        ...merge
     };
     if (withId) {
         customer.id = faker.random.uuid();
@@ -392,7 +393,7 @@ export function createGatewayAccountData(withId = false, merge = {}) {
 export function createCustomFieldData(withSchema = false) {
     let customField = {
         name: generateSlug(),
-        type: pickRandomFromList(['array', 'boolean', 'date', 'datetime', 'integer', 'number', 'string', 'monetary']),
+        type: pickRandomFromList(['array', 'boolean', 'datetime', 'integer', 'number', 'string']),
         description: faker.hacker.phrase()
     };
     if (withSchema) {
@@ -401,4 +402,16 @@ export function createCustomFieldData(withSchema = false) {
         };
     }
     return deepFreeze(customField);
+}
+
+export function createCustomFieldEntryData(customField) {
+    const getters = {
+        array: () => Array.from(new Array(4)).map(item => faker.lorem.word()),
+        boolean: () => Boolean(Math.round(Math.random())),
+        datetime: () => generatePastAPIDatetime(),
+        integer: () => Math.round(Math.random() * 9999),
+        number: () => Number((Math.random() * 9999).toFixed(2)),
+        string: () => faker.lorem.words()
+    };
+    return deepFreeze({[customField.fields.name]: getters[customField.fields.type]()});
 }
