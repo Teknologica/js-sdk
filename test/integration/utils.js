@@ -115,6 +115,14 @@ export function pickRandomFromList(list) {
     return list[Math.floor(Math.random() * list.length)];
 }
 
+export function getRandomBool() {
+    return Boolean(Math.round(Math.random()));
+}
+
+export function getRandomRuleStatus() {
+    return getRandomBool() ? 'active' : 'inactive';
+}
+
 export function createMerchantSignupData() {
     return deepFreeze({
         email: faker.internet.email(),
@@ -407,11 +415,42 @@ export function createCustomFieldData(withSchema = false) {
 export function createCustomFieldEntryData(customField) {
     const getters = {
         array: () => Array.from(new Array(4)).map(item => faker.lorem.word()),
-        boolean: () => Boolean(Math.round(Math.random())),
+        boolean: () => getRandomBool(),
         datetime: () => generatePastAPIDatetime(),
         integer: () => Math.round(Math.random() * 9999),
         number: () => Number((Math.random() * 9999).toFixed(2)),
         string: () => faker.lorem.words()
     };
     return deepFreeze({[customField.fields.name]: getters[customField.fields.type]()});
+}
+
+export function createEventRulesData() {
+    return deepFreeze({
+       rules: Array.from(new Array(4)).map(rule => createRuleData())
+    });
+}
+
+export function createRuleData() {
+    return deepFreeze({
+        name: faker.lorem.words(),
+        status: getRandomRuleStatus(),
+        final: getRandomBool(),
+        criteria: {}, //TODO create criteria
+        actions: Array.from(new Array(4)).map(rule => createRuleActionData())
+    });
+}
+
+export function createRuleActionData() {
+    return deepFreeze(pickRandomFromList([
+        {
+            name: 'blacklist',
+            status: getRandomRuleStatus(),
+            type: pickRandomFromList(['customer-id', 'email', 'fingerprint', 'ip-address', 'payment-card']),
+            ttl: Math.round(Math.random() * 9999)
+        },
+        {
+            name: 'stop-subscriptions',
+            status: getRandomRuleStatus(),
+        }
+    ]));
 }
