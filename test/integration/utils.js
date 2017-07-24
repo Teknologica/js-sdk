@@ -15,11 +15,11 @@ const testPaymentCards = {
             '4111111111111111',
             '5555555555554444',
             /*'378282246310005',
-            '6011111111111117',
-            '30569309025904',
-            '3530111333300000',*/
+             '6011111111111117',
+             '30569309025904',
+             '3530111333300000',*/
         ];
-        return cards[Math.floor(Math.random() * cards.length)];
+        return pickRandomFromList(cards);
     },
     /**
      * @prop declined {string}
@@ -29,11 +29,11 @@ const testPaymentCards = {
             '4000000000000002',
             '5105105105105100',
             /*'371449635398431',
-            '6011000990139424',
-            '38520000023237',
-            '3566002020360505',*/
+             '6011000990139424',
+             '38520000023237',
+             '3566002020360505',*/
         ];
-        return cards[Math.floor(Math.random() * cards.length)];
+        return pickRandomFromList(cards);
     },
     firstApprovedSubsequentDeclined: '4000000000000010',
     timeout: '4000000000000200',
@@ -108,7 +108,11 @@ export function generatePassword() {
 }
 
 export function generateSlug() {
-    return `${faker.lorem.word()}-${faker.lorem.word()}`;
+    return faker.helpers.slugify(faker.lorem.words());
+}
+
+export function pickRandomFromList(list) {
+    return list[Math.floor(Math.random() * list.length)];
 }
 
 export function createMerchantSignupData() {
@@ -223,7 +227,7 @@ export function createTransactionData(withId = false, merge = {}, scheduledTrans
         description: faker.hacker.phrase(),
         ...merge
     };
-    if(scheduledTransaction) {
+    if (scheduledTransaction) {
         transaction.scheduledTime = generateFutureAPIDatetime();
     }
     if (withId) {
@@ -420,4 +424,18 @@ export function createGatewayAccountData(withId = false, merge = {}) {
         gatewayAccount.id = faker.random.uuid();
     }
     return deepFreeze(gatewayAccount);
+}
+
+export function createCustomFieldData(withSchema = false) {
+    let customField = {
+        name: generateSlug(),
+        type: pickRandomFromList(['array', 'boolean', 'date', 'datetime', 'integer', 'number', 'string', 'monetary']),
+        description: faker.hacker.phrase()
+    };
+    if (withSchema) {
+        customField.additionalSchema = {
+            allowedValues: Array.from(new Array(10)).map(() => faker.lorem.word)
+        };
+    }
+    return deepFreeze(customField);
 }
