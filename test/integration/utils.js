@@ -412,6 +412,7 @@ export function createCustomerCredentialsData({withId = false, customerId = ''} 
     }
     // return deepFreeze(credentialsData);
     return credentialsData;
+}
 
 export function createCustomFieldData(withSchema = false) {
     let customField = {
@@ -468,4 +469,19 @@ export function createRuleActionData() {
             status: getRandomRuleStatus(),
         }
     ]));
+}
+
+export function createLayoutData(withId = false, merge = {}) {
+    let layout = {
+        name: faker.lorem.words(),
+        ...merge
+    };
+    if (withId) {
+        layout.id = faker.random.uuid();
+    }
+    return deepFreeze(layout);
+}
+
+export function createLayoutItemData(planId) {
+    return deepFreeze({planId, starred: false});
 }
