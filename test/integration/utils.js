@@ -15,11 +15,11 @@ const testPaymentCards = {
             '4111111111111111',
             '5555555555554444',
             /*'378282246310005',
-            '6011111111111117',
-            '30569309025904',
-            '3530111333300000',*/
+             '6011111111111117',
+             '30569309025904',
+             '3530111333300000',*/
         ];
-        return cards[Math.floor(Math.random() * cards.length)];
+        return pickRandomFromList(cards);
     },
     /**
      * @prop declined {string}
@@ -29,11 +29,11 @@ const testPaymentCards = {
             '4000000000000002',
             '5105105105105100',
             /*'371449635398431',
-            '6011000990139424',
-            '38520000023237',
-            '3566002020360505',*/
+             '6011000990139424',
+             '38520000023237',
+             '3566002020360505',*/
         ];
-        return cards[Math.floor(Math.random() * cards.length)];
+        return pickRandomFromList(cards);
     },
     firstApprovedSubsequentDeclined: '4000000000000010',
     timeout: '4000000000000200',
@@ -108,7 +108,19 @@ export function generatePassword() {
 }
 
 export function generateSlug() {
-    return `${faker.lorem.word()}-${faker.lorem.word()}`;
+    return faker.helpers.slugify(faker.lorem.words());
+}
+
+export function pickRandomFromList(list) {
+    return list[Math.floor(Math.random() * list.length)];
+}
+
+export function getRandomBool() {
+    return Boolean(Math.round(Math.random()));
+}
+
+export function getRandomRuleStatus() {
+    return getRandomBool() ? 'active' : 'inactive';
 }
 
 export function createMerchantSignupData() {
@@ -197,7 +209,7 @@ export function createUserData(withId = false) {
     return deepFreeze(user);
 }
 
-export function createTransactionLeadSourceData() {
+export function createLeadSourceData() {
     const leadSource = {
         medium: faker.lorem.word(),
         source: faker.internet.domainName(),
@@ -223,7 +235,7 @@ export function createTransactionData(withId = false, merge = {}, scheduledTrans
         description: faker.hacker.phrase(),
         ...merge
     };
-    if(scheduledTransaction) {
+    if (scheduledTransaction) {
         transaction.scheduledTime = generateFutureAPIDatetime();
     }
     if (withId) {
@@ -240,7 +252,7 @@ export function createApiKeyData(withId = false) {
     return deepFreeze(key);
 }
 
-export function createCustomerData(withId = false) {
+export function createCustomerData(withId = false, merge = {}) {
     let customer = {
         primaryAddress: {
             firstName: faker.name.firstName(),
@@ -250,7 +262,8 @@ export function createCustomerData(withId = false) {
                 value: faker.internet.email(),
                 primary: true
             }]
-        }
+        },
+        ...merge
     };
     if (withId) {
         customer.id = faker.random.uuid();
@@ -399,4 +412,60 @@ export function createCustomerCredentialsData({withId = false, customerId = ''} 
     }
     // return deepFreeze(credentialsData);
     return credentialsData;
+
+export function createCustomFieldData(withSchema = false) {
+    let customField = {
+        name: generateSlug(),
+        type: pickRandomFromList(['array', 'boolean', 'datetime', 'integer', 'number', 'string']),
+        description: faker.hacker.phrase()
+    };
+    if (withSchema) {
+        customField.additionalSchema = {
+            allowedValues: Array.from(new Array(10)).map(() => faker.lorem.word)
+        };
+    }
+    return deepFreeze(customField);
+}
+
+export function createCustomFieldEntryData(customField) {
+    const getters = {
+        array: () => Array.from(new Array(4)).map(item => faker.lorem.word()),
+        boolean: () => getRandomBool(),
+        datetime: () => generatePastAPIDatetime(),
+        integer: () => Math.round(Math.random() * 9999),
+        number: () => Number((Math.random() * 9999).toFixed(2)),
+        string: () => faker.lorem.words()
+    };
+    return deepFreeze({[customField.fields.name]: getters[customField.fields.type]()});
+}
+
+export function createEventRulesData() {
+    return deepFreeze({
+       rules: Array.from(new Array(4)).map(rule => createRuleData())
+    });
+}
+
+export function createRuleData() {
+    return deepFreeze({
+        name: faker.lorem.words(),
+        status: getRandomRuleStatus(),
+        final: getRandomBool(),
+        criteria: {}, //TODO create criteria
+        actions: Array.from(new Array(4)).map(rule => createRuleActionData())
+    });
+}
+
+export function createRuleActionData() {
+    return deepFreeze(pickRandomFromList([
+        {
+            name: 'blacklist',
+            status: getRandomRuleStatus(),
+            type: pickRandomFromList(['customer-id', 'email', 'fingerprint', 'ip-address', 'payment-card']),
+            ttl: Math.round(Math.random() * 9999)
+        },
+        {
+            name: 'stop-subscriptions',
+            status: getRandomRuleStatus(),
+        }
+    ]));
 }
