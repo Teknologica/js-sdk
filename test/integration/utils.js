@@ -201,7 +201,7 @@ export function createUserData(withId = false) {
     return deepFreeze(user);
 }
 
-export function createTransactionLeadSourceData() {
+export function createLeadSourceData() {
     const leadSource = {
         medium: faker.lorem.word(),
         source: faker.internet.domainName(),
@@ -242,8 +242,8 @@ export function createSubscriptionData(withId = false, merge = {}) {
         billingAddress: {},
         quantity: 2,
         autopay: true,
-        startTime: faker.date.past(),
-        renewalTime: faker.date.future(),
+        startTime: '2017-07-21 21:49:39',
+        renewalTime: "2017-08-25 21:49:39",
         customFields: {},
         ...merge
     };
@@ -280,8 +280,7 @@ export function createApiKeyData(withId = false) {
     return deepFreeze(key);
 }
 
-
-export function createCustomerData(withId = false) {
+export function createCustomerData(withId = false, merge = {}) {
     let customer = {
         primaryAddress: {
             firstName: faker.name.firstName(),
@@ -291,7 +290,8 @@ export function createCustomerData(withId = false) {
                 value: faker.internet.email(),
                 primary: true
             }]
-        }
+        },
+        ...merge
     };
     if (withId) {
         customer.id = faker.random.uuid();
@@ -429,7 +429,7 @@ export function createGatewayAccountData(withId = false, merge = {}) {
 export function createCustomFieldData(withSchema = false) {
     let customField = {
         name: generateSlug(),
-        type: pickRandomFromList(['array', 'boolean', 'date', 'datetime', 'integer', 'number', 'string', 'monetary']),
+        type: pickRandomFromList(['array', 'boolean', 'datetime', 'integer', 'number', 'string']),
         description: faker.hacker.phrase()
     };
     if (withSchema) {
@@ -438,4 +438,37 @@ export function createCustomFieldData(withSchema = false) {
         };
     }
     return deepFreeze(customField);
+}
+
+export function createCustomFieldEntryData(customField) {
+    const getters = {
+        array: () => Array.from(new Array(4)).map(item => faker.lorem.word()),
+        boolean: () => Boolean(Math.round(Math.random())),
+        datetime: () => generatePastAPIDatetime(),
+        integer: () => Math.round(Math.random() * 9999),
+        number: () => Number((Math.random() * 9999).toFixed(2)),
+        string: () => faker.lorem.words()
+    };
+    return deepFreeze({[customField.fields.name]: getters[customField.fields.type]()});
+}
+
+export function creatSubscriptionCancelData() {
+    const subscriptionCancel = {
+        policy: "at-next-renewal",
+        canceledBy: "merchant",
+        cancelCategory: "did-not-use",
+        cancelDescription: "sdsds"
+    };
+
+    return deepFreeze(subscriptionCancel);
+}
+
+
+export function createSubscriptionSwitchData(merge = {}) {
+    const subscriptionSwitch = {
+        policy: "at-next-renewal",
+        quantity: 2,
+        ...merge
+    };
+    return deepFreeze(subscriptionSwitch);
 }
