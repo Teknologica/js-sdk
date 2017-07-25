@@ -9,10 +9,7 @@ describe('when using the layouts resource', () => {
     let plans;
 
     before(async () => {
-        const createPlans = Array.from(new Array(4)).map(() => {
-            const planStub = createPlanData();
-            return apiInstance.plans.create({data: planStub});
-        });
+        const createPlans = Array.from(new Array(4)).map(() => apiInstance.plans.create({data: createPlanData()}));
         plans = await Promise.all(createPlans);
     });
 

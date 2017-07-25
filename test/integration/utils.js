@@ -108,7 +108,7 @@ export function generatePassword() {
 }
 
 export function generateSlug() {
-    return faker.helpers.slugify(faker.lorem.words());
+    return faker.helpers.slugify(faker.lorem.words()).slice(0,30);
 }
 
 export function pickRandomFromList(list) {
@@ -313,7 +313,7 @@ export function createPlanData(withId = false) {
 
 export function createCheckoutPageData(withId = false, merge = {}) {
     let checkoutPage = {
-        uriPath: faker.lorem.slug(),
+        uriPath: generateSlug(),
         name: faker.lorem.words(),
         ...merge
     };

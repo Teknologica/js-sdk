@@ -229,7 +229,6 @@ export default function createApiHandler({options}) {
         }
         else if (error.request) { //5xx errors without a response
             if (error.code === 'ECONNABORTED') {
-                console.log(error.message);
                 throw new Errors.RebillyTimeoutError(error);
             }
             throw new Errors.RebillyRequestError(error);
@@ -237,6 +236,23 @@ export default function createApiHandler({options}) {
         else {
             throw new Errors.RebillyRequestError(error);
         }
+    }
+
+    /**
+     * Remove null or empty string parameters from the provided object literal and return a `params` structure for the querystring.
+     * @param params {object}
+     * @returns {{params: {Object}}}
+     */
+    function cleanUpParameters(params) {
+        return {
+            params: Object
+                .keys(params)
+                .filter(key => params[key] !== null && params[key] !== '')
+                .reduce((cleaned, key) => {
+                    cleaned[key] = params[key];
+                    return cleaned;
+                }, {})
+        };
     }
 
     /**
@@ -255,7 +271,7 @@ export default function createApiHandler({options}) {
      * @returns {Collection} collection
      */
     function getAll(url, params) {
-        return wrapRequest(instance.get(url, {params}), {isCollection: true});
+        return wrapRequest(instance.get(url, cleanUpParameters(params)), {isCollection: true});
     }
 
     /**
