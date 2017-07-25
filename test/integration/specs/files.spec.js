@@ -29,7 +29,6 @@ describe('when using the files resource', () => {
             const params = {description: 'string', tags: ['test']};
             file = await apiInstance.files.upload({fileObject: data, data: params});
             testIds.with = file.fields.id;
-            console.log(testIds.with)
             expect(file.response.status).to.be.equal(200);
             expect(file.fields.description).to.be.equal(params.description);
         });
