@@ -7,7 +7,7 @@ import {createSubscriptionData,
         createInvoiceData,
         createPaymentCard,
         createGatewayAccountData,
-        creatSubscriptionCancelData,
+        createSubscriptionCancelData,
         createSubscriptionSwitchData,
         createLeadSourceData} from '../utils.js';
 
@@ -54,6 +54,7 @@ describe('when using the subscriptions resource', () => {
 
     });
 
+
     it('I can create a subscription with ID', async() => {
         const {id: subscriptionId, ...data} = createSubscriptionData(true, sharedData);
         const subscription = await apiInstance.subscriptions.create({id: subscriptionId, data: data});
@@ -68,6 +69,7 @@ describe('when using the subscriptions resource', () => {
         expect(subscription.response.status).to.be.equal(201);
     });
 
+
     it('I can get a list of subscriptions', async () => {
         const subscriptions = await apiInstance.subscriptions.getAll();
         expect(subscriptions.total).to.not.be.equal(0);
@@ -75,6 +77,7 @@ describe('when using the subscriptions resource', () => {
         expect(subscriptionsItem.fields.id).to.not.be.undefined;
         expect(subscriptions.response.status).to.be.equal(200);
     });
+
 
     it('I can get a subscription by its ID', async () => {
         const subscription = await apiInstance.subscriptions.get({id: sharedSubscriptionId});
@@ -90,9 +93,8 @@ describe('when using the subscriptions resource', () => {
     });
 
 
-
     it('I can cancel a subscription by its ID', async() => {
-        const data = creatSubscriptionCancelData();
+        const data = createSubscriptionCancelData();
         const subscriptionCancel = await apiInstance.subscriptions.cancel({id: sharedSubscriptionId, data: data});
         expect(subscriptionCancel.response.status).to.be.equal(201);
 

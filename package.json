@@ -12,7 +12,7 @@
     "unit:watch": "mocha --watch --compilers js:babel-core/register --require babel-polyfill --colors ./test/unit/specs/*.spec.js",
     "integration": "mocha --compilers js:babel-core/register --require babel-polyfill --colors ./test/integration/specs/*.spec.js",
     "integration:watch": "mocha --watch --timeout 7000 --compilers js:babel-core/register --require babel-polyfill --colors ./test/integration/specs/*.spec.js",
-    "integration:watch:only": "mocha --watch --timeout 9000 --compilers js:babel-core/register --require babel-polyfill --colors",
+    "integration:watch:only": "mocha --watch --timeout 7000 --compilers js:babel-core/register --require babel-polyfill --colors",
     "coverage": "nyc --require babel-register --require babel-polyfill test"
   },
   "repository": {

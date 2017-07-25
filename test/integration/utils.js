@@ -115,6 +115,14 @@ export function pickRandomFromList(list) {
     return list[Math.floor(Math.random() * list.length)];
 }
 
+export function getRandomBool() {
+    return Boolean(Math.round(Math.random()));
+}
+
+export function getRandomRuleStatus() {
+    return getRandomBool() ? 'active' : 'inactive';
+}
+
 export function createMerchantSignupData() {
     return deepFreeze({
         email: faker.internet.email(),
@@ -242,8 +250,8 @@ export function createSubscriptionData(withId = false, merge = {}) {
         billingAddress: {},
         quantity: 2,
         autopay: true,
-        startTime: '2017-07-21 21:49:39',
-        renewalTime: "2017-08-25 21:49:39",
+        startTime: generatePastAPIDatetime(),
+        renewalTime: generateFutureAPIDatetime(),
         customFields: {},
         ...merge
     };
@@ -299,6 +307,7 @@ export function createCustomerData(withId = false, merge = {}) {
     return deepFreeze(customer);
 }
 
+
 export function createBankAccountData(withId = false, merge = {}) {
     let bankAccount = {
         bankName: faker.finance.accountName(),
@@ -313,6 +322,7 @@ export function createBankAccountData(withId = false, merge = {}) {
     return deepFreeze(bankAccount);
 }
 
+
 export function createBlacklistData(withId = false) {
     let blacklistItem = {
         type: 'ip-address',
@@ -323,6 +333,7 @@ export function createBlacklistData(withId = false) {
     }
     return deepFreeze(blacklistItem);
 }
+
 
 export function createPlanData(withId = false) {
     let plan = {
@@ -339,6 +350,7 @@ export function createPlanData(withId = false) {
     return deepFreeze(plan);
 }
 
+
 export function createCheckoutPageData(withId = false, merge = {}) {
     let checkoutPage = {
         uriPath: faker.lorem.slug(),
@@ -350,6 +362,7 @@ export function createCheckoutPageData(withId = false, merge = {}) {
     }
     return deepFreeze(checkoutPage);
 }
+
 
 export function createCouponData(withRedemptionCode = false) {
     let coupon = {
@@ -370,12 +383,14 @@ export function createCouponData(withRedemptionCode = false) {
     return deepFreeze(coupon);
 }
 
+
 export function createCouponRedemptionData(redemptionCode, customerId) {
     return deepFreeze({
         redemptionCode,
         customerId
     });
 }
+
 
 export function createCustomEventData(withId = false) {
     let customEvent = {
@@ -395,6 +410,7 @@ export function createCustomEventData(withId = false) {
     return deepFreeze(customEvent);
 }
 
+
 export function createPaymentCard(withId = false, merge = {}) {
     let paymentCard = {
         pan: testPaymentCards.approved,
@@ -409,10 +425,11 @@ export function createPaymentCard(withId = false, merge = {}) {
     return deepFreeze(paymentCard);
 }
 
+
 export function createGatewayAccountData(withId = false, merge = {}) {
     let gatewayAccount = {
         gatewayName: 'RebillyProcessor',
-        acquirerName: 'Other',
+        acquirerName: pickRandomFromList(['Other', 'RebillyProcessor', 'Bank Of Rebilly']),
         merchantCategoryCode: 0,
         acceptedCurrencies: ['USD'],
         method: 'payment-card',
@@ -425,6 +442,24 @@ export function createGatewayAccountData(withId = false, merge = {}) {
     }
     return deepFreeze(gatewayAccount);
 }
+
+
+export function createCustomerCredentialsData({withId = false, customerId = ''} = {}) {
+    let credentialsData = {
+        "username": faker.internet.userName(),
+        "password": 'pa$$word',
+        "expiredTime": "2017-07-20T16:22:55Z"
+    };
+    if (withId) {
+        credentialsData.id = faker.random.uuid();
+    }
+    if (customerId) {
+        credentialsData.customerId = customerId;
+    }
+    // return deepFreeze(credentialsData);
+    return credentialsData;
+}
+
 
 export function createCustomFieldData(withSchema = false) {
     let customField = {
@@ -440,10 +475,11 @@ export function createCustomFieldData(withSchema = false) {
     return deepFreeze(customField);
 }
 
+
 export function createCustomFieldEntryData(customField) {
     const getters = {
         array: () => Array.from(new Array(4)).map(item => faker.lorem.word()),
-        boolean: () => Boolean(Math.round(Math.random())),
+        boolean: () => getRandomBool(),
         datetime: () => generatePastAPIDatetime(),
         integer: () => Math.round(Math.random() * 9999),
         number: () => Number((Math.random() * 9999).toFixed(2)),
@@ -452,12 +488,13 @@ export function createCustomFieldEntryData(customField) {
     return deepFreeze({[customField.fields.name]: getters[customField.fields.type]()});
 }
 
-export function creatSubscriptionCancelData() {
+
+export function createSubscriptionCancelData() {
     const subscriptionCancel = {
         policy: "at-next-renewal",
         canceledBy: "merchant",
         cancelCategory: "did-not-use",
-        cancelDescription: "sdsds"
+        cancelDescription: "string"
     };
 
     return deepFreeze(subscriptionCancel);
@@ -471,4 +508,55 @@ export function createSubscriptionSwitchData(merge = {}) {
         ...merge
     };
     return deepFreeze(subscriptionSwitch);
+}
+
+
+export function createEventRulesData() {
+    return deepFreeze({
+       rules: Array.from(new Array(4)).map(rule => createRuleData())
+    });
+}
+
+
+export function createRuleData() {
+    return deepFreeze({
+        name: faker.lorem.words(),
+        status: getRandomRuleStatus(),
+        final: getRandomBool(),
+        criteria: {}, //TODO create criteria
+        actions: Array.from(new Array(4)).map(rule => createRuleActionData())
+    });
+}
+
+
+export function createRuleActionData() {
+    return deepFreeze(pickRandomFromList([
+        {
+            name: 'blacklist',
+            status: getRandomRuleStatus(),
+            type: pickRandomFromList(['customer-id', 'email', 'fingerprint', 'ip-address', 'payment-card']),
+            ttl: Math.round(Math.random() * 9999)
+        },
+        {
+            name: 'stop-subscriptions',
+            status: getRandomRuleStatus(),
+        }
+    ]));
+}
+
+
+export function createLayoutData(withId = false, merge = {}) {
+    let layout = {
+        name: faker.lorem.words(),
+        ...merge
+    };
+    if (withId) {
+        layout.id = faker.random.uuid();
+    }
+    return deepFreeze(layout);
+}
+
+
+export function createLayoutItemData(planId) {
+    return deepFreeze({planId, starred: false});
 }
