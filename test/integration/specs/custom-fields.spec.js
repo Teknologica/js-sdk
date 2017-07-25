@@ -6,7 +6,8 @@ const expect = chai.expect;
 
 describe('when using the custom fields resource', () => {
     const resourceName = 'customers';
-    let cachedField, inUseField;
+    let cachedField;
+    let inUseField;
 
     it('I can create a custom field for a resource', async () => {
         const {name, ...data} = createCustomFieldData();
