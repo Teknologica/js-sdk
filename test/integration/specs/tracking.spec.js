@@ -4,7 +4,9 @@ import apiInstance from '../api-instance';
 const expect = chai.expect;
 
 describe('when using the tracking resource', () => {
-    let sharedApiLogId, sharedSubscriptionLogId, sharedWebhookNotificationLogId;
+    let sharedApiLogId;
+    let sharedSubscriptionLogId;
+    let sharedWebhookNotificationLogId;
 
     it('I can get a list of api logs', async () => {
         const apiLogs = await apiInstance.tracking.getAllApiLogs();

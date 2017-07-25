@@ -15,7 +15,8 @@ const expect = chai.expect;
 
 describe('when using the subscriptions resource', () => {
 
-    let sharedSubscriptionId, sharedData={};
+    let sharedSubscriptionId;
+    let sharedData = {};
 
     beforeEach(async () => {
 

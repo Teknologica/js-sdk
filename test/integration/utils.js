@@ -620,3 +620,25 @@ export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) 
         currency: 'USD'
     })
 }
+
+
+export function createShippingZoneData(withId = false) {
+    let shippingZone = {
+        name: faker.lorem.word(),
+        countries: [],
+        rates: [
+            {
+                name: "string",
+                price: 0,
+                currency: "USD",
+            }
+        ]
+    };
+
+    if (withId) {
+        shippingZone.id = faker.random.uuid()
+    }
+
+    return deepFreeze(shippingZone);
+
+}

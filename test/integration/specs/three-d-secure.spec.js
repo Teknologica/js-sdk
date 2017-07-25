@@ -10,7 +10,8 @@ const expect = chai.expect;
 
 describe('when using the three-d-secure resource', () => {
 
-    let sharedData = {}, sharedThreeDSecureId;
+    let sharedData = {};
+    let sharedThreeDSecureId;
 
     before(async() => {
         const {id : customerId, ...customerData} = createCustomerData(true);
