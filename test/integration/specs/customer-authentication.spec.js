@@ -16,7 +16,7 @@ describe('when using the customer-authentication resource', () => {
             authTokenTtl: 20,
             resetTokenTtl: 30
         };
-        const authOptions = await apiInstance.customerAuthentication.updateAuthOptions(data);
+        const authOptions = await apiInstance.customerAuthentication.updateAuthOptions({data});
         //TODO: values get set to credentialTtl value - investigate further, seems buggy
         expect(authOptions.fields.authTokenTtl).to.be.equal(data.credentialTtl);
     });
@@ -28,25 +28,25 @@ describe('when using the customer-authentication resource', () => {
     });
 
     //TODO: /authentication-tokens endpoints, as soon as we figure out how to populate the response to GET /authentication-tokens
-    // it('I can login a customer', async () => {
-    //     const credentialsData = createCustomerCredentialsData({customerId: customer.fields.id});
-    //     const customerLogin = await apiInstance.customerAuthentication.login({data: credentialsData});
-    // });
-    //
-    // it('I can get a list of authentication tokens', async () => {
-    //     const authTokens = await apiInstance.customerAuthentication.getAllAuthTokens();
-    //     expect(authTokens.total).to.not.be.equal(0);
-    //     const [authToken] = authTokens.items;
-    //     expect(authToken.fields.id).to.not.be.undefined;
-    // });
-    //
-    // it('I can verify an authentication token', async () => {
-    //
-    // });
-    //
-    // it('I can logout a customer', async () => {
-    //
-    // });
+    it.skip('I can login a customer', async () => {
+        const credentialsData = createCustomerCredentialsData({customerId: customer.fields.id});
+        const customerLogin = await apiInstance.customerAuthentication.login({data: credentialsData});
+    });
+
+    it.skip('I can get a list of authentication tokens', async () => {
+        const authTokens = await apiInstance.customerAuthentication.getAllAuthTokens();
+        expect(authTokens.total).to.not.be.equal(0);
+        const [authToken] = authTokens.items;
+        expect(authToken.fields.id).to.not.be.undefined;
+    });
+
+    it.skip('I can verify an authentication token', async () => {
+
+    });
+
+    it.skip('I can logout a customer', async () => {
+
+    });
 
     it('I can create customer login credentials without an ID', async () => {
         const {id: customerId, ...data} = createCustomerData(true);
@@ -100,22 +100,22 @@ describe('when using the customer-authentication resource', () => {
     });
 
     //TODO: GET /password-tokens always returns empty
-    // it('I can get a list of reset password tokens', async () => {
-    //     const passwordTokensList = await apiInstance.customerAuthentication.getAllResetPasswordTokens();
-    //     const [passwordTokensListItems] = passwordTokensList.items;
-    //     expect(passwordTokensList.total).to.not.be.equal(0);
-    //     expect(passwordTokensListItems.fields.id).to.not.be.undefined;
-    // });
+    it.skip('I can get a list of reset password tokens', async () => {
+        const passwordTokensList = await apiInstance.customerAuthentication.getAllResetPasswordTokens();
+        const [passwordTokensListItems] = passwordTokensList.items;
+        expect(passwordTokensList.total).to.not.be.equal(0);
+        expect(passwordTokensListItems.fields.id).to.not.be.undefined;
+    });
 
     //TODO: GET /password-tokens/id doesn't work, no IDs found
-    // it('I can get a reset password token by using its ID', async () => {
-    //     const passwordToken = await apiInstance.customerAuthentication.getAllResetPasswordTokens({id: testIds.with});
-    //     expect(passwordToken.fields.id).to.be.equal(testIds.with);
-    // });
+    it.skip('I can get a reset password token by using its ID', async () => {
+        const passwordToken = await apiInstance.customerAuthentication.getAllResetPasswordTokens({id: testIds.with});
+        expect(passwordToken.fields.id).to.be.equal(testIds.with);
+    });
 
     //TODO: DELETE /password-tokens/id doesn't work, no IDs found
-    // it('I can delete a reset password token', async () => {
-    //     const deletedToken = await apiInstance.customerAuthentication.deleteResetPasswordToken({id: testIds.with});
-    //     expect(deletedToken.response.status).to.be.equal(204);
-    // });
+    it.skip('I can delete a reset password token', async () => {
+        const deletedToken = await apiInstance.customerAuthentication.deleteResetPasswordToken({id: testIds.with});
+        expect(deletedToken.response.status).to.be.equal(204);
+    });
 });

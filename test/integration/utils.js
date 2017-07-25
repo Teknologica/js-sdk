@@ -525,7 +525,7 @@ export function createEventRulesData() {
 export function createRuleData() {
     return deepFreeze({
         name: faker.lorem.words(),
-        status: getRandomRuleStatus(),
+        status: 'inactive', //TODO allow for random value in the future without affecting other tests
         final: getRandomBool(),
         criteria: {}, //TODO create criteria
         actions: Array.from(new Array(4)).map(rule => createRuleActionData())

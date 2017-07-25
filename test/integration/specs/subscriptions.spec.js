@@ -15,11 +15,10 @@ import {createSubscriptionData,
 const expect = chai.expect;
 
 describe('when using the subscriptions resource', () => {
-
     let sharedSubscriptionId;
-    let sharedData = {};
 
-    before(async () => {
+    async function prepareStub()  {
+        let sharedData = {};
         const {id : customerId, ...customerData} = createCustomerData(true);
         const {id : websiteId, ...websiteData} = createWebsiteData(true);
         const [customer, website, organizations] = await Promise.all([
@@ -43,17 +42,19 @@ describe('when using the subscriptions resource', () => {
         await apiInstance.customers.update({id: customerId, data: customerData});
         sharedData.customerId = customer.fields.id;
         sharedData.websiteId = website.fields.id;
-        const {id : planId, ...planData} = createPlanData(true);
-        const {id : invoiceId, ...invoiceData} = createInvoiceData(true, sharedData);
+        const {id: planId, ...planData} = createPlanData(true);
+        const {id: invoiceId, ...invoiceData} = createInvoiceData(true, sharedData);
         const [plan, invoice] = await Promise.all([
             apiInstance.plans.create({id: planId, data: planData}),
             apiInstance.invoices.create({id: invoiceId, data: invoiceData})
         ]);
         sharedData.initialInvoiceId = invoice.fields.id;
         sharedData.planId = plan.fields.id;
-    });
+        return sharedData;
+    }
 
     it('I can create a subscription with ID', async() => {
+        const sharedData = await prepareStub();
         const {id: subscriptionId, ...data} = createSubscriptionData(true, sharedData);
         const subscription = await apiInstance.subscriptions.create({id: subscriptionId, data: data});
         expect(subscription.response.status).to.be.equal(201);
@@ -61,6 +62,7 @@ describe('when using the subscriptions resource', () => {
     });
 
     it('I can create a subscription without ID', async() => {
+        const sharedData = await prepareStub();
         const {id: subscriptionId, ...data} = createSubscriptionData(false, sharedData);
         const subscription = await apiInstance.subscriptions.create({id: subscriptionId, data: data});
         expect(subscription.response.status).to.be.equal(201);
@@ -81,6 +83,7 @@ describe('when using the subscriptions resource', () => {
     });
 
     it('I can update a subscription by its ID', async() => {
+        const sharedData = await prepareStub();
         const {id: subscriptionId, ...data} = createSubscriptionData(false, sharedData);
         const subscription = await apiInstance.subscriptions.update({id: sharedSubscriptionId, data: data});
         expect(subscription.response.status).to.be.equal(200);
@@ -94,6 +97,7 @@ describe('when using the subscriptions resource', () => {
     });
 
     it('I can switch a subscription by its ID', async() => {
+        const sharedData = await prepareStub();
         const data = createSubscriptionSwitchData({planId: sharedData.planId, websiteId: sharedData.websiteId });
         const subscriptionSwitch = await apiInstance.subscriptions.switch({id: sharedSubscriptionId, data: data});
         expect(subscriptionSwitch.response.status).to.be.equal(201);
