@@ -418,6 +418,18 @@ export function createPaymentCard(withId = false, merge = {}) {
 }
 
 export function createGatewayAccountData(withId = false, merge = {}) {
+    let gatewayName, gatewayConfig;
+
+    if ( merge !== {} && merge.gatewayName) {
+        gatewayName = merge.gatewayName;
+        delete merge.gatewayName;
+    }
+
+    if (merge.gatewayConfig) {
+        gatewayConfig = merge.gatewayConfig;
+        delete merge.gatewayConfig;
+    }
+
     let gatewayAccount = {
         gatewayName: 'RebillyProcessor',
         acquirerName: pickRandomFromList(['Other', 'RebillyProcessor', 'Bank Of Rebilly']),
@@ -428,9 +440,19 @@ export function createGatewayAccountData(withId = false, merge = {}) {
         gatewayConfig: {},
         ...merge
     };
+
+    if (gatewayName) {
+        gatewayAccount.gatewayName = gatewayName;
+    }
+
+    if (gatewayConfig) {
+        gatewayAccount.gatewayConfig = gatewayConfig;
+    }
+
     if (withId) {
         gatewayAccount.id = faker.random.uuid();
     }
+
     return deepFreeze(gatewayAccount);
 }
 
@@ -503,7 +525,7 @@ export function createEventRulesData() {
 export function createRuleData() {
     return deepFreeze({
         name: faker.lorem.words(),
-        status: getRandomRuleStatus(),
+        status: 'inactive', //TODO allow for random value in the future without affecting other tests
         final: getRandomBool(),
         criteria: {}, //TODO create criteria
         actions: Array.from(new Array(4)).map(rule => createRuleActionData())
@@ -557,6 +579,25 @@ export function createLayoutData(withId = false, merge = {}) {
 export function createLayoutItemData(planId) {
     return deepFreeze({planId, starred: false});
 }
+
+
+export function create3DSecureData(merge = {}) {
+    let threeDSecure = {
+        ...merge,
+        enrolled: "Y",
+        enrollmentEci: "abc",
+        eci: 0,
+        cavv: "string",
+        xid: "string",
+        payerAuthResponseStatus: "Y",
+        signatureVerification: "Y",
+        amount: 0,
+        currency: "USD"
+    };
+
+    return deepFreeze(threeDSecure);
+}
+
 
 export function createNoteData(withId = false, customerId) {
     let note = {
