@@ -1,6 +1,13 @@
 import chai from 'chai';
 import apiInstance from '../api-instance';
-import {createDisputeData, createWebsiteData, createCustomerData, createPaymentCard, createGatewayAccountData, createTransactionData} from '../utils';
+import {
+    createDisputeData,
+    createWebsiteData,
+    createCustomerData,
+    createPaymentCard,
+    createGatewayAccountData,
+    createTransactionData
+} from '../utils';
 
 const expect = chai.expect;
 
@@ -12,17 +19,21 @@ describe('when using the disputes resource', () => {
     before(async () => {
         const customerStub = createCustomerData();
         const websiteStub = createWebsiteData();
-        const customer = await apiInstance.customers.create({data: customerStub});
-        const website = await apiInstance.websites.create({data: websiteStub});
-        const paymentCardStub = createPaymentCard(false, {customerId: customer.fields.id, billingAddress: customer.fields.primaryAddress});
-        const organizations = await apiInstance.organizations.getAll();
+        const [customer, website, organizations] = await Promise.all([
+            apiInstance.customers.create({data: customerStub}),
+            apiInstance.websites.create({data: websiteStub}),
+            apiInstance.organizations.getAll()
+        ]);
         const [organization] = organizations.items;
+        const paymentCardStub = createPaymentCard(false, {customerId: customer.fields.id, billingAddress: customer.fields.primaryAddress});
         const gatewayAccountStub = createGatewayAccountData(false, {
             websites: [website.fields.id],
             organizationId: organization.fields.id
         });
-        const gatewayAccount = await apiInstance.gatewayAccounts.create({data: gatewayAccountStub});
-        const paymentCard = await apiInstance.paymentCards.create({data: paymentCardStub});
+        const [paymentCard, gatewayAccount] = await Promise.all([
+            apiInstance.paymentCards.create({data: paymentCardStub}),
+            apiInstance.gatewayAccounts.create({data: gatewayAccountStub})
+        ]);
         sharedData = {
             customerId: customer.fields.id,
             websiteId: website.fields.id,
@@ -43,7 +54,7 @@ describe('when using the disputes resource', () => {
         const disputeData = createDisputeData({transactionId: payment.fields.id});
         const dispute = await apiInstance.disputes.create({data: disputeData});
         testIds.without = dispute.fields.id;
-        expect(dispute.fields.description).to.be.equal(disputeData.description);
+        expect(dispute.fields.transactionId).to.be.equal(disputeData.transactionId);
     });
 
     it('I can create a dispute with an ID', async () => {
@@ -70,6 +81,6 @@ describe('when using the disputes resource', () => {
         const disputeData = createDisputeData({transactionId: payment.fields.id});
         const dispute = await apiInstance.disputes.update({id: testIds.without, data: disputeData});
         expect(dispute.fields.id).to.be.equal(testIds.without);
-        expect(dispute.fields.description).to.be.equal(disputeData.description);
+        expect(dispute.fields.acquirerReferenceNumber).to.be.equal(disputeData.acquirerReferenceNumber);
     });
 });

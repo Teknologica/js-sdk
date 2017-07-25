@@ -25,7 +25,7 @@ export default function InvoicesResource({apiHandler}) {
             return await apiHandler.put(`invoices/${id}`, data);
         },
 
-        async issue({id, data}) {
+        async issue({id, data = {}}) {
             return await apiHandler.post(`invoices/${id}/issue`, data);
         },
 
@@ -37,11 +37,27 @@ export default function InvoicesResource({apiHandler}) {
             return await apiHandler.post(`invoices/${id}/void`, null);
         },
 
+        async getAllInvoiceItems({id, limit = null, offset = null}) {
+            const params = {
+                limit,
+                offset
+            };
+            return await apiHandler.getAll(`invoices/${id}/items`, params);
+        },
+
+        async createInvoiceItem({id, data}) {
+            return await apiHandler.post(`invoices/${id}/items`, data);
+        },
+
         async getLeadSource({id}) {
             return await apiHandler.get(`invoices/${id}/lead-source`);
         },
 
         async createLeadSource({id, data}) {
+            return await apiHandler.put(`invoices/${id}/lead-source`, data);
+        },
+
+        async updateLeadSource({id, data}) {
             return await apiHandler.put(`invoices/${id}/lead-source`, data);
         },
 

@@ -269,7 +269,7 @@ export function createInvoiceData(withId = false, merge = {}) {
         currency: "USD",
         billingAddress: {},
         deliveryAddress: {},
-        "notes": "string",
+        notes: faker.hacker.phrase(),
         ...merge
     };
 
@@ -547,6 +547,7 @@ export function createDisputeData({withId = false, transactionId} = {}) {
         reasonCode: '1000',
         type: 'first-chargeback',
         status: 'response-needed',
+        acquirerReferenceNumber: faker.random.number().toString(),
         postedTime: generatePastAPIDatetime(),
         deadlineTime: generateFutureAPIDatetime()
     };
