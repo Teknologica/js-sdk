@@ -569,3 +569,12 @@ export function createNoteData(withId = false, customerId) {
     }
     return deepFreeze(note);
 }
+
+export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) {
+    return deepFreeze({
+        websiteId,
+        gatewayAccountId,
+        amount: faker.finance.amount(),
+        currency: 'USD'
+    })
+}
