@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
-    "babel-polyfill": "^6.23.0"
+    "babel-polyfill": "^6.23.0",
+    "filereader": "^0.10.3"
   }
 }

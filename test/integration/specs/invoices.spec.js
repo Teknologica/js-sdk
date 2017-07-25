@@ -28,14 +28,14 @@ describe('when using the invoices resource', () => {
         };
     });
 
-    it('I can create a invoice without an ID', async () => {
+    it('I can create an invoice without an ID', async () => {
         const invoiceData = createInvoiceData(false, sharedData);
         const invoice = await apiInstance.invoices.create({data: invoiceData});
         testIds.without = invoice.fields.id;
         expect(invoice.fields.customerId).to.be.equal(invoiceData.customerId);
     });
 
-    it('I can create a invoice with an ID', async () => {
+    it('I can create an invoice with an ID', async () => {
         const {id, ...invoiceData} = createInvoiceData(true, sharedData);
         const invoice = await apiInstance.invoices.create({id, data: invoiceData});
         cachedInvoice = invoice;
@@ -51,15 +51,15 @@ describe('when using the invoices resource', () => {
         expect(invoice.fields.id).to.not.be.undefined;
     });
 
-    it('I can get a invoice by using its ID', async () => {
+    it('I can get an invoice by using its ID', async () => {
         const invoice = await apiInstance.invoices.get({id: testIds.with});
         expect(invoice.fields.id).to.be.equal(testIds.with);
     });
 
-    it('I can update a invoice', async () => {
+    it('I can update an invoice', async () => {
         const invoiceData = createInvoiceData(false, sharedData);
-        const invoice = await apiInstance.invoices.update({id: testIds.without, data: invoiceData});
-        expect(invoice.fields.id).to.be.equal(testIds.without);
+        const invoice = await apiInstance.invoices.update({id: testIds.with, data: invoiceData});
+        expect(invoice.fields.id).to.be.equal(testIds.with);
         expect(invoice.fields.notes).to.be.equal(invoiceData.notes);
     });
 
@@ -101,7 +101,7 @@ describe('when using the invoices resource', () => {
         expect(invoiceItem.fields.id).to.not.be.undefined;
     });
 
-    it('I can create a lead source for a invoice by using its ID', async () => {
+    it('I can create a lead source for an invoice by using its ID', async () => {
         const data = createLeadSourceData();
         const leadSource = await apiInstance.invoices.createLeadSource({id: cachedInvoice.fields.id, data: data});
         cachedLeadSource = leadSource;
@@ -110,7 +110,7 @@ describe('when using the invoices resource', () => {
         expect(leadSource.response.status).to.be.equal(201);
     });
 
-    it('I can update a lead source for a invoice by using its ID', async () => {
+    it('I can update a lead source for an invoice by using its ID', async () => {
         const {campaign} = createLeadSourceData();
         const data = {...cachedLeadSource.fields, campaign};
         const leadSource = await apiInstance.invoices.updateLeadSource({id: cachedInvoice.fields.id, data: data});

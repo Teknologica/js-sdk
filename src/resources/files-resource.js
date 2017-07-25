@@ -15,16 +15,16 @@ export default function FilesResource({apiHandler}) {
             return await apiHandler.get(`files/${id}`);
         },
 
-        async upload({fileObject, data = {description: '', tags: ''}}) {
+        async upload({fileObject, data = {description: '', tags: ['']}}) {
             const file = await apiHandler.post(`files`, fileObject);
             const params = {
-                name: fileObject.name,
+                name: file.name,
                 extension: file.extension,
                 description: data.description,
                 tags: data.tags,
                 url: ''
             };
-            return await this.update({id: file.id, data: params});
+            return await this.update({id: file.fields.id, data: params});
         },
 
         async update({id, data}) {
@@ -36,7 +36,7 @@ export default function FilesResource({apiHandler}) {
                 filter: `fileId:${id}`
             };
             const attachments = await apiHandler.getAll(`attachments`, params);
-            const promises = attachments.map(attachment => apiHandler.delete(`attachments/${attachment.id}`));
+            const promises = attachments.items.map(attachment => apiHandler.delete(`attachments/${attachment.fields.id}`));
             await Promise.all(promises);
             return await apiHandler.delete(`files/${id}`);
         },

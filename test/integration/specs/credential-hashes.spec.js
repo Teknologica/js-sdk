@@ -4,7 +4,7 @@ import {createWebhookCredData, createEmailCredData} from '../utils';
 
 const expect = chai.expect;
 
-describe('when using the credential hases resource', () => {
+describe('when using the credential hashes resource', () => {
     const testHashes = {webhook: null, email: null};
 
     it('I can create a website credential hash', async () => {

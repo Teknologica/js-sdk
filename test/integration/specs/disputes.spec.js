@@ -79,8 +79,8 @@ describe('when using the disputes resource', () => {
 
     it('I can update a dispute', async () => {
         const disputeData = createDisputeData({transactionId: payment.fields.id});
-        const dispute = await apiInstance.disputes.update({id: testIds.without, data: disputeData});
-        expect(dispute.fields.id).to.be.equal(testIds.without);
+        const dispute = await apiInstance.disputes.update({id: testIds.with, data: disputeData});
+        expect(dispute.fields.id).to.be.equal(testIds.with);
         expect(dispute.fields.acquirerReferenceNumber).to.be.equal(disputeData.acquirerReferenceNumber);
     });
 });
