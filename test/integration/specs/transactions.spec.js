@@ -11,8 +11,6 @@ import {
 
 const expect = chai.expect;
 
-// TODO test transactions cancel and refund api
-
 describe('when using the transactions resource', () => {
     const testIds = {with: null, without: null};
     let cachedTransaction;
@@ -21,16 +19,21 @@ describe('when using the transactions resource', () => {
     let website;
     let customer;
     let paymentCard;
-    let gatewayAccount;
     let sharedData;
 
     before(async () => {
         const customerStub = createCustomerData();
         const websiteStub = createWebsiteData();
-        customer = await apiInstance.customers.create({data: customerStub});
-        website = await apiInstance.websites.create({data: websiteStub});
-        const paymentCardStub = createPaymentCard(false, {customerId: customer.fields.id, billingAddress: customer.fields.primaryAddress});
-        const organizations = await apiInstance.organizations.getAll();
+        let organizations;
+        [customer, website, organizations] = await Promise.all([
+            apiInstance.customers.create({data: customerStub}),
+            apiInstance.websites.create({data: websiteStub}),
+            apiInstance.organizations.getAll()
+        ]);
+        const paymentCardStub = createPaymentCard(false, {
+            customerId: customer.fields.id,
+            billingAddress: customer.fields.primaryAddress
+        });
         const [organization] = organizations.items;
         const gatewayAccountStub = createGatewayAccountData(false, {
             websites: [website.fields.id],
