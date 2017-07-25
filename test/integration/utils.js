@@ -438,7 +438,7 @@ export function createCustomerCredentialsData({withId = false, customerId = ''} 
     let credentialsData = {
         "username": faker.internet.userName(),
         "password": 'pa$$word',
-        "expiredTime": "2017-07-20T16:22:55Z"
+        "expiredTime": generateFutureAPIDatetime()
     };
     if (withId) {
         credentialsData.id = faker.random.uuid();
@@ -446,8 +446,7 @@ export function createCustomerCredentialsData({withId = false, customerId = ''} 
     if (customerId) {
         credentialsData.customerId = customerId;
     }
-    // return deepFreeze(credentialsData);
-    return credentialsData;
+    return deepFreeze(credentialsData);
 }
 
 export function createCustomFieldData(withSchema = false) {
@@ -524,6 +523,23 @@ export function createRuleActionData() {
             status: getRandomRuleStatus(),
         }
     ]));
+}
+
+export function createDisputeData({withId = false, transactionId} = {}) {
+    let disputesData = {
+        transactionId: transactionId,
+        currency: 'USD',
+        amount: 5,
+        reasonCode: '1000',
+        type: 'first-chargeback',
+        status: 'response-needed',
+        postedTime: generatePastAPIDatetime(),
+        deadlineTime: generateFutureAPIDatetime()
+    };
+    if (withId) {
+        disputesData.id = faker.random.uuid();
+    }
+    return deepFreeze(disputesData);
 }
 
 export function createLayoutData(withId = false, merge = {}) {
