@@ -6,7 +6,8 @@ const expect = chai.expect;
 
 describe('when using the custom fields resource', () => {
     const resourceName = 'customers';
-    let cachedField, inUseField;
+    let cachedField;
+    let inUseField;
 
     it('I can create a custom field for a resource', async () => {
         const {name, ...data} = createCustomFieldData();
@@ -50,7 +51,7 @@ describe('when using the custom fields resource', () => {
         });
         const customer = await apiInstance.customers.create({data: customerStub});
         const [customFieldValue] = Object.values(customFieldEntry);
-        expect(customer.fields.customFields[customField.fields.name]).to.be.equal(customFieldValue);
+        expect(customer.fields.customFields[customField.fields.name]).to.be.deep.equal(customFieldValue);
     });
 
     it('I can delete a custom field for a resource by its name', async () => {

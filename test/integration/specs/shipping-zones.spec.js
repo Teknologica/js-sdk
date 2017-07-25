@@ -11,7 +11,6 @@ describe('when using the shipping zones resource', () => {
     it('I can create a shipping zone with ID', async() => {
         const {id: id, ...data} = createShippingZoneData(true);
         const shippingZone = await apiInstance.shippingZones.create({id: id, data: data});
-        // console.log(shippingZone);
         expect(shippingZone.response.status).to.be.equal(201);
     });
 
@@ -53,6 +52,13 @@ describe('when using the shipping zones resource', () => {
         const data = createShippingZoneData(false);
         const shippingZone = await apiInstance.shippingZones.create({data: data});
         expect(shippingZone.response.status).to.be.equal(201);
+        sharedShippingZonesId = shippingZone.fields.id;
+    });
+
+
+    it('I can delete a shipping zone by its ID', async() => {
+        const shippingZone = await apiInstance.shippingZones.delete({id: sharedShippingZonesId});
+        expect(shippingZone.response.status).to.be.equal(204);
     });
 
 });

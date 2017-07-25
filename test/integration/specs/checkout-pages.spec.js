@@ -6,7 +6,9 @@ const expect = chai.expect;
 
 describe('when using the checkout pages resource', () => {
     const testIds = {with: null, without: null};
-    let plan, website, sharedData;
+    let plan;
+    let website;
+    let sharedData;
 
     before(async () => {
         const {id, ...data} = createPlanData(true);
