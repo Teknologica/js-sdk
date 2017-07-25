@@ -244,6 +244,42 @@ export function createTransactionData(withId = false, merge = {}, scheduledTrans
     return deepFreeze(transaction);
 }
 
+export function createSubscriptionData(withId = false, merge = {}) {
+    let subscription = {
+        deliveryAddress: {},
+        billingAddress: {},
+        quantity: 2,
+        autopay: true,
+        startTime: generatePastAPIDatetime(),
+        renewalTime: generateFutureAPIDatetime(),
+        customFields: {},
+        ...merge
+    };
+
+    if (withId) {
+        subscription.id = faker.random.uuid();
+    }
+    return deepFreeze(subscription);
+
+}
+
+
+export function createInvoiceData(withId = false, merge = {}) {
+    let invoice = {
+        currency: "USD",
+        billingAddress: {},
+        deliveryAddress: {},
+        "notes": "string",
+        ...merge
+    };
+
+    if (withId) {
+        invoice.id = faker.random.uuid();
+    }
+    return deepFreeze(invoice);
+
+}
+
 export function createApiKeyData(withId = false) {
     let key = {description: faker.lorem.sentence()};
     if (withId) {
@@ -271,6 +307,7 @@ export function createCustomerData(withId = false, merge = {}) {
     return deepFreeze(customer);
 }
 
+
 export function createBankAccountData(withId = false, merge = {}) {
     let bankAccount = {
         bankName: faker.finance.accountName(),
@@ -285,6 +322,7 @@ export function createBankAccountData(withId = false, merge = {}) {
     return deepFreeze(bankAccount);
 }
 
+
 export function createBlacklistData(withId = false) {
     let blacklistItem = {
         type: 'ip-address',
@@ -295,6 +333,7 @@ export function createBlacklistData(withId = false) {
     }
     return deepFreeze(blacklistItem);
 }
+
 
 export function createPlanData(withId = false) {
     let plan = {
@@ -311,6 +350,7 @@ export function createPlanData(withId = false) {
     return deepFreeze(plan);
 }
 
+
 export function createCheckoutPageData(withId = false, merge = {}) {
     let checkoutPage = {
         uriPath: generateSlug(),
@@ -322,6 +362,7 @@ export function createCheckoutPageData(withId = false, merge = {}) {
     }
     return deepFreeze(checkoutPage);
 }
+
 
 export function createCouponData(withRedemptionCode = false) {
     let coupon = {
@@ -342,12 +383,14 @@ export function createCouponData(withRedemptionCode = false) {
     return deepFreeze(coupon);
 }
 
+
 export function createCouponRedemptionData(redemptionCode, customerId) {
     return deepFreeze({
         redemptionCode,
         customerId
     });
 }
+
 
 export function createCustomEventData(withId = false) {
     let customEvent = {
@@ -367,6 +410,7 @@ export function createCustomEventData(withId = false) {
     return deepFreeze(customEvent);
 }
 
+
 export function createPaymentCard(withId = false, merge = {}) {
     let paymentCard = {
         pan: testPaymentCards.approved,
@@ -380,6 +424,7 @@ export function createPaymentCard(withId = false, merge = {}) {
     }
     return deepFreeze(paymentCard);
 }
+
 
 export function createGatewayAccountData(withId = false, merge = {}) {
     let gatewayAccount = {
@@ -398,6 +443,7 @@ export function createGatewayAccountData(withId = false, merge = {}) {
     return deepFreeze(gatewayAccount);
 }
 
+
 export function createCustomerCredentialsData({withId = false, customerId = ''} = {}) {
     let credentialsData = {
         "username": faker.internet.userName(),
@@ -414,6 +460,7 @@ export function createCustomerCredentialsData({withId = false, customerId = ''} 
     return credentialsData;
 }
 
+
 export function createCustomFieldData(withSchema = false) {
     let customField = {
         name: generateSlug(),
@@ -428,6 +475,7 @@ export function createCustomFieldData(withSchema = false) {
     return deepFreeze(customField);
 }
 
+
 export function createCustomFieldEntryData(customField) {
     const getters = {
         array: () => Array.from(new Array(4)).map(item => faker.lorem.word()),
@@ -440,11 +488,35 @@ export function createCustomFieldEntryData(customField) {
     return deepFreeze({[customField.fields.name]: getters[customField.fields.type]()});
 }
 
+
+export function createSubscriptionCancelData() {
+    const subscriptionCancel = {
+        policy: "at-next-renewal",
+        canceledBy: "merchant",
+        cancelCategory: "did-not-use",
+        cancelDescription: "string"
+    };
+
+    return deepFreeze(subscriptionCancel);
+}
+
+
+export function createSubscriptionSwitchData(merge = {}) {
+    const subscriptionSwitch = {
+        policy: "at-next-renewal",
+        quantity: 2,
+        ...merge
+    };
+    return deepFreeze(subscriptionSwitch);
+}
+
+
 export function createEventRulesData() {
     return deepFreeze({
        rules: Array.from(new Array(4)).map(rule => createRuleData())
     });
 }
+
 
 export function createRuleData() {
     return deepFreeze({
@@ -455,6 +527,7 @@ export function createRuleData() {
         actions: Array.from(new Array(4)).map(rule => createRuleActionData())
     });
 }
+
 
 export function createRuleActionData() {
     return deepFreeze(pickRandomFromList([
@@ -471,6 +544,7 @@ export function createRuleActionData() {
     ]));
 }
 
+
 export function createLayoutData(withId = false, merge = {}) {
     let layout = {
         name: faker.lorem.words(),
@@ -481,6 +555,7 @@ export function createLayoutData(withId = false, merge = {}) {
     }
     return deepFreeze(layout);
 }
+
 
 export function createLayoutItemData(planId) {
     return deepFreeze({planId, starred: false});
