@@ -108,7 +108,7 @@ export function generatePassword() {
 }
 
 export function generateSlug() {
-    return faker.helpers.slugify(faker.lorem.words());
+    return faker.helpers.slugify(faker.lorem.words()).slice(0,30);
 }
 
 export function pickRandomFromList(list) {
@@ -269,7 +269,7 @@ export function createInvoiceData(withId = false, merge = {}) {
         currency: "USD",
         billingAddress: {},
         deliveryAddress: {},
-        "notes": "string",
+        notes: faker.hacker.phrase(),
         ...merge
     };
 
@@ -307,7 +307,6 @@ export function createCustomerData(withId = false, merge = {}) {
     return deepFreeze(customer);
 }
 
-
 export function createBankAccountData(withId = false, merge = {}) {
     let bankAccount = {
         bankName: faker.finance.accountName(),
@@ -322,7 +321,6 @@ export function createBankAccountData(withId = false, merge = {}) {
     return deepFreeze(bankAccount);
 }
 
-
 export function createBlacklistData(withId = false) {
     let blacklistItem = {
         type: 'ip-address',
@@ -333,7 +331,6 @@ export function createBlacklistData(withId = false) {
     }
     return deepFreeze(blacklistItem);
 }
-
 
 export function createPlanData(withId = false) {
     let plan = {
@@ -350,10 +347,9 @@ export function createPlanData(withId = false) {
     return deepFreeze(plan);
 }
 
-
 export function createCheckoutPageData(withId = false, merge = {}) {
     let checkoutPage = {
-        uriPath: faker.lorem.slug(),
+        uriPath: generateSlug(),
         name: faker.lorem.words(),
         ...merge
     };
@@ -362,7 +358,6 @@ export function createCheckoutPageData(withId = false, merge = {}) {
     }
     return deepFreeze(checkoutPage);
 }
-
 
 export function createCouponData(withRedemptionCode = false) {
     let coupon = {
@@ -383,14 +378,12 @@ export function createCouponData(withRedemptionCode = false) {
     return deepFreeze(coupon);
 }
 
-
 export function createCouponRedemptionData(redemptionCode, customerId) {
     return deepFreeze({
         redemptionCode,
         customerId
     });
 }
-
 
 export function createCustomEventData(withId = false) {
     let customEvent = {
@@ -410,7 +403,6 @@ export function createCustomEventData(withId = false) {
     return deepFreeze(customEvent);
 }
 
-
 export function createPaymentCard(withId = false, merge = {}) {
     let paymentCard = {
         pan: testPaymentCards.approved,
@@ -424,7 +416,6 @@ export function createPaymentCard(withId = false, merge = {}) {
     }
     return deepFreeze(paymentCard);
 }
-
 
 export function createGatewayAccountData(withId = false, merge = {}) {
     let gatewayName, gatewayConfig;
@@ -465,12 +456,11 @@ export function createGatewayAccountData(withId = false, merge = {}) {
     return deepFreeze(gatewayAccount);
 }
 
-
 export function createCustomerCredentialsData({withId = false, customerId = ''} = {}) {
     let credentialsData = {
         "username": faker.internet.userName(),
         "password": 'pa$$word',
-        "expiredTime": "2017-07-20T16:22:55Z"
+        "expiredTime": generateFutureAPIDatetime()
     };
     if (withId) {
         credentialsData.id = faker.random.uuid();
@@ -478,10 +468,8 @@ export function createCustomerCredentialsData({withId = false, customerId = ''} 
     if (customerId) {
         credentialsData.customerId = customerId;
     }
-    // return deepFreeze(credentialsData);
-    return credentialsData;
+    return deepFreeze(credentialsData);
 }
-
 
 export function createCustomFieldData(withSchema = false) {
     let customField = {
@@ -497,7 +485,6 @@ export function createCustomFieldData(withSchema = false) {
     return deepFreeze(customField);
 }
 
-
 export function createCustomFieldEntryData(customField) {
     const getters = {
         array: () => Array.from(new Array(4)).map(item => faker.lorem.word()),
@@ -510,7 +497,6 @@ export function createCustomFieldEntryData(customField) {
     return deepFreeze({[customField.fields.name]: getters[customField.fields.type]()});
 }
 
-
 export function createSubscriptionCancelData() {
     const subscriptionCancel = {
         policy: "at-next-renewal",
@@ -522,23 +508,19 @@ export function createSubscriptionCancelData() {
     return deepFreeze(subscriptionCancel);
 }
 
-
 export function createSubscriptionSwitchData(merge = {}) {
-    const subscriptionSwitch = {
+    return deepFreeze({
         policy: "at-next-renewal",
         quantity: 2,
         ...merge
-    };
-    return deepFreeze(subscriptionSwitch);
+    });
 }
-
 
 export function createEventRulesData() {
     return deepFreeze({
        rules: Array.from(new Array(4)).map(rule => createRuleData())
     });
 }
-
 
 export function createRuleData() {
     return deepFreeze({
@@ -549,7 +531,6 @@ export function createRuleData() {
         actions: Array.from(new Array(4)).map(rule => createRuleActionData())
     });
 }
-
 
 export function createRuleActionData() {
     return deepFreeze(pickRandomFromList([
@@ -566,6 +547,23 @@ export function createRuleActionData() {
     ]));
 }
 
+export function createDisputeData({withId = false, transactionId} = {}) {
+    let disputesData = {
+        transactionId: transactionId,
+        currency: 'USD',
+        amount: 5,
+        reasonCode: '1000',
+        type: 'first-chargeback',
+        status: 'response-needed',
+        acquirerReferenceNumber: faker.random.number().toString(),
+        postedTime: generatePastAPIDatetime(),
+        deadlineTime: generateFutureAPIDatetime()
+    };
+    if (withId) {
+        disputesData.id = faker.random.uuid();
+    }
+    return deepFreeze(disputesData);
+}
 
 export function createLayoutData(withId = false, merge = {}) {
     let layout = {
@@ -577,7 +575,6 @@ export function createLayoutData(withId = false, merge = {}) {
     }
     return deepFreeze(layout);
 }
-
 
 export function createLayoutItemData(planId) {
     return deepFreeze({planId, starred: false});
@@ -599,4 +596,27 @@ export function create3DSecureData(merge = {}) {
     };
 
     return deepFreeze(threeDSecure);
+}
+
+
+export function createNoteData(withId = false, customerId) {
+    let note = {
+        content: faker.hacker.phrase(),
+        archived: false,
+        relatedType: 'customer',
+        relatedId: customerId
+    };
+    if (withId) {
+        note.id = faker.random.uuid()
+    }
+    return deepFreeze(note);
+}
+
+export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) {
+    return deepFreeze({
+        websiteId,
+        gatewayAccountId,
+        amount: faker.finance.amount(),
+        currency: 'USD'
+    })
 }

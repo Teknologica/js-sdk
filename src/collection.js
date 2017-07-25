@@ -20,7 +20,7 @@ import deepFreeze from './deep-freeze';
  */
 export default class Collection {
     constructor({data, status, statusText, headers}) {
-        Object.keys(paginationHeaders).forEach(header => this[header] = headers[paginationHeaders[header]]);
+        Object.keys(paginationHeaders).forEach(header => this[header] = Number(headers[paginationHeaders[header]]));
         this.response = {status, statusText, headers};
         this.items = data.map(member => new Member({data: member, status, statusText, headers}));
         deepFreeze(this);
