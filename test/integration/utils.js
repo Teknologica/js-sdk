@@ -458,9 +458,9 @@ export function createGatewayAccountData(withId = false, merge = {}) {
 
 export function createCustomerCredentialsData({withId = false, customerId = ''} = {}) {
     let credentialsData = {
-        'username': faker.internet.userName(),
-        'password': 'pa$$word',
-        'expiredTime': generateFutureAPIDatetime()
+        username: faker.internet.userName(),
+        password: 'pa$$word',
+        expiredTime: generateFutureAPIDatetime()
     };
     if (withId) {
         credentialsData.id = faker.random.uuid();
@@ -604,7 +604,6 @@ export function create3DSecureData(merge = {}) {
         amount: 0,
         currency: 'USD'
     };
-
     return deepFreeze(threeDSecure);
 }
 
@@ -616,9 +615,25 @@ export function createNoteData(withId = false, customerId) {
         relatedId: customerId
     };
     if (withId) {
-        note.id = faker.random.uuid()
+        note.id = faker.random.uuid();
     }
     return deepFreeze(note);
+}
+
+export function createOrganizationData(withId = false) {
+    let organization = {
+        name: faker.lorem.words(),
+        address: faker.address.streetAddress(),
+        address2: faker.address.secondaryAddress(),
+        city: faker.address.city(),
+        region: faker.address.state(),
+        country: faker.address.countryCode(),
+        postalCode: faker.address.zipCode()
+    };
+    if (withId) {
+        organization.id = faker.random.uuid();
+    }
+    return deepFreeze(organization);
 }
 
 export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) {
@@ -643,7 +658,7 @@ export function createShippingZoneData(withId = false, merge = {}) {
         ...merge
     };
     if (withId) {
-        shippingZone.id = faker.random.uuid()
+        shippingZone.id = faker.random.uuid();
     }
     return deepFreeze(shippingZone);
 }
@@ -671,4 +686,25 @@ export function createPaypalAccountActivateData(websiteId) {
             error: faker.internet.url()
         }
     });
+}
+
+export function createSessionsData(withId = false) {
+    let session = {
+        permissions: [
+            {
+                resourceName: 'plans',
+                methods: [
+                    'GET',
+                    'POST',
+                    'PUT',
+                    'HEAD',
+                    'DELETE'
+                ]
+            }
+        ]
+    };
+    if (withId) {
+        session.id = faker.random.uuid();
+    }
+    return deepFreeze(session);
 }
