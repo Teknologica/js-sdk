@@ -8,7 +8,7 @@ export default function HistogramsResource({apiHandler}) {
                 aggregationPeriod,
                 metric
             };
-            return await apiHandler.getAll(`histograms/transactions`, params);
+            return await apiHandler.get(`histograms/transactions`, params);
         }
     };
 };
