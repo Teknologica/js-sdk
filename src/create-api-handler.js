@@ -52,7 +52,7 @@ export default function createApiHandler({options}) {
      */
     function getBaseURL() {
         const url = options.isSandbox ? options.apiEndpoints.sandbox : options.apiEndpoints.live;
-        return `${url}/v${options.apiVersion}`;
+        return `${url}/${options.apiVersion}`;
     }
 
     /**
