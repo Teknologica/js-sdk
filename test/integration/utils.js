@@ -266,7 +266,7 @@ export function createSubscriptionData(withId = false, merge = {}) {
 
 export function createInvoiceData(withId = false, merge = {}) {
     let invoice = {
-        currency: "USD",
+        currency: 'USD',
         billingAddress: {},
         deliveryAddress: {},
         notes: faker.hacker.phrase(),
@@ -458,9 +458,9 @@ export function createGatewayAccountData(withId = false, merge = {}) {
 
 export function createCustomerCredentialsData({withId = false, customerId = ''} = {}) {
     let credentialsData = {
-        "username": faker.internet.userName(),
-        "password": 'pa$$word',
-        "expiredTime": generateFutureAPIDatetime()
+        'username': faker.internet.userName(),
+        'password': 'pa$$word',
+        'expiredTime': generateFutureAPIDatetime()
     };
     if (withId) {
         credentialsData.id = faker.random.uuid();
@@ -499,10 +499,10 @@ export function createCustomFieldEntryData(customField) {
 
 export function createSubscriptionCancelData() {
     const subscriptionCancel = {
-        policy: "at-next-renewal",
-        canceledBy: "merchant",
-        cancelCategory: "did-not-use",
-        cancelDescription: "string"
+        policy: 'at-next-renewal',
+        canceledBy: 'merchant',
+        cancelCategory: 'did-not-use',
+        cancelDescription: 'string'
     };
 
     return deepFreeze(subscriptionCancel);
@@ -510,7 +510,7 @@ export function createSubscriptionCancelData() {
 
 export function createSubscriptionSwitchData(merge = {}) {
     return deepFreeze({
-        policy: "at-next-renewal",
+        policy: 'at-next-renewal',
         quantity: 2,
         ...merge
     });
@@ -594,20 +594,19 @@ export function createListData(withId = false) {
 export function create3DSecureData(merge = {}) {
     let threeDSecure = {
         ...merge,
-        enrolled: "Y",
-        enrollmentEci: "abc",
+        enrolled: 'Y',
+        enrollmentEci: 'abc',
         eci: 0,
-        cavv: "string",
-        xid: "string",
-        payerAuthResponseStatus: "Y",
-        signatureVerification: "Y",
+        cavv: 'string',
+        xid: 'string',
+        payerAuthResponseStatus: 'Y',
+        signatureVerification: 'Y',
         amount: 0,
-        currency: "USD"
+        currency: 'USD'
     };
 
     return deepFreeze(threeDSecure);
 }
-
 
 export function createNoteData(withId = false, customerId) {
     let note = {
@@ -631,21 +630,45 @@ export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) 
     });
 }
 
-
-export function createShippingZoneData(withId = false) {
+export function createShippingZoneData(withId = false, merge = {}) {
     let shippingZone = {
         name: faker.lorem.word(),
-        countries: [],
         rates: [
             {
-                name: "string",
+                name: 'string',
                 price: 0,
-                currency: "USD",
+                currency: 'USD',
             }
-        ]
+        ],
+        ...merge
     };
     if (withId) {
         shippingZone.id = faker.random.uuid()
     }
     return deepFreeze(shippingZone);
+}
+
+export function createPaypalAccountData(withId = false, merge = {}) {
+    let paypalAccount = {
+        username: faker.lorem.word(),
+        status: 'active',
+        ...merge
+    };
+    if (withId) {
+        paypalAccount.id = faker.random.uuid();
+    }
+    return deepFreeze(paypalAccount);
+}
+
+export function createPaypalAccountActivateData(websiteId) {
+    return deepFreeze({
+        websiteId,
+        currency: 'USD',
+        redirectURLs: {
+            success: faker.internet.url(),
+            decline: faker.internet.url(),
+            cancel: faker.internet.url(),
+            error: faker.internet.url()
+        }
+    });
 }
