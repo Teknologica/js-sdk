@@ -258,10 +258,11 @@ export default function createApiHandler({options}) {
     /**
      * Trigger a GET request on the target URL and return the member received in the response.
      * @param url {string}
+     * @param params {Object}
      * @returns {Member} member
      */
-    function get(url) {
-        return wrapRequest(instance.get(url));
+    function get(url, params = {}) {
+        return wrapRequest(instance.get(url, cleanUpParameters(params)));
     }
 
     /**

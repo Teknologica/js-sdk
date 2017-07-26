@@ -9,7 +9,7 @@ export default function ReportsResource({apiHandler}) {
                 filter,
                 criteria
             };
-            return await apiHandler.getAll(`reports/cumulative-subscriptions-plans`, params);
+            return await apiHandler.get(`reports/cumulative-subscriptions-plans`, params);
         },
 
         async getCumulativeSubscriptions({aggregationField, periodStart, periodEnd, limit = null, offset = null, filter = null, criteria = null} = {}) {
@@ -22,7 +22,7 @@ export default function ReportsResource({apiHandler}) {
                 filter,
                 criteria
             };
-            return await apiHandler.getAll(`reports/cumulative-subscriptions`, params);
+            return await apiHandler.get(`reports/cumulative-subscriptions`, params);
         },
 
         async getDccMarkup({aggregationField, periodStart, periodEnd, limit = null, offset = null, filter = null} = {}) {
@@ -34,7 +34,7 @@ export default function ReportsResource({apiHandler}) {
                 offset,
                 filter
             };
-            return await apiHandler.getAll(`reports/dcc-markup`, params);
+            return await apiHandler.get(`reports/dcc-markup`, params);
         },
 
         async getDisputes({aggregationField, periodMonth, limit = null, offset = null, filter = null} = {}) {
@@ -45,7 +45,7 @@ export default function ReportsResource({apiHandler}) {
                 offset,
                 filter
             };
-            return await apiHandler.getAll(`reports/disputes`, params);
+            return await apiHandler.get(`reports/disputes`, params);
         },
 
         async getEventsTriggeredSummary({periodStart, periodEnd, limit = null, offset = null} = {}) {
@@ -55,7 +55,7 @@ export default function ReportsResource({apiHandler}) {
                 limit,
                 offset
             };
-            return await apiHandler.getAll(`reports/events-triggered`, params);
+            return await apiHandler.get(`reports/events-triggered`, params);
         },
 
         async getRulesMatchedSummary({eventType, periodStart, periodEnd, limit = null, offset = null} = {}) {
@@ -65,7 +65,7 @@ export default function ReportsResource({apiHandler}) {
                 limit,
                 offset
             };
-            return await apiHandler.getAll(`reports/events-triggered/${eventType}/rules`, params);
+            return await apiHandler.get(`reports/events-triggered/${eventType}/rules`, params);
         },
 
         async getFutureRenewals({periodStart, periodEnd, limit = null, offset = null} = {}) {
@@ -75,7 +75,7 @@ export default function ReportsResource({apiHandler}) {
                 limit,
                 offset
             };
-            return await apiHandler.getAll(`reports/future-renewals`, params);
+            return await apiHandler.get(`reports/future-renewals`, params);
         },
 
         async getRenewalSales({periodStart, periodEnd, limit = null, offset = null} = {}) {
@@ -85,7 +85,7 @@ export default function ReportsResource({apiHandler}) {
                 limit,
                 offset
             };
-            return await apiHandler.getAll(`reports/renewal-sales`, params);
+            return await apiHandler.get(`reports/renewal-sales`, params);
         },
 
         async getRetentionPercentage({aggregationField, aggregationPeriod, periodStart, periodEnd, includeSwitchedSubscriptions = null, limit = null, offset = null, filter = null} = {}) {
@@ -99,7 +99,7 @@ export default function ReportsResource({apiHandler}) {
                 offset,
                 filter
             };
-            return await apiHandler.getAll(`reports/retention-percentage`, params);
+            return await apiHandler.get(`reports/retention-percentage`, params);
         },
 
         async getRetentionValue({aggregationField, aggregationPeriod, periodStart, periodEnd, includeRefunds = null, includeDisputes = null, limit = null, offset = null, filter = null, criteria = null} = {}) {
@@ -115,7 +115,7 @@ export default function ReportsResource({apiHandler}) {
                 filter,
                 criteria
             };
-            return await apiHandler.getAll(`reports/retention-value`, params);
+            return await apiHandler.get(`reports/retention-value`, params);
         },
 
         async getRetryTransaction({periodStart, periodEnd, filter = null, criteria = null} = {}) {
@@ -125,11 +125,11 @@ export default function ReportsResource({apiHandler}) {
                 filter,
                 criteria
             };
-            return await apiHandler.getAll(`reports/retry-transaction`, params);
+            return await apiHandler.get(`reports/retry-transaction`, params);
         },
 
         async getStatistics() {
-            return await apiHandler.getAll(`reports/statistics`);
+            return await apiHandler.get(`reports/statistics`);
         },
 
         async getSubscriptionCancellation({aggregationField, periodStart, periodEnd, limit = null, offset = null, filter = null, criteria = null} = {}) {
@@ -142,7 +142,7 @@ export default function ReportsResource({apiHandler}) {
                 filter,
                 criteria
             };
-            return await apiHandler.getAll(`reports/subscription-cancellation`, params);
+            return await apiHandler.get(`reports/subscription-cancellation`, params);
         },
 
         async getSubscriptionRenewalList({periodStart, periodEnd, limit = null, offset = null} = {}) {
@@ -152,7 +152,7 @@ export default function ReportsResource({apiHandler}) {
                 limit,
                 offset
             };
-            return await apiHandler.getAll(`reports/subscription-renewal-list`, params);
+            return await apiHandler.get(`reports/subscription-renewal-list`, params);
         },
 
         async getSubscriptionRenewal({periodStart, periodEnd, limit = null, offset = null} = {}) {
@@ -162,7 +162,7 @@ export default function ReportsResource({apiHandler}) {
                 limit,
                 offset
             };
-            return await apiHandler.getAll(`reports/subscription-renewal`, params);
+            return await apiHandler.get(`reports/subscription-renewal`, params);
         },
 
         async getTimeSeriesTransaction({periodStart, periodEnd, type, subaggregate} = {}) {
@@ -172,7 +172,7 @@ export default function ReportsResource({apiHandler}) {
                 type,
                 subaggregate
             };
-            return await apiHandler.getAll(`reports/time-series-transactions`, params);
+            return await apiHandler.get(`reports/time-series-transaction`, params);
         },
 
         async getTransactionsPlan({periodStart, periodEnd, limit = null, offset = null} = {}) {
@@ -182,7 +182,7 @@ export default function ReportsResource({apiHandler}) {
                 limit,
                 offset
             };
-            return await apiHandler.getAll(`reports/transactions-plan`, params);
+            return await apiHandler.get(`reports/transactions-plan`, params);
         },
 
         async getTransactionsTimeDispute({aggregationField, periodStart, periodEnd, limit = null, offset = null, filter = null, criteria = null} = {}) {
@@ -195,7 +195,7 @@ export default function ReportsResource({apiHandler}) {
                 filter,
                 criteria
             };
-            return await apiHandler.getAll(`reports/transactions-time-dispute`, params);
+            return await apiHandler.get(`reports/transactions-time-dispute`, params);
         },
 
         async getTransactions({aggregationField, periodStart, periodEnd, limit = null, offset = null, filter = null, criteria = null} = {}) {
@@ -208,7 +208,7 @@ export default function ReportsResource({apiHandler}) {
                 filter,
                 criteria
             };
-            return await apiHandler.getAll(`reports/transactions`, params);
+            return await apiHandler.get(`reports/transactions`, params);
         },
 
         async getPaymentsSuccessByDeclineReason({periodStart, periodEnd, limit = null, offset = null, filter = null} = {}) {
@@ -219,7 +219,7 @@ export default function ReportsResource({apiHandler}) {
                 offset,
                 filter
             };
-            return await apiHandler.getAll(`reports/payments-success-by-decline-reason`, params);
+            return await apiHandler.get(`reports/payments-success-by-decline-reason`, params);
         }
     };
 };
