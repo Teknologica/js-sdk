@@ -604,10 +604,8 @@ export function create3DSecureData(merge = {}) {
         amount: 0,
         currency: "USD"
     };
-
     return deepFreeze(threeDSecure);
 }
-
 
 export function createNoteData(withId = false, customerId) {
     let note = {
@@ -622,6 +620,22 @@ export function createNoteData(withId = false, customerId) {
     return deepFreeze(note);
 }
 
+export function createOrganizationData(withId = false) {
+    let organization = {
+        name: faker.lorem.words(),
+        address: faker.address.streetAddress(),
+        address2: faker.address.secondaryAddress(),
+        city: faker.address.city(),
+        region: faker.address.state(),
+        country: faker.address.countryCode(),
+        postalCode: faker.address.zipCode()
+    };
+    if (withId) {
+        organization.id = faker.random.uuid();
+    }
+    return deepFreeze(organization);
+}
+
 export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) {
     return deepFreeze({
         websiteId,
@@ -630,7 +644,6 @@ export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) 
         currency: 'USD'
     });
 }
-
 
 export function createShippingZoneData(withId = false) {
     let shippingZone = {
