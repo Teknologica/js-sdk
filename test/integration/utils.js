@@ -615,7 +615,7 @@ export function createNoteData(withId = false, customerId) {
         relatedId: customerId
     };
     if (withId) {
-        note.id = faker.random.uuid()
+        note.id = faker.random.uuid();
     }
     return deepFreeze(note);
 }
@@ -658,7 +658,7 @@ export function createShippingZoneData(withId = false) {
         ]
     };
     if (withId) {
-        shippingZone.id = faker.random.uuid()
+        shippingZone.id = faker.random.uuid();
     }
     return deepFreeze(shippingZone);
 }
@@ -679,7 +679,7 @@ export function createSessionsData(withId = false) {
         ]
     };
     if (withId) {
-        session.id = faker.random.uuid()
+        session.id = faker.random.uuid();
     }
     return deepFreeze(session);
 }
