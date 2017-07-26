@@ -580,6 +580,16 @@ export function createLayoutItemData(planId) {
     return deepFreeze({planId, starred: false});
 }
 
+export function createListData(withId = false) {
+    let list = {
+        name: faker.lorem.words(),
+        values: ['foo', 'bar']
+    };
+    if (withId) {
+        list.id = faker.random.uuid();
+    }
+    return deepFreeze(list);
+}
 
 export function create3DSecureData(merge = {}) {
     let threeDSecure = {
@@ -594,10 +604,8 @@ export function create3DSecureData(merge = {}) {
         amount: 0,
         currency: "USD"
     };
-
     return deepFreeze(threeDSecure);
 }
-
 
 export function createNoteData(withId = false, customerId) {
     let note = {
@@ -612,15 +620,30 @@ export function createNoteData(withId = false, customerId) {
     return deepFreeze(note);
 }
 
+export function createOrganizationData(withId = false) {
+    let organization = {
+        name: faker.lorem.words(),
+        address: faker.address.streetAddress(),
+        address2: faker.address.secondaryAddress(),
+        city: faker.address.city(),
+        region: faker.address.state(),
+        country: faker.address.countryCode(),
+        postalCode: faker.address.zipCode()
+    };
+    if (withId) {
+        organization.id = faker.random.uuid();
+    }
+    return deepFreeze(organization);
+}
+
 export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) {
     return deepFreeze({
         websiteId,
         gatewayAccountId,
         amount: faker.finance.amount(),
         currency: 'USD'
-    })
+    });
 }
-
 
 export function createShippingZoneData(withId = false) {
     let shippingZone = {
@@ -634,13 +657,10 @@ export function createShippingZoneData(withId = false) {
             }
         ]
     };
-
     if (withId) {
         shippingZone.id = faker.random.uuid()
     }
-
     return deepFreeze(shippingZone);
-
 }
 
 

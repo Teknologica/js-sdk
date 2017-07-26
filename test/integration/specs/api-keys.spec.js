@@ -41,7 +41,7 @@ describe('when using the API keys resource', () => {
         expect(key.fields.description).to.be.equal(keyStub.description);
     });
 
-    it('I can delete the API keys I just created', async () => {
+    it('I can delete an API key', async () => {
         const firstDelete = await apiInstance.apiKeys.delete({id: testIds.with});
         const secondDelete = await apiInstance.apiKeys.delete({id: testIds.without});
         expect(firstDelete.response.status).to.be.equal(204);
