@@ -1,6 +1,6 @@
 export default function TransactionsResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null, sort = null, expand = '', filter = '', q = '', criteria = ''} = {}) {
+        async getAll({limit = null, offset = null, sort = null, expand = null, filter = null, q = null, criteria = null} = {}) {
             const params = {
                 limit,
                 offset,
@@ -13,7 +13,7 @@ export default function TransactionsResource({apiHandler}) {
             return await apiHandler.getAll(`transactions`, params);
         },
 
-        async getAllScheduled({limit = null, offset = null, sort = null, expand = '', filter = '', q = '', criteria = ''} = {}) {
+        async getAllScheduled({limit = null, offset = null, sort = null, expand = null, filter = null, q = null, criteria = null} = {}) {
             const params = {
                 limit,
                 offset,

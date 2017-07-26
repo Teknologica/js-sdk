@@ -1,6 +1,6 @@
 export default function WebsitesResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null, sort = null, filter = '', q = '', criteria = ''} = {}) {
+        async getAll({limit = null, offset = null, sort = null, filter = null, q = null, criteria = null} = {}) {
             const params = {
                 limit,
                 offset,

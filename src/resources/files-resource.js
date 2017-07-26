@@ -1,6 +1,6 @@
 export default function FilesResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null, sort = null, filter = '', q = ''} = {}) {
+        async getAll({limit = null, offset = null, sort = null, filter = null, q = null} = {}) {
             const params = {
                 limit,
                 offset,
