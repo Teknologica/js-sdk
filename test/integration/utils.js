@@ -713,7 +713,9 @@ export function createSessionsData(withId = false) {
 export function createProfileData() {
     let profile = {
         reportingCurrency: 'USD',
-        preferences: []
+        preferences: [],
+        totpRequired: true,
+
     };
 
     return deepFreeze(profile);

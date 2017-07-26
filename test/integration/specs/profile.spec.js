@@ -11,6 +11,7 @@ describe('when using the profile resource', () => {
     it('I can get a profile', async() => {
         const profile = await apiInstance.profile.get();
         expect(profile.response.status).to.be.equal(200);
+        console.log(profile);
         sharedProfileId = profile.fields.id;
     });
 
@@ -27,8 +28,8 @@ describe('when using the profile resource', () => {
     });
 
 
-    it.skip('I can reset totp', async () => {
+    it('I can reset totp', async () => {
         const totpSecret = await apiInstance.profile.resetTotp();
-        expect(totpSecret.response.status).to.be.equal(200);
+        expect(totpSecret.response.status).to.be.equal(201);
     });
 });
