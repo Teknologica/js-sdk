@@ -1,10 +1,10 @@
 export default function CustomersResource({apiHandler}) {
     return {
-        async getAll({customerId = ''} = {}) {
+        async getCustomerLifetimeSummaryMetrics({customerId = ''} = {}) {
             const params = {
                 customerId,
             };
-            return await apiHandler.getAll(`customers/{customerId}/summary-metrics`, params);
+            return await apiHandler.get(`customers/${customerId}/summary-metrics`, params);
         }
     };
 };
