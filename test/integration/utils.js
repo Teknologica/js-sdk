@@ -799,3 +799,4 @@ export function createProductData(withId = false) {
     }
     return deepFreeze(product);
 }
+

@@ -1,6 +1,6 @@
 export default function HistogramsResource({apiHandler}) {
     return {
-        async getAll({periodStart = '', periodEnd = '', aggregationField = '', aggregationPeriod = '', metric = ''} = {}) {
+        async getTransactionHistogramReport({periodStart = '', periodEnd = '', aggregationField = '', aggregationPeriod = '', metric = ''} = {}) {
             const params = {
                 periodStart,
                 periodEnd,
