@@ -580,6 +580,16 @@ export function createLayoutItemData(planId) {
     return deepFreeze({planId, starred: false});
 }
 
+export function createListData(withId = false) {
+    let list = {
+        name: faker.lorem.words(),
+        values: ['foo', 'bar']
+    };
+    if (withId) {
+        list.id = faker.random.uuid();
+    }
+    return deepFreeze(list);
+}
 
 export function create3DSecureData(merge = {}) {
     let threeDSecure = {
@@ -618,7 +628,7 @@ export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) 
         gatewayAccountId,
         amount: faker.finance.amount(),
         currency: 'USD'
-    })
+    });
 }
 
 
@@ -634,11 +644,8 @@ export function createShippingZoneData(withId = false) {
             }
         ]
     };
-
     if (withId) {
         shippingZone.id = faker.random.uuid()
     }
-
     return deepFreeze(shippingZone);
-
 }
