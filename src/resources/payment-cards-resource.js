@@ -1,6 +1,6 @@
 export default function PaymentCardsResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null, sort = null, q = ''} = {}) {
+        async getAll({limit = null, offset = null, sort = null, q = null} = {}) {
             const params = {
                 limit,
                 offset,
@@ -26,7 +26,7 @@ export default function PaymentCardsResource({apiHandler}) {
             return await apiHandler.post(`payment-cards/${id}/deactivation`);
         },
 
-        async getAllMigratable({limit = null, offset = null, sort = null, filter = ''} = {}) {
+        async getAllMigratable({limit = null, offset = null, sort = null, filter = null} = {}) {
             const params = {
                 limit,
                 offset,
