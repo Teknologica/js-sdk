@@ -81,10 +81,10 @@ export function generatePastAPIDatetime() {
 }
 
 /**
- * Generates a datetime value in the future by one month. Always on the first day of the month at noon.
- * @returns {string} an RFC3999 valid datetime in the future
+ * Generates a date value in the future by one month. Always on the first day of the month at noon.
+ * @returns {string} an RFC3999 valid date in the future
  */
-export function generateFutureAPIDatetime() {
+export function generateFutureAPIDate() {
     const currentDate = new Date();
     let month = currentDate.getMonth() + 1;
     let year = currentDate.getFullYear();
@@ -98,7 +98,16 @@ export function generateFutureAPIDatetime() {
         //zero pad months
         month = `0${month}`;
     }
-    return `${year}-${month}-01T12:00:00+00:00`;
+    return `${year}-${month}`;
+}
+
+/**
+ * Generates a datetime value in the future by one month. Always on the first day of the month at noon.
+ * @returns {string} an RFC3999 valid datetime in the future
+ */
+export function generateFutureAPIDatetime() {
+    const futureDate = generateFutureAPIDate();
+    return `${futureDate}-01T12:00:00+00:00`;
 }
 
 /**
