@@ -58,7 +58,7 @@ describe('when using the checkout pages resource', () => {
         expect(checkoutPage.fields.name).to.be.equal(name);
     });
 
-    it('I can delete the checkout pages I just created', async () => {
+    it('I can delete a checkout page', async () => {
         const firstDelete = await apiInstance.checkoutPages.delete({id: testIds.with});
         const secondDelete = await apiInstance.checkoutPages.delete({id: testIds.without});
         expect(firstDelete.response.status).to.be.equal(204);
