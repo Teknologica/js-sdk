@@ -645,6 +645,19 @@ export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) 
     });
 }
 
+export function createPaymentTokenData() {
+    return deepFreeze({
+        method: 'payment-card',
+        paymentInstrument: {
+            pan: testPaymentCards.approved,
+            expYear: (new Date()).getFullYear() + 2,
+            expMonth: Math.ceil(Math.random() * 12) >> 0,
+            cvv: 123
+        },
+        billingAddress: {}
+    });
+}
+
 export function createShippingZoneData(withId = false, merge = {}) {
     let shippingZone = {
         name: faker.lorem.word(),
@@ -652,7 +665,7 @@ export function createShippingZoneData(withId = false, merge = {}) {
             {
                 name: 'string',
                 price: 0,
-                currency: 'USD',
+                currency: 'USD'
             }
         ],
         ...merge
