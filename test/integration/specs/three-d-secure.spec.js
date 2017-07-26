@@ -49,7 +49,7 @@ describe('when using the three-d-secure resource', () => {
         const data = create3DSecureData(sharedData);
         const threeDSecure = await apiInstance.threeDSecure.create({data: data});
         expect(threeDSecure.response.status).to.be.equal(201);
-
+        sharedThreeDSecureId = threeDSecure.fields.id;
     });
 
     it('I can get a list of three-d-secure', async () => {
@@ -58,8 +58,6 @@ describe('when using the three-d-secure resource', () => {
         expect(threeDSecures.total).to.not.be.equal(0);
         const [threeDSecuresItem] = threeDSecures.items;
         expect(threeDSecuresItem.fields.id).to.not.be.undefined;
-        sharedThreeDSecureId = threeDSecuresItem.fields.id;
-
     });
 
 
