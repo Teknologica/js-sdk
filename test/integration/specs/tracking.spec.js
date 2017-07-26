@@ -27,7 +27,6 @@ describe('when using the tracking resource', () => {
         const subscriptionLogs = await apiInstance.tracking.getAllSubscriptionLogs();
         expect(subscriptionLogs.total).to.not.be.equal(0);
         const [subscriptionLogsItem] = subscriptionLogs.items;
-
         expect(subscriptionLogsItem.fields.id).to.not.be.undefined;
         expect(subscriptionLogs.response.status).to.be.equal(200);
         sharedSubscriptionLogId = subscriptionLogsItem.fields.id;
