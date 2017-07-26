@@ -645,22 +645,47 @@ export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) 
     });
 }
 
-export function createShippingZoneData(withId = false) {
+export function createShippingZoneData(withId = false, merge = {}) {
     let shippingZone = {
         name: faker.lorem.word(),
-        countries: [],
         rates: [
             {
                 name: 'string',
                 price: 0,
                 currency: 'USD',
             }
-        ]
+        ],
+        ...merge
     };
     if (withId) {
         shippingZone.id = faker.random.uuid();
     }
     return deepFreeze(shippingZone);
+}
+
+export function createPaypalAccountData(withId = false, merge = {}) {
+    let paypalAccount = {
+        username: faker.lorem.word(),
+        status: 'active',
+        ...merge
+    };
+    if (withId) {
+        paypalAccount.id = faker.random.uuid();
+    }
+    return deepFreeze(paypalAccount);
+}
+
+export function createPaypalAccountActivateData(websiteId) {
+    return deepFreeze({
+        websiteId,
+        currency: 'USD',
+        redirectURLs: {
+            success: faker.internet.url(),
+            decline: faker.internet.url(),
+            cancel: faker.internet.url(),
+            error: faker.internet.url()
+        }
+    });
 }
 
 export function createSessionsData(withId = false) {
