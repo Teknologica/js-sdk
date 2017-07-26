@@ -721,3 +721,15 @@ export function createSessionsData(withId = false) {
     }
     return deepFreeze(session);
 }
+
+
+export function createProfileData() {
+    let profile = {
+        reportingCurrency: 'USD',
+        preferences: [],
+        totpRequired: true,
+
+    };
+
+    return deepFreeze(profile);
+}
