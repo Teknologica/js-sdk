@@ -2,7 +2,6 @@ import MockAdapter from 'axios-mock-adapter';
 import createApiHandler from '../../src/create-api-handler';
 import mocks from './mocks';
 
-
 export default function createApiTestHandler({options}) {
     const apiHandler = createApiHandler({options});
     //get the api handler instance

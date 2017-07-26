@@ -1,11 +1,12 @@
 import chai from 'chai';
-import RebillyAPI from '../rebilly-js-sdk';
+import MockRebillyAPI from '../mock-rebilly-js-sdk';
 
 const expect = chai.expect;
-const api = new RebillyAPI({apiKey: '00000000000000000', sandbox: true});
 
 describe('when I get a collection', () => {
+    const api = new MockRebillyAPI({apiKey: '00000000000000000', sandbox: true});
     let customers;
+
     before(async () => {
         customers = await api.customers.getAll();
     });
