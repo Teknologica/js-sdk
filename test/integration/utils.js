@@ -668,6 +668,19 @@ export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) 
     });
 }
 
+export function createPaymentTokenData() {
+    return deepFreeze({
+        method: 'payment-card',
+        paymentInstrument: {
+            pan: testPaymentCards.approved,
+            expYear: (new Date()).getFullYear() + 2,
+            expMonth: Math.ceil(Math.random() * 12) >> 0,
+            cvv: 123
+        },
+        billingAddress: {}
+    });
+}
+
 export function createShippingZoneData(withId = false, merge = {}) {
     let shippingZone = {
         name: faker.lorem.word(),
@@ -675,7 +688,7 @@ export function createShippingZoneData(withId = false, merge = {}) {
             {
                 name: 'string',
                 price: 0,
-                currency: 'USD',
+                currency: 'USD'
             }
         ],
         ...merge
@@ -762,4 +775,27 @@ export function createSendEmailPreviewData(merge = {}) {
         subject: faker.hacker.phrase(),
         ...merge
     });
+}
+
+export function createProfileData() {
+    return deepFreeze({
+        reportingCurrency: 'USD',
+        preferences: [],
+        totpRequired: true,
+    });
+}
+
+export function createProductData(withId = false) {
+    let product = {
+        name: faker.commerce.productName(),
+        description: faker.commerce.product(),
+        taxCategoryId: '',
+        requiresShipping: true,
+        accountingCode: '100',
+        customFields: []
+    };
+    if (withId) {
+        product.id = faker.random.uuid();
+    }
+    return deepFreeze(product);
 }

@@ -1,9 +1,9 @@
 import libraryVersion from '../version';
 import createApiHandler from './create-api-handler';
-import createApiInstance from './create-api-instance';
+import createApiInstance, {createExperimentalApiInstance} from './create-api-instance';
 import Errors from './errors';
 
-const baseApiVersion = '2.1';
+const baseApiVersion = 'v2.1';
 const baseEndpoints = {
     live: 'https://api.rebilly.com',
     sandbox: 'https://api-sandbox.rebilly.com'
@@ -55,6 +55,7 @@ function RebillyExperimentalAPI({apiKey = null, sandbox = false, timeout = baseT
         version: libraryVersion,
         apiEndpoints: baseEndpoints,
         apiKey: apiKey,
+        apiVersion: 'experimental',
         isSandbox: sandbox,
         requestTimeout: timeout,
         jwt: null
@@ -62,7 +63,7 @@ function RebillyExperimentalAPI({apiKey = null, sandbox = false, timeout = baseT
 
     //TODO map to experimental
     const apiHandler = createApiHandler({options});
-    return createApiInstance({apiHandler});
+    return createExperimentalApiInstance({apiHandler});
 }
 
 export {Errors as RebillyErrors, RebillyExperimentalAPI};

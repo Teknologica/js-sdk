@@ -1,4 +1,5 @@
 import Resources from './resources';
+import ExperimentalResources from './resources/experimental';
 
 /**
  * Create an API instance using the provided API handler.
@@ -56,5 +57,13 @@ export default function createApiInstance({apiHandler}) {
         setApiConsumer: apiHandler.setApiConsumer,
         setEndpoints: apiHandler.setEndpoints,
         getCancellationToken: apiHandler.getCancellationToken
+    };
+}
+
+export function createExperimentalApiInstance({apiHandler}) {
+    return {
+        reports: ExperimentalResources.ReportsResource({apiHandler}),
+        setEndpoints: apiHandler.setEndpoints,
+        setTimeout: apiHandler.setTimeout
     };
 }
