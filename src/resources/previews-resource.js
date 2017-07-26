@@ -4,11 +4,11 @@ export default function PreviewsResource({apiHandler}) {
             return await apiHandler.post(`previews/webhooks`, data);
         },
 
-        async sendEmailRuleAction({data}) {
+        async triggerWebhookRuleAction({data}) {
             return await apiHandler.post(`previews/rule-actions/trigger-webhook`, data);
         },
 
-        async triggerWebhookRuleAction({data}) {
+        async sendEmailRuleAction({data}) {
             return await apiHandler.post(`previews/rule-actions/send-email`, data);
         }
     };
