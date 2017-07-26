@@ -733,3 +733,20 @@ export function createProfileData() {
 
     return deepFreeze(profile);
 }
+
+
+export function createProductData(withId = false) {
+    let product = {
+        name: faker.commerce.productName(),
+        description: faker.commerce.product(),
+        taxCategoryId: '',
+        requiresShipping: true,
+        accountingCode: '100',
+        customFields: []
+    };
+
+    if (withId) {
+        product.id = faker.random.uuid();
+    }
+    return deepFreeze(product);
+}

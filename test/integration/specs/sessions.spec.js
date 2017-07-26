@@ -52,10 +52,10 @@ describe('when using the sessions resource', () => {
 
 
     it('I can delete a sessions by its ID', async() => {
-        const session1 = await apiInstance.sessions.delete({id: testIds.with});
-        const session2 = await apiInstance.sessions.delete({id: testIds.without});
-        expect(session1.response.status).to.be.equal(204);
-        expect(session2.response.status).to.be.equal(204);
+        const firstSession = await apiInstance.sessions.delete({id: testIds.with});
+        const secondSession = await apiInstance.sessions.delete({id: testIds.without});
+        expect(firstSession.response.status).to.be.equal(204);
+        expect(secondSession.response.status).to.be.equal(204);
     });
 
 });
