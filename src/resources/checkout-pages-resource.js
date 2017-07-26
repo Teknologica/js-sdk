@@ -1,6 +1,6 @@
 export default function CheckoutPagesResource({apiHandler}) {
     return {
-        async getAll({limit = null, offset = null, sort = null, expand = '', q = ''} = {}) {
+        async getAll({limit = null, offset = null, sort = null, expand = null, q = null} = {}) {
             const params = {
                 limit,
                 offset,

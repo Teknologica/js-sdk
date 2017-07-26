@@ -1,6 +1,6 @@
 export default function TrackingResource({apiHandler}) {
     return {
-        async getAllApiLogs({limit = null, offset = null, sort = null, filter = '', q = '', criteria = ''} = {}) {
+        async getAllApiLogs({limit = null, offset = null, sort = null, filter = null, q = null, criteria = null} = {}) {
             const params = {
                 limit,
                 offset,
@@ -16,7 +16,7 @@ export default function TrackingResource({apiHandler}) {
             return await apiHandler.get(`tracking/api/${id}`);
         },
 
-        async getAllSubscriptionLogs({limit = null, offset = null, sort = null, filter = ''} = {}) {
+        async getAllSubscriptionLogs({limit = null, offset = null, sort = null, filter = null} = {}) {
             const params = {
                 limit,
                 offset,
@@ -30,7 +30,7 @@ export default function TrackingResource({apiHandler}) {
             return await apiHandler.get(`tracking/subscriptions/${id}`);
         },
 
-        async getAllWebhookNotificationLogs({limit = null, offset = null, sort = null, filter = ''} = {}) {
+        async getAllWebhookNotificationLogs({limit = null, offset = null, sort = null, filter = null} = {}) {
             const params = {
                 limit,
                 offset,
@@ -44,7 +44,7 @@ export default function TrackingResource({apiHandler}) {
             return await apiHandler.get(`tracking/website-webhooks/${id}`);
         },
 
-        async getAllListsChangesHistory({limit = null, offset = null, sort = null, filter = '', q = ''} = {}) {
+        async getAllListsChangesHistory({limit = null, offset = null, sort = null, filter = null, q = null} = {}) {
             const params = {
                 limit,
                 offset,
