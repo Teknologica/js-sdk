@@ -5,8 +5,8 @@ import createApiInstance from '../../../src/create-api-instance';
 const expect = chai.expect;
 const options = {
     version: 1,
-    apiEndpoints: {live: '', sandbox: ''},
-    apiKey: '000000000',
+    apiEndpoints: {live: 'new-live-url', sandbox: 'new-sandbox-url'},
+    apiKey: '0123456789',
     apiVersion: 1,
     isSandbox: false,
     requestTimeout: 1,
