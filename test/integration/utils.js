@@ -662,3 +662,27 @@ export function createShippingZoneData(withId = false) {
     }
     return deepFreeze(shippingZone);
 }
+
+
+export function createSessionsData(withId = false) {
+    let session = {
+        permissions: [
+            {
+                resourceName: 'plans',
+                methods: [
+                    'GET',
+                    'POST',
+                    'PUT',
+                    'HEAD',
+                    'DELETE'
+                ]
+            }
+        ]
+    };
+
+    if (withId) {
+        session.id = faker.random.uuid()
+    }
+
+    return deepFreeze(session);
+}
