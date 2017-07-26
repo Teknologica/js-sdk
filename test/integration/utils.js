@@ -1,5 +1,7 @@
 import faker from 'faker';
 import deepFreeze from '../../src/deep-freeze';
+import axios from 'axios';
+import {URL} from 'url';
 
 /**
  * List of test payment cards
@@ -123,6 +125,22 @@ export function getRandomRuleStatus() {
     return getRandomBool() ? 'active' : 'inactive';
 }
 
+export async function getWebhookRequestBinUrl() {
+    try {
+        const {data} = await axios({
+            method: 'post',
+            url: 'https://requestb.in/api/v1/bins',
+            data: {
+                private: false
+            }
+        });
+        return `https://requestb.in/${data.name}`;
+    }
+    catch (err) {
+        throw 'Unable to create Requestb.in URI';
+    }
+}
+
 export function createMerchantSignupData() {
     return deepFreeze({
         email: faker.internet.email(),
@@ -150,9 +168,14 @@ export function createWebsiteData(withId = false) {
     return deepFreeze(website);
 }
 
-export function createWebhookCredData() {
+export function createWebhookCredData(webhookUrl = false) {
+    let host = 'google.com';
+    if (webhookUrl) {
+        //get host from provided URL
+        host = new URL(webhookUrl).host;
+    }
     return deepFreeze({
-        host: 'google.com',
+        host,
         auth: {
             type: 'none'
         }
@@ -707,4 +730,36 @@ export function createSessionsData(withId = false) {
         session.id = faker.random.uuid();
     }
     return deepFreeze(session);
+}
+
+export function createWebhookPreviewData(merge = {}) {
+    return deepFreeze({
+        eventsFilter: [],
+        status: 'active',
+        method: 'POST',
+        headers: {},
+        ...merge
+    });
+}
+
+export function createTriggerWebhookPreviewData(merge = {}) {
+    return deepFreeze({
+        body: JSON.stringify({hello: 'world'}),
+        status: 'active',
+        method: 'POST',
+        headers: {},
+        query: {},
+        ...merge
+    });
+}
+
+export function createSendEmailPreviewData(merge = {}) {
+    return deepFreeze({
+        bodyText: faker.lorem.words(),
+        bodyHTML: `<strong>${faker.lorem.words()}</strong>`,
+        sender: process.env.TEST_SMTP_USER,
+        recipients: [process.env.TEST_SMTP_USER],
+        subject: faker.hacker.phrase(),
+        ...merge
+    });
 }
