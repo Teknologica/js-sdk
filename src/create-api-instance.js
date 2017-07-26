@@ -62,7 +62,9 @@ export default function createApiInstance({apiHandler}) {
 
 export function createExperimentalApiInstance({apiHandler}) {
     return {
+        histograms: ExperimentalResources.HistogramsResource({apiHandler}),
         reports: ExperimentalResources.ReportsResource({apiHandler}),
+        customers: ExperimentalResources.CustomersResource({apiHandler}),
         setEndpoints: apiHandler.setEndpoints,
         setTimeout: apiHandler.setTimeout
     };
