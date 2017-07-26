@@ -683,3 +683,13 @@ export function createSessionsData(withId = false) {
     }
     return deepFreeze(session);
 }
+
+
+export function createProfileData() {
+    let profile = {
+        reportingCurrency: 'USD',
+        preferences: []
+    };
+
+    return deepFreeze(profile);
+}
