@@ -6,18 +6,21 @@ const expect = chai.expect;
 
 describe('when using the sessions resource', () => {
 
+    const testIds = {with: null, without: null};
     let sharedSessionId;
 
     it('I can create a sessions with ID', async() => {
         const {id: id, ...data} = createSessionsData(true);
+        testIds.with = id;
         const session = await apiInstance.sessions.create({id: id, data: data});
         expect(session.response.status).to.be.equal(201);
     });
 
 
     it('I can create a sessions without ID', async() => {
-        const {id: id, ...data} = createSessionsData(true);
+        const {id: id, ...data} = createSessionsData(false);
         const session = await apiInstance.sessions.create({id: id, data: data});
+        testIds.without = session.fields.id;
         expect(session.response.status).to.be.equal(201);
     });
 
@@ -49,8 +52,10 @@ describe('when using the sessions resource', () => {
 
 
     it('I can delete a sessions by its ID', async() => {
-        const session = await apiInstance.sessions.delete({id: sharedSessionId});
-        expect(session.response.status).to.be.equal(204);
+        const session1 = await apiInstance.sessions.delete({id: testIds.with});
+        const session2 = await apiInstance.sessions.delete({id: testIds.without});
+        expect(session1.response.status).to.be.equal(204);
+        expect(session2.response.status).to.be.equal(204);
     });
 
 });
