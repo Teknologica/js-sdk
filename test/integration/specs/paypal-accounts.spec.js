@@ -16,8 +16,14 @@ describe('when using the paypal accounts resource', () => {
     let website;
 
     before(async () => {
+        /**
+         * create a new customer and a new website
+         */
         customer = await apiInstance.customers.create({data: createCustomerData()});
         website = await apiInstance.websites.create({data: createWebsiteData()});
+        /**
+         * fill the shared data object with customer ID and customer primary address
+         */
         sharedData = {
             customerId: customer.fields.id,
             billingAddress: customer.fields.primaryAddress

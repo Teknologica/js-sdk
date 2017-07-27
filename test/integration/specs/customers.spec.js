@@ -19,6 +19,9 @@ describe('when using the customers resource', () => {
     let sharedData;
 
     before(async () => {
+        /**
+         *  create a new website and a new gateway account
+         */
         const websiteStub = createWebsiteData();
         website = await apiInstance.websites.create({data: websiteStub});
         const organizations = await apiInstance.organizations.getAll();

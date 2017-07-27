@@ -9,6 +9,9 @@ describe('when using the layouts resource', () => {
     let plans;
 
     before(async () => {
+        /**
+         *  create a list of plans
+         */
         const createPlans = Array.from(new Array(4)).map(() => apiInstance.plans.create({data: createPlanData()}));
         plans = await Promise.all(createPlans);
     });

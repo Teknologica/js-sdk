@@ -17,6 +17,9 @@ describe('when using the disputes resource', () => {
     let sharedData = null;
 
     before(async () => {
+        /**
+         * create a new customer, a new website and a list of organizations
+         */
         const customerStub = createCustomerData();
         const websiteStub = createWebsiteData();
         const [customer, website, organizations] = await Promise.all([
@@ -24,6 +27,9 @@ describe('when using the disputes resource', () => {
             apiInstance.websites.create({data: websiteStub}),
             apiInstance.organizations.getAll()
         ]);
+        /**
+         * create a new gateway account and a new payment card
+         */
         const [organization] = organizations.items;
         const paymentCardStub = createPaymentCard(false, {customerId: customer.fields.id, billingAddress: customer.fields.primaryAddress});
         const gatewayAccountStub = createGatewayAccountData(false, {
@@ -34,6 +40,9 @@ describe('when using the disputes resource', () => {
             apiInstance.paymentCards.create({data: paymentCardStub}),
             apiInstance.gatewayAccounts.create({data: gatewayAccountStub})
         ]);
+        /**
+         *  fill shared data object with customer ID, website ID, payment instrument object
+         */
         sharedData = {
             customerId: customer.fields.id,
             websiteId: website.fields.id,
@@ -46,6 +55,9 @@ describe('when using the disputes resource', () => {
     });
 
     beforeEach(async () => {
+        /**
+         * create a new transaction for each test case
+         */
         const paymentStub = createTransactionData(false, sharedData);
         payment = await apiInstance.transactions.create({data: paymentStub});
     });

@@ -10,10 +10,19 @@ describe('when using the gateway accounts resource', () => {
     let sharedData;
 
     before(async () => {
+        /**
+         * create a new website
+         */
         const websiteStub = createWebsiteData();
         website = await apiInstance.websites.create({data: websiteStub});
+        /**
+         * get a organizations
+         */
         const organizations = await apiInstance.organizations.getAll();
         const [organization] = organizations.items;
+        /**
+         * fill the shared data object with website ID and organization ID
+         */
         sharedData = {
             websites: [website.fields.id],
             organizationId: organization.fields.id

@@ -18,7 +18,13 @@ describe('when using the payment cards resource', () => {
     let sharedGatewayData;
 
     before(async () => {
+        /**
+         * create a new customer
+         */
         const customer = await apiInstance.customers.create({data: createCustomerData()});
+        /**
+         * fill the shared data object with customer ID and customer primary address
+         */
         sharedData = {customerId: customer.fields.id, billingAddress: customer.fields.primaryAddress};
     });
 
