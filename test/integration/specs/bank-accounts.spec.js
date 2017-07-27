@@ -6,7 +6,7 @@ const expect = chai.expect;
 
 describe('when using the bank accounts resource', () => {
     const testIds = {with: null, without: null};
-    let customer
+    let customer;
     let sharedData;
 
     before(async () => {

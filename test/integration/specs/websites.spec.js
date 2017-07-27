@@ -9,9 +9,10 @@ describe('when using the websites resource', () => {
 
     it('I can create a website without an ID', async () => {
         const data = createWebsiteData();
-        const website = await apiInstance.websites.create({data: data});
+        const website = await apiInstance.websites.create({data});
         testIds.without = website.fields.id;
         expect(website.fields.value).to.be.equal(data.value);
+        expect(website.response.status).to.be.equal(201);
     });
 
     it('I can create a website with an ID', async () => {
@@ -20,6 +21,7 @@ describe('when using the websites resource', () => {
         expect(website.fields.id).to.be.equal(id);
         testIds.with = id;
         expect(website.fields.value).to.be.equal(data.value);
+        expect(website.response.status).to.be.equal(201);
     });
 
     it('I can get a list of websites', async () => {
@@ -30,8 +32,9 @@ describe('when using the websites resource', () => {
     });
 
     it('I can get a website by using its ID', async () => {
-        const websiteItem = await apiInstance.websites.get({id: testIds.with});
-        expect(websiteItem.fields.id).to.be.equal(testIds.with);
+        const website = await apiInstance.websites.get({id: testIds.with});
+        expect(website.fields.id).to.be.equal(testIds.with);
+        expect(website.response.status).to.be.equal(200);
     });
 
     it('I can update a website by using its ID', async () => {

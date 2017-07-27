@@ -733,7 +733,7 @@ export function createPaypalAccountActivateData(websiteId) {
     });
 }
 
-export function createSessionsData(withId = false) {
+export function createSessionData(withId = false) {
     let session = {
         permissions: [
             {
@@ -786,11 +786,19 @@ export function createSendEmailPreviewData(merge = {}) {
     });
 }
 
-export function createProfileData() {
+export function createProfileDataTotp() {
     return deepFreeze({
         reportingCurrency: 'USD',
         preferences: [],
         totpRequired: true,
+    });
+}
+
+export function createProfileData() {
+    return deepFreeze({
+        reportingCurrency: 'USD',
+        preferences: [],
+        totpRequired: false,
     });
 }
 

@@ -10,21 +10,16 @@ describe('when using the webhooks resource', () => {
 
     before(async () => {
         const data = createWebhookCredData();
-
-        try {
-          const WebhookCredHash = await apiInstance.credentialHashes.createWebhookCredential({data:data});
-          sharedData.credentialHash = WebhookCredHash.fields.hash;
-        }
-        catch(err) {
-          console.log(err);
-        }
+        const WebhookCredHash = await apiInstance.credentialHashes.createWebhookCredential({data});
+        sharedData.credentialHash = WebhookCredHash.fields.hash;
     });
 
     it('I can create a webhook without an ID', async () => {
         const data = createWebhookData(false, sharedData);
-        const webhook = await apiInstance.webhooks.create({data: data});
+        const webhook = await apiInstance.webhooks.create({data});
         testIds.without = webhook.fields.id;
         expect(webhook.fields.value).to.be.equal(data.value);
+        expect(webhook.response.status).to.be.equal(201);
     });
 
     it('I can create a webhook with an ID', async () => {
@@ -33,6 +28,7 @@ describe('when using the webhooks resource', () => {
         expect(webhook.fields.id).to.be.equal(id);
         testIds.with = id;
         expect(webhook.fields.value).to.be.equal(data.value);
+        expect(webhook.response.status).to.be.equal(201);
     });
 
     it('I can get a list of webhooks', async () => {
@@ -45,6 +41,7 @@ describe('when using the webhooks resource', () => {
     it('I can get a webhook by using its ID', async () => {
         const webhookItem = await apiInstance.webhooks.get({id: testIds.with});
         expect(webhookItem.fields.id).to.be.equal(testIds.with);
+        expect(webhookItem.response.status).to.be.equal(200);
     });
 
     it('I can update a webhook by using its ID', async () => {

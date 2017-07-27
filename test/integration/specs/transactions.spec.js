@@ -18,10 +18,14 @@ describe('when using the transactions resource', () => {
     let cachedLeadSource;
     let website;
     let customer;
+    let gatewayAccount;
     let paymentCard;
     let sharedData;
 
     before(async () => {
+        /**
+         * create a new customer, a new website and get a list of organizations
+         */
         const customerStub = createCustomerData();
         const websiteStub = createWebsiteData();
         let organizations;
@@ -30,6 +34,9 @@ describe('when using the transactions resource', () => {
             apiInstance.websites.create({data: websiteStub}),
             apiInstance.organizations.getAll()
         ]);
+        /**
+         * create a new payment card, a new gateway account
+         */
         const paymentCardStub = createPaymentCard(false, {
             customerId: customer.fields.id,
             billingAddress: customer.fields.primaryAddress
@@ -39,8 +46,13 @@ describe('when using the transactions resource', () => {
             websites: [website.fields.id],
             organizationId: organization.fields.id
         });
-        const gatewayAccount = await apiInstance.gatewayAccounts.create({data: gatewayAccountStub});
-        paymentCard = await apiInstance.paymentCards.create({data: paymentCardStub});
+        [gatewayAccount, paymentCard] = await Promise.all([
+            apiInstance.gatewayAccounts.create({data: gatewayAccountStub}),
+            apiInstance.paymentCards.create({data: paymentCardStub})
+        ]);
+        /**
+         * fill the shared data object with customer ID, website ID and payment instrument
+         */
         sharedData = {
             customerId: customer.fields.id,
             websiteId: website.fields.id,
@@ -122,7 +134,7 @@ describe('when using the transactions resource', () => {
 
     it('I can create a lead source for a transaction by using its ID', async () => {
         const data = createLeadSourceData();
-        const leadSource = await apiInstance.transactions.createLeadSource({id: testIds.with, data: data});
+        const leadSource = await apiInstance.transactions.createLeadSource({id: testIds.with, data});
         cachedLeadSource = leadSource;
         expect(leadSource.fields.id).to.not.be.undefined;
         expect(leadSource.fields.campaign).to.be.equal(data.campaign);
@@ -132,7 +144,7 @@ describe('when using the transactions resource', () => {
     it('I can update a lead source for a transaction by using its ID', async () => {
         const {campaign} = createLeadSourceData();
         const data = {...cachedLeadSource.fields, campaign};
-        const leadSource = await apiInstance.transactions.updateLeadSource({id: testIds.with, data: data});
+        const leadSource = await apiInstance.transactions.updateLeadSource({id: testIds.with, data});
         expect(leadSource.fields.campaign).to.be.equal(campaign);
         expect(leadSource.response.status).to.be.equal(200);
     });

@@ -9,8 +9,8 @@ describe('when using the shipping zones resource', () => {
     let cachedShippingZone;
 
     it('I can create a shipping zone without ID (only US)', async() => {
-        const data = createShippingZoneData(false, {countries: ['US']});
-        const shippingZone = await apiInstance.shippingZones.create({data: data});
+        const data = createShippingZoneData(false, {countries: ['CA']});
+        const shippingZone = await apiInstance.shippingZones.create({data});
         testIds.without = shippingZone.fields.id;
         expect(shippingZone.response.status).to.be.equal(201);
     });
@@ -38,7 +38,7 @@ describe('when using the shipping zones resource', () => {
 
     it('I can update a shipping zone by its ID', async() => {
         const data = createShippingZoneData(false);
-        const shippingZone = await apiInstance.shippingZones.update({id: testIds.with, data: data});
+        const shippingZone = await apiInstance.shippingZones.update({id: testIds.with, data});
         expect(shippingZone.response.status).to.be.equal(200);
 
     });

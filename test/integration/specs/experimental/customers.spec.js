@@ -4,7 +4,7 @@ import {createCustomerData} from '../../utils.js';
 
 const expect = chai.expect;
 
-describe('when using the histograms experimental resource', () => {
+describe('when using the customers experimental resource', () => {
     let sharedCustomerId;
 
     before(async() => {

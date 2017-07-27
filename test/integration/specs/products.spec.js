@@ -7,19 +7,18 @@ const expect = chai.expect;
 describe('when using the products resource', () => {
 
     let testIds = {with: null, without: null};
-    let sharedProductId;
 
     it('I can create a product with ID', async() => {
-        const {id:id, ...data} = createProductData(true);
-        const product = await apiInstance.products.create({id:id, data:data});
+        const {id, ...data} = createProductData(true);
+        const product = await apiInstance.products.create({id, data});
         testIds.with = id;
         expect(product.response.status).to.be.equal(201);
     });
 
 
     it('I can create a product without ID', async() => {
-        const {id:id, ...data} = createProductData(false);
-        const product = await apiInstance.products.create({id:id, data:data});
+        const {id, ...data} = createProductData(false);
+        const product = await apiInstance.products.create({id, data});
         testIds.without = product.fields.id;
         expect(product.response.status).to.be.equal(201);
     });
@@ -31,17 +30,17 @@ describe('when using the products resource', () => {
         expect(products.total).to.not.be.equal(0);
         const [productsItem] = products.items;
         expect(productsItem.fields.id).to.not.be.undefined;
-        sharedProductId = productsItem.fields.id;
     });
 
 
     it('I can update a product with its ID', async () => {
-        const {id:id, ...data} = createProductData(false);
-        const product = await apiInstance.products.update({id: sharedProductId, data:data});
+        const {id, ...data} = createProductData(false);
+        const product = await apiInstance.products.update({id: testIds.with, data});
         expect(product.response.status).to.be.equal(200);
     });
 
-    it('I can delete products that I created', async() => {
+
+    it('I can delete products that I created bu their IDs', async() => {
         const firstDelete = await apiInstance.products.delete({id: testIds.with});
         const secondDelete = await apiInstance.products.delete({id: testIds.without});
         expect(firstDelete.response.status).to.be.equal(204);
