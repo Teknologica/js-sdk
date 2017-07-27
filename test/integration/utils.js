@@ -118,22 +118,43 @@ export function generatePassword() {
     return `${(Math.random() * 99) >> 0}${faker.internet.password()}`
 }
 
+/**
+ * Generate a slug max length is 30
+ * @returns {string}
+ */
 export function generateSlug() {
     return faker.helpers.slugify(faker.lorem.words()).slice(0,30);
 }
 
+/**
+ * Pick a value randomly from an array
+ * @param list
+ * @returns {*}
+ */
 export function pickRandomFromList(list) {
     return list[Math.floor(Math.random() * list.length)];
 }
 
+/**
+ * Generate a bool value randomly
+ * @returns {boolean}
+ */
 export function getRandomBool() {
     return Boolean(Math.round(Math.random()));
 }
 
+/**
+ * Generate a status randomly
+ * @returns {string}
+ */
 export function getRandomRuleStatus() {
     return getRandomBool() ? 'active' : 'inactive';
 }
 
+/**
+ * Get a webhook request from request bin
+ * @returns {Promise}
+ */
 export async function getWebhookRequestBinUrl() {
     try {
         const {data} = await axios({
@@ -150,6 +171,10 @@ export async function getWebhookRequestBinUrl() {
     }
 }
 
+/**
+ * Create a merchant signup object
+ * @returns {Object}
+ */
 export function createMerchantSignupData() {
     return deepFreeze({
         email: faker.internet.email(),
@@ -162,6 +187,11 @@ export function createMerchantSignupData() {
     })
 }
 
+/**
+ * Create a website object
+ * @param withId
+ * @returns {Object}
+ */
 export function createWebsiteData(withId = false) {
     let website = {
         name: faker.company.companyName(),
@@ -177,6 +207,11 @@ export function createWebsiteData(withId = false) {
     return deepFreeze(website);
 }
 
+/**
+ * Create webhook credential object
+ * @param webhookUrl
+ * @returns {Object}
+ */
 export function createWebhookCredData(webhookUrl = false) {
     let host = 'google.com';
     if (webhookUrl) {
@@ -191,6 +226,12 @@ export function createWebhookCredData(webhookUrl = false) {
     });
 }
 
+/**
+ * Create a webhook object
+ * @param withId
+ * @param merge
+ * @returns {Object}
+ */
 export function createWebhookData(withId = false, merge = {}) {
     let webhook = {
         eventsFilter: [],
@@ -206,6 +247,10 @@ export function createWebhookData(withId = false, merge = {}) {
     return deepFreeze(webhook);
 }
 
+/**
+ * Create an email credential object
+ * @returns {Object}
+ */
 export function createEmailCredData() {
     return deepFreeze({
         host: process.env.TEST_SMTP_HOST,
@@ -219,6 +264,11 @@ export function createEmailCredData() {
     });
 }
 
+/**
+ * Create a user object
+ * @param withId
+ * @returns {Object}
+ */
 export function createUserData(withId = false) {
     let user = {
         email: faker.internet.email(),
@@ -241,6 +291,10 @@ export function createUserData(withId = false) {
     return deepFreeze(user);
 }
 
+/**
+ * Create a lead source object
+ * @returns {Object}
+ */
 export function createLeadSourceData() {
     const leadSource = {
         medium: faker.lorem.word(),
@@ -260,6 +314,13 @@ export function createLeadSourceData() {
     return deepFreeze(leadSource);
 }
 
+/**
+ * Create a transaction object
+ * @param withId
+ * @param merge
+ * @param scheduledTransaction
+ * @returns {Object}
+ */
 export function createTransactionData(withId = false, merge = {}, scheduledTransaction = false) {
     let transaction = {
         currency: 'USD',
@@ -276,6 +337,12 @@ export function createTransactionData(withId = false, merge = {}, scheduledTrans
     return deepFreeze(transaction);
 }
 
+/**
+ * Create a subscription object
+ * @param withId
+ * @param merge
+ * @returns {Object}
+ */
 export function createSubscriptionData(withId = false, merge = {}) {
     let subscription = {
         deliveryAddress: {},
@@ -295,7 +362,12 @@ export function createSubscriptionData(withId = false, merge = {}) {
 
 }
 
-
+/**
+ * Create an invoice object
+ * @param withId
+ * @param merge
+ * @returns {Object}
+ */
 export function createInvoiceData(withId = false, merge = {}) {
     let invoice = {
         currency: 'USD',
@@ -312,6 +384,11 @@ export function createInvoiceData(withId = false, merge = {}) {
 
 }
 
+/**
+ * Create an api key o object
+ * @param withId
+ * @returns {Object}
+ */
 export function createApiKeyData(withId = false) {
     let key = {description: faker.lorem.sentence()};
     if (withId) {
@@ -320,6 +397,12 @@ export function createApiKeyData(withId = false) {
     return deepFreeze(key);
 }
 
+/**
+ * Create a customer object
+ * @param withId
+ * @param merge
+ * @returns {Object}
+ */
 export function createCustomerData(withId = false, merge = {}) {
     let customer = {
         primaryAddress: {
@@ -339,6 +422,12 @@ export function createCustomerData(withId = false, merge = {}) {
     return deepFreeze(customer);
 }
 
+/**
+ * Create a bank account object
+ * @param withId
+ * @param merge
+ * @returns {Object}
+ */
 export function createBankAccountData(withId = false, merge = {}) {
     let bankAccount = {
         bankName: faker.finance.accountName(),
@@ -353,6 +442,11 @@ export function createBankAccountData(withId = false, merge = {}) {
     return deepFreeze(bankAccount);
 }
 
+/**
+ * Create a black list object
+ * @param withId
+ * @returns {Object}
+ */
 export function createBlacklistData(withId = false) {
     let blacklistItem = {
         type: 'ip-address',
@@ -364,6 +458,11 @@ export function createBlacklistData(withId = false) {
     return deepFreeze(blacklistItem);
 }
 
+/**
+ * Create a plan object
+ * @param withId
+ * @returns {Object}
+ */
 export function createPlanData(withId = false) {
     let plan = {
         name: faker.commerce.productName(),
@@ -379,6 +478,12 @@ export function createPlanData(withId = false) {
     return deepFreeze(plan);
 }
 
+/**
+ * Create a checkout page object
+ * @param withId
+ * @param merge
+ * @returns {Object}
+ */
 export function createCheckoutPageData(withId = false, merge = {}) {
     let checkoutPage = {
         uriPath: generateSlug(),
@@ -391,6 +496,11 @@ export function createCheckoutPageData(withId = false, merge = {}) {
     return deepFreeze(checkoutPage);
 }
 
+/**
+ * Create a coupon object
+ * @param withRedemptionCode
+ * @returns {Object}
+ */
 export function createCouponData(withRedemptionCode = false) {
     let coupon = {
         description: faker.hacker.phrase(),
@@ -410,6 +520,12 @@ export function createCouponData(withRedemptionCode = false) {
     return deepFreeze(coupon);
 }
 
+/**
+ * Create a coupon redemption data
+ * @param redemptionCode
+ * @param customerId
+ * @returns {Object}
+ */
 export function createCouponRedemptionData(redemptionCode, customerId) {
     return deepFreeze({
         redemptionCode,
@@ -417,6 +533,11 @@ export function createCouponRedemptionData(redemptionCode, customerId) {
     });
 }
 
+/**
+ * Create a customer event object
+ * @param withId
+ * @returns {Object}
+ */
 export function createCustomEventData(withId = false) {
     let customEvent = {
         eventType: 'subscription-ended',
@@ -435,6 +556,12 @@ export function createCustomEventData(withId = false) {
     return deepFreeze(customEvent);
 }
 
+/**
+ * Create a payment card object
+ * @param withId
+ * @param merge
+ * @returns {Object}
+ */
 export function createPaymentCard(withId = false, merge = {}) {
     let paymentCard = {
         pan: testPaymentCards.approved,
@@ -449,6 +576,12 @@ export function createPaymentCard(withId = false, merge = {}) {
     return deepFreeze(paymentCard);
 }
 
+/**
+ * Create a gateway account object
+ * @param withId
+ * @param merge
+ * @returns {Object}
+ */
 export function createGatewayAccountData(withId = false, merge = {}) {
     let gatewayName, gatewayConfig;
 
@@ -488,6 +621,12 @@ export function createGatewayAccountData(withId = false, merge = {}) {
     return deepFreeze(gatewayAccount);
 }
 
+/**
+ * Create a customer credential object
+ * @param withId
+ * @param customerId
+ * @returns {Object}
+ */
 export function createCustomerCredentialsData({withId = false, customerId = ''} = {}) {
     let credentialsData = {
         username: faker.internet.userName(),
@@ -503,6 +642,11 @@ export function createCustomerCredentialsData({withId = false, customerId = ''} 
     return deepFreeze(credentialsData);
 }
 
+/**
+ * Create a customer field object
+ * @param withSchema
+ * @returns {Object}
+ */
 export function createCustomFieldData(withSchema = false) {
     let customField = {
         name: generateSlug(),
@@ -517,6 +661,11 @@ export function createCustomFieldData(withSchema = false) {
     return deepFreeze(customField);
 }
 
+/**
+ * Create a customer field entry object
+ * @param customField
+ * @returns {Object}
+ */
 export function createCustomFieldEntryData(customField) {
     const getters = {
         array: () => Array.from(new Array(4)).map(item => faker.lorem.word()),
@@ -529,6 +678,10 @@ export function createCustomFieldEntryData(customField) {
     return deepFreeze({[customField.fields.name]: getters[customField.fields.type]()});
 }
 
+/**
+ * Create a subscription cancel object
+ * @returns {Object}
+ */
 export function createSubscriptionCancelData() {
     const subscriptionCancel = {
         policy: 'at-next-renewal',
@@ -540,6 +693,11 @@ export function createSubscriptionCancelData() {
     return deepFreeze(subscriptionCancel);
 }
 
+/**
+ * Create a subscription switch object
+ * @param merge
+ * @returns {Object}
+ */
 export function createSubscriptionSwitchData(merge = {}) {
     return deepFreeze({
         policy: 'at-next-renewal',
@@ -548,12 +706,20 @@ export function createSubscriptionSwitchData(merge = {}) {
     });
 }
 
+/**
+ * Create an event rule object
+ * @returns {Object}
+ */
 export function createEventRulesData() {
     return deepFreeze({
        rules: Array.from(new Array(4)).map(rule => createRuleData())
     });
 }
 
+/**
+ * Create a rule object
+ * @returns {Object}
+ */
 export function createRuleData() {
     return deepFreeze({
         name: faker.lorem.words(),
@@ -564,6 +730,10 @@ export function createRuleData() {
     });
 }
 
+/**
+ * Create rule action object
+ * @returns {Object}
+ */
 export function createRuleActionData() {
     return deepFreeze(pickRandomFromList([
         {
@@ -579,6 +749,12 @@ export function createRuleActionData() {
     ]));
 }
 
+/**
+ * Create a dispute object
+ * @param withId
+ * @param transactionId
+ * @returns {Object}
+ */
 export function createDisputeData({withId = false, transactionId} = {}) {
     let disputesData = {
         transactionId: transactionId,
@@ -597,6 +773,12 @@ export function createDisputeData({withId = false, transactionId} = {}) {
     return deepFreeze(disputesData);
 }
 
+/**
+ * Create a layout object
+ * @param withId
+ * @param merge
+ * @returns {Object}
+ */
 export function createLayoutData(withId = false, merge = {}) {
     let layout = {
         name: faker.lorem.words(),
@@ -608,10 +790,20 @@ export function createLayoutData(withId = false, merge = {}) {
     return deepFreeze(layout);
 }
 
+/**
+ * Create a layout item object
+ * @param planId
+ * @returns {Object}
+ */
 export function createLayoutItemData(planId) {
     return deepFreeze({planId, starred: false});
 }
 
+/**
+ * Create a list object
+ * @param withId
+ * @returns {Object}
+ */
 export function createListData(withId = false) {
     let list = {
         name: faker.lorem.words(),
@@ -623,6 +815,11 @@ export function createListData(withId = false) {
     return deepFreeze(list);
 }
 
+/**
+ * Create a 3d secure object
+ * @param merge
+ * @returns {Object}
+ */
 export function create3DSecureData(merge = {}) {
     let threeDSecure = {
         ...merge,
@@ -639,6 +836,12 @@ export function create3DSecureData(merge = {}) {
     return deepFreeze(threeDSecure);
 }
 
+/**
+ * Create a note object
+ * @param withId
+ * @param customerId
+ * @returns {Object}
+ */
 export function createNoteData(withId = false, customerId) {
     let note = {
         content: faker.hacker.phrase(),
@@ -652,6 +855,11 @@ export function createNoteData(withId = false, customerId) {
     return deepFreeze(note);
 }
 
+/**
+ * Create an organization object
+ * @param withId
+ * @returns {Object}
+ */
 export function createOrganizationData(withId = false) {
     let organization = {
         name: faker.lorem.words(),
@@ -668,6 +876,12 @@ export function createOrganizationData(withId = false) {
     return deepFreeze(organization);
 }
 
+/**
+ * Create a payment card authorization object
+ * @param websiteId
+ * @param gatewayAccountId
+ * @returns {Object}
+ */
 export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) {
     return deepFreeze({
         websiteId,
@@ -677,6 +891,10 @@ export function createPaymentCardAuthorizationData(websiteId, gatewayAccountId) 
     });
 }
 
+/**
+ * Create a payment token object
+ * @returns {Object}
+ */
 export function createPaymentTokenData() {
     return deepFreeze({
         method: 'payment-card',
@@ -690,6 +908,12 @@ export function createPaymentTokenData() {
     });
 }
 
+/**
+ * Create a shipping zone object
+ * @param withId
+ * @param merge
+ * @returns {Object}
+ */
 export function createShippingZoneData(withId = false, merge = {}) {
     let shippingZone = {
         name: faker.lorem.word(),
@@ -708,6 +932,12 @@ export function createShippingZoneData(withId = false, merge = {}) {
     return deepFreeze(shippingZone);
 }
 
+/**
+ * Create a paypal account object
+ * @param withId
+ * @param merge
+ * @returns {Object}
+ */
 export function createPaypalAccountData(withId = false, merge = {}) {
     let paypalAccount = {
         username: faker.lorem.word(),
@@ -720,6 +950,11 @@ export function createPaypalAccountData(withId = false, merge = {}) {
     return deepFreeze(paypalAccount);
 }
 
+/**
+ * Create a paypal account activate object
+ * @param websiteId
+ * @returns {Object}
+ */
 export function createPaypalAccountActivateData(websiteId) {
     return deepFreeze({
         websiteId,
@@ -733,6 +968,11 @@ export function createPaypalAccountActivateData(websiteId) {
     });
 }
 
+/**
+ * Create a session object
+ * @param withId
+ * @returns {Object}
+ */
 export function createSessionData(withId = false) {
     let session = {
         permissions: [
@@ -754,6 +994,11 @@ export function createSessionData(withId = false) {
     return deepFreeze(session);
 }
 
+/**
+ * Create a webhook preview object
+ * @param merge
+ * @returns {Object}
+ */
 export function createWebhookPreviewData(merge = {}) {
     return deepFreeze({
         eventsFilter: [],
@@ -764,6 +1009,11 @@ export function createWebhookPreviewData(merge = {}) {
     });
 }
 
+/**
+ * Create a trigger of webhook preview object
+ * @param merge
+ * @returns {Object}
+ */
 export function createTriggerWebhookPreviewData(merge = {}) {
     return deepFreeze({
         body: JSON.stringify({hello: 'world'}),
@@ -775,6 +1025,11 @@ export function createTriggerWebhookPreviewData(merge = {}) {
     });
 }
 
+/**
+ * Create a sent email preview object
+ * @param merge
+ * @returns {Object}
+ */
 export function createSendEmailPreviewData(merge = {}) {
     return deepFreeze({
         bodyText: faker.lorem.words(),
@@ -786,6 +1041,10 @@ export function createSendEmailPreviewData(merge = {}) {
     });
 }
 
+/**
+ * Create a profile two-factor auth object
+ * @returns {Object}
+ */
 export function createProfileDataTotp() {
     return deepFreeze({
         reportingCurrency: 'USD',
@@ -794,6 +1053,10 @@ export function createProfileDataTotp() {
     });
 }
 
+/**
+ * Create a profile without two-factor auth object
+ * @returns {Object}
+ */
 export function createProfileData() {
     return deepFreeze({
         reportingCurrency: 'USD',
@@ -802,6 +1065,11 @@ export function createProfileData() {
     });
 }
 
+/**
+ * Create a product object
+ * @param withId
+ * @returns {Object}
+ */
 export function createProductData(withId = false) {
     let product = {
         name: faker.commerce.productName(),
