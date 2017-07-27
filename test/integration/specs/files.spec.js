@@ -17,8 +17,7 @@ describe('when using the files resource', () => {
         let readFilePromise = new Promise((resolve, reject) => {
             fs.readFile(filePath, function(error, data) {
                 if (error) {
-                    console.log('error',error);
-                    reject();
+                    reject(error);
                 }
                 else {
                     resolve(data);

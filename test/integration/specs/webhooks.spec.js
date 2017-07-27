@@ -12,7 +12,6 @@ describe('when using the webhooks resource', () => {
         const data = createWebhookCredData();
         const WebhookCredHash = await apiInstance.credentialHashes.createWebhookCredential({data});
         sharedData.credentialHash = WebhookCredHash.fields.hash;
-
     });
 
     it('I can create a webhook without an ID', async () => {
