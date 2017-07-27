@@ -4,10 +4,10 @@
   "description": "JavaScript SDK for Rebilly.com",
   "main": "./dist/rebilly-js-sdk.js",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf dist && rimraf coverage",
     "build:prod": "npm run clean && webpack --env=prod",
     "build:dev": "npm run clean && webpack --env=dev",
-    "postinstall": "npm run build:prod",
+    "prepublish": "npm run build:prod",
     "unit": "mocha --compilers js:babel-core/register --require babel-polyfill --colors ./test/unit/specs/*.spec.js",
     "unit:watch": "mocha --watch --compilers js:babel-core/register --require babel-polyfill --colors ./test/unit/specs/*.spec.js",
     "integration": "mocha --timeout 10000 --compilers js:babel-core/register --require babel-polyfill --colors ./test/integration/specs/**/*.spec.js",
