@@ -5,7 +5,7 @@ module.exports = (env = {}) => {
     const isProd = env === 'prod';
     return [
         {
-            entry: ['babel-polyfill', './src/index.js'],
+            entry: ['./src/index.js'],
             target: 'node',
             output: {
                 path: path.resolve(__dirname, './dist'),
@@ -35,7 +35,7 @@ module.exports = (env = {}) => {
             devtool: 'source-map',
         },
         {
-            entry: ['babel-polyfill', './src/index.js'],
+            entry: ['./src/index.js'],
             output: {
                 path: path.resolve(__dirname, './dist'),
                 filename: 'rebilly-js-sdk.js',
