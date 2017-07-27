@@ -4,16 +4,12 @@ import {createUserData} from '../utils';
 
 const expect = chai.expect;
 
-// Can't update user password and reset user password,
-// because current user password and user token can't
-// be retrieved in testing env.
-
 describe('when using the users resource', () => {
     const testIds = {with: null, without: null};
 
     it('I can create a user without an ID', async () => {
         const data = createUserData();
-        const user = await apiInstance.users.create({data: data});
+        const user = await apiInstance.users.create({data});
         testIds.without = user.fields.id;
         expect(user.fields.value).to.be.equal(data.value);
         expect(user.response.status).to.be.equal(201);
@@ -44,11 +40,24 @@ describe('when using the users resource', () => {
 
     it('I can update a user by using its ID', async () => {
         const data = createUserData();
-        const user = await apiInstance.users.update({id: testIds.with, data: data});
+        const user = await apiInstance.users.update({id: testIds.with, data});
         expect(user.fields.value).to.be.equal(data.value);
         expect(user.response.status).to.be.equal(200);
     });
 
+    /**
+     *  user current password can't be retrieved
+     */
+    it.skip('I can update a user password by its ID', async() => {
+
+    });
+
+    /**
+     *  user current password can't be retrieved
+     */
+    it.skip('I can reset a user password by its ID', async() => {
+
+    });
 
     it('I can delete the users I just created', async () => {
         const firstDelete = await apiInstance.users.delete({id: testIds.with});

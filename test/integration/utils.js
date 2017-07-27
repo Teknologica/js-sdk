@@ -733,7 +733,7 @@ export function createPaypalAccountActivateData(websiteId) {
     });
 }
 
-export function createSessionsData(withId = false) {
+export function createSessionData(withId = false) {
     let session = {
         permissions: [
             {

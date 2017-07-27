@@ -15,10 +15,13 @@ describe('when using the profile resource', () => {
 
     it('I can update a profile', async() => {
         const data = createProfileData();
-        const profile = await apiInstance.profile.update({data: data});
+        const profile = await apiInstance.profile.update({data});
         expect(profile.response.status).to.be.equal(200);
     });
 
+    /**
+     * current password can't be retrieved
+     */
     it.skip('I can update the password of a profile', async() => {
 
     });
