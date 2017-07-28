@@ -27,14 +27,6 @@ export default function createApiHandler({options}) {
     }
 
     /**
-     * Set the current Axios instance for this API handler.
-     * @param newInstance {Object} an Axios instance
-     */
-    function setInstance(newInstance) {
-        instance = newInstance;
-    }
-
-    /**
      * Generate the minimum configuration options for the current Axios instance.
      * @returns {Object}
      */
@@ -346,7 +338,6 @@ export default function createApiHandler({options}) {
 
     return {
         getInstance,
-        setInstance,
         addRequestInterceptor,
         removeRequestInterceptor,
         addResponseInterceptor,
