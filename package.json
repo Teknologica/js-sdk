@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "JavaScript SDK for Rebilly.com",
   "browser": "./dist/rebilly-js-sdk.js",
-  "module": "./src/index.js",
   "main": "./dist/rebilly-js-sdk.node.js",
   "scripts": {
     "clean": "rimraf dist && rimraf coverage",
