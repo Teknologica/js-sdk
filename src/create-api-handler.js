@@ -187,7 +187,7 @@ export default function createApiHandler({options}) {
             const response = await request;
             return processResponse(response, isCollection)
         }
-        catch(error) {
+        catch (error) {
             return processError(error);
         }
     }
@@ -239,26 +239,27 @@ export default function createApiHandler({options}) {
     }
 
     /**
-     * Remove null or empty string parameters from the provided object literal and return a `params` structure for the querystring.
-     * @param params {object}
-     * @returns {{params: {Object}}}
+     * Remove null or empty string parameters from the provided configuration parameters and return only defined values.
+     * @param configuration {object}
+     * @returns {Object}
      */
-    function cleanUpParameters(params) {
-        return {
-            params: Object
-                .keys(params)
-                .filter(key => params[key] !== null && params[key] !== '')
+    function cleanUpParameters(configuration) {
+        if (configuration.params !== undefined) {
+            configuration.params = Object
+                .keys(configuration.params)
+                .filter(key => configuration.params[key] !== null && configuration.params[key] !== '')
                 .reduce((cleaned, key) => {
-                    cleaned[key] = params[key];
+                    cleaned[key] = configuration.params[key];
                     return cleaned;
-                }, {})
-        };
+                }, {});
+        }
+        return configuration;
     }
 
     /**
      * Trigger a GET request on the target URL and return the member received in the response.
      * @param url {string}
-     * @param params {Object}
+     * @param params {Object=}
      * @returns {Member} member
      */
     function get(url, params = {}) {
@@ -334,13 +335,36 @@ export default function createApiHandler({options}) {
                 }
             }
             catch(error) {
-                //TODO use a debug
-                //console.warn('catch', error.name, error);
+                //TODO use a debug call instead of a console, e.g. debug('wrong call')
                 if (error.name === 'RebillyNotFoundError') {
                     return wrapRequest(instance.put(url, data));
                 }
                 return error;
             }
+        }
+    }
+
+    /**
+     * Trigger a get call to the specified URL without converting the response into a Member. Use the config object to specify headers and desired response type.
+     * @link https://github.com/mzabriskie/axios#request-config
+     * @param url {string}
+     * @param config {Object}
+     * @returns {Promise.<*>}
+     */
+    async function download(url, config) {
+        try {
+            const response = await instance.get(url, cleanUpParameters(config));
+            return {
+                response: {
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: response.headers
+                },
+                data: response.data
+            };
+        }
+        catch (error) {
+            return processError(error);
         }
     }
 
@@ -363,6 +387,7 @@ export default function createApiHandler({options}) {
         put,
         patch,
         delete: del,
-        create
+        create,
+        download
     };
 };

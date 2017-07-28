@@ -1,3 +1,5 @@
+import {pdfHeader} from '../request-headers';
+
 export default function InvoicesResource({apiHandler}) {
     return {
         async getAll({limit = null, offset = null, sort = null, expand = null, filter = null, q = null, criteria = null} = {}) {
@@ -15,6 +17,14 @@ export default function InvoicesResource({apiHandler}) {
 
         async get({id}) {
             return await apiHandler.get(`invoices/${id}`);
+        },
+
+        async downloadPDF({id}) {
+            const config = {
+                header: pdfHeader,
+                responseType: 'arraybuffer'
+            };
+            return await apiHandler.download(`invoices/${id}`, config);
         },
 
         async create({id = '', data}) {
