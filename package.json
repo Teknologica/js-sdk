@@ -1,6 +1,6 @@
 {
   "name": "rebilly-js-sdk",
-  "version": "0.0.21",
+  "version": "0.1.0",
   "description": "JavaScript SDK for Rebilly.com",
   "browser": "./dist/rebilly-js-sdk.js",
   "module": "./src/index.js",
