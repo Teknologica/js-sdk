@@ -34,21 +34,21 @@ describe('when throwing errors', () => {
     });
 
     it('should use the response error as the error message', () => {
-        const response = {data: {error: 'Data Validation Failed'}};
+        const response = {data: {error: 'Not Found'}};
         try {
-            throw new Errors.RebillyValidationError({response});
+            throw new Errors.RebillyNotFoundError ({response});
         } catch (err) {
             expect(err.message).to.be.equal(response.data.error);
-            expect(err.name).to.be.equal('RebillyValidationError');
+            expect(err.name).to.be.equal('RebillyNotFoundError');
             expect(err.response).to.be.deep.equal(response);
         }
     });
 
-    it('should return the response status, details and text', () => {
+    it('should return the response status code when present', () => {
         const response = {
-            data: {error: 'Data Validation Failed', details: ['Wrong format']},
+            data: {error: 'Generic Error', details: ['Wrong format']},
             status: 422,
-            statusText: 'Data Validation Failed'
+            statusText: 'Generic Error'
         };
         try {
             throw new Errors.RebillyValidationError({response});
@@ -57,47 +57,38 @@ describe('when throwing errors', () => {
             expect(err.name).to.be.equal('RebillyValidationError');
             expect(err.response).to.be.deep.equal(response);
             expect(err.status).to.be.equal(response.status);
-            expect(err.statusText).to.be.equal(response.statusText);
-            expect(err.details).to.be.equal(response.data.details);
         }
     });
 
-    it('should return error names that match the error types thrown', () => {
-        const message = 'Bad Request';
+    it('should return the response status text when present', () => {
+        const response = {
+            data: {error: 'Generic Error', details: ['Invalid Operation']},
+            status: 409,
+            statusText: 'Generic Error'
+        };
         try {
-            throw new Errors.RebillyRequestError({message});
+            throw new Errors.RebillyInvalidOperationError({response});
         } catch (err) {
-            expect(err.name).to.be.equal('RebillyRequestError');
-        }
-        try {
-            throw new Errors.RebillyValidationError({message});
-        } catch (err) {
-            expect(err.name).to.be.equal('RebillyValidationError');
-        }
-        try {
-            throw new Errors.RebillyNotFoundError({message});
-        } catch (err) {
-            expect(err.name).to.be.equal('RebillyNotFoundError');
-        }
-        try {
-            throw new Errors.RebillyInvalidOperationError({message});
-        } catch (err) {
+            expect(err.message).to.be.equal(response.data.error);
             expect(err.name).to.be.equal('RebillyInvalidOperationError');
+            expect(err.response).to.be.deep.equal(response);
+            expect(err.statusText).to.be.equal(response.statusText);
         }
+    });
+
+    it('should return the error details text when present', () => {
+        const response = {
+            data: {error: 'Generic Error', details: ['Not Allowed']},
+            status: 405,
+            statusText: 'Generic Error'
+        };
         try {
-            throw new Errors.RebillyForbiddenError({message});
+            throw new Errors.RebillyMethodNotAllowedError({response});
         } catch (err) {
-            expect(err.name).to.be.equal('RebillyForbiddenError');
-        }
-        try {
-            throw new Errors.RebillyMethodNotAllowedError({message});
-        } catch (err) {
+            expect(err.message).to.be.equal(response.data.error);
             expect(err.name).to.be.equal('RebillyMethodNotAllowedError');
-        }
-        try {
-            throw new Errors.RebillyTimeoutError({message});
-        } catch (err) {
-            expect(err.name).to.be.equal('RebillyTimeoutError');
+            expect(err.response).to.be.deep.equal(response);
+            expect(err.statusText).to.be.equal(response.statusText);
         }
     });
 });
