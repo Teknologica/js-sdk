@@ -15,13 +15,10 @@ describe('when using the previews resource', () => {
     let webhookTestUrl;
 
     before(async () => {
-        try {
-            webhookTestUrl = await getWebhookRequestBinUrl();
-        }
-        catch (err) {
-            //fallback
-            webhookTestUrl = 'https://rebilly.com';
-        }
+        /**
+         * create a new webhook test url
+         */
+        webhookTestUrl = await getWebhookRequestBinUrl();
     });
 
     it('I can trigger a preview for a global webhook', async () => {

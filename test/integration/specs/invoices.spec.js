@@ -16,12 +16,18 @@ describe('when using the invoices resource', () => {
     let cachedLeadSource = null;
 
     before(async () => {
+        /**
+         * create a new customer and a new website
+         */
         const customerStub = createCustomerData();
         const websiteStub = createWebsiteData();
         const [customer, website] = await Promise.all([
             apiInstance.customers.create({data: customerStub}),
             apiInstance.websites.create({data: websiteStub})
         ]);
+        /**
+         * fill the shared data object with customer ID and website ID
+         */
         sharedData = {
             customerId: customer.fields.id,
             websiteId: website.fields.id

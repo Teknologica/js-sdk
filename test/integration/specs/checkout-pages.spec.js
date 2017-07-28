@@ -11,10 +11,16 @@ describe('when using the checkout pages resource', () => {
     let sharedData;
 
     before(async () => {
+        /**
+         * create a new plan and a new website
+         */
         const {id, ...data} = createPlanData(true);
         const websiteData = createWebsiteData();
         plan = await apiInstance.plans.create({id, data});
         website = await apiInstance.websites.create({data: websiteData});
+        /**
+         *  fill the shared data object with plan ID and website ID
+         */
         sharedData = {
             planId: plan.fields.id,
             websiteId: website.fields.id

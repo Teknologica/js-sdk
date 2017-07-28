@@ -8,6 +8,9 @@ describe('when using the customers experimental resource', () => {
     let sharedCustomerId;
 
     before(async() => {
+        /**
+         * create a new customer and shared customer ID
+         */
         const {id: id, ...data} = createCustomerData(true);
         const customer = await apiInstance.customers.create({id:id, data: data});
         sharedCustomerId = customer.fields.id;

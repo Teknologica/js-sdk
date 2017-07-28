@@ -9,6 +9,9 @@ describe('when using the notes resource', () => {
     let customer;
 
     before(async () => {
+        /**
+         * create a new customer
+         */
         customer = await apiInstance.customers.create({data: createCustomerData()});
     });
 

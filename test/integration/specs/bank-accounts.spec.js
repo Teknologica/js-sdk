@@ -10,6 +10,9 @@ describe('when using the bank accounts resource', () => {
     let sharedData;
 
     before(async () => {
+        /**
+         * create a new customer and fill the shared data with customer ID and primary address
+         */
         const {id, ...data} = createCustomerData(true);
         customer = await apiInstance.customers.create({id, data});
         sharedData = {
