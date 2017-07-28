@@ -12,11 +12,7 @@
     "prepublish": "npm run build:prod",
     "unit": "mocha --compilers js:babel-core/register --require babel-polyfill --colors ./test/unit/specs/*.spec.js",
     "unit:watch": "mocha --watch --compilers js:babel-core/register --require babel-polyfill --colors ./test/unit/specs/*.spec.js",
-    "integration": "mocha --timeout 10000 --compilers js:babel-core/register --require babel-polyfill --colors ./test/integration/specs/**/*.spec.js",
-    "integration:watch": "mocha --watch --timeout 10000 --compilers js:babel-core/register --require babel-polyfill --colors ./test/integration/specs/**/*.spec.js",
-    "integration:watch:only": "mocha --watch --timeout 10000 --compilers js:babel-core/register --require babel-polyfill --colors",
-    "test": "npm run unit && npm run integration",
-    "coverage": "npm run clean && cross-env NODE_ENV=test nyc npm run test"
+    "coverage": "npm run clean && cross-env NODE_ENV=test nyc npm run unit"
   },
   "repository": {
     "type": "git",
@@ -71,6 +67,7 @@
       "text"
     ],
     "sourceMap": false,
-    "instrument": false
+    "instrument": false,
+    "exclude": ["src/resources", "test"]
   }
 }
