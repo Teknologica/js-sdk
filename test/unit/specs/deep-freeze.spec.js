@@ -3,46 +3,29 @@ import faker from 'faker';
 import deepFreeze from '../../../src/deep-freeze.js';
 
 const expect = chai.expect;
-const should = chai.should();
 
 describe('when I using deep-freeze helper function', () => {
+    const testObj = {
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName()
+    };
+    const testFunc = () => ({fullName: `${testObj.firstName} ${testObj.lastName}`});
 
-    let testObj;
-    let testFunc;
-
-    before(()=> {
-
-        testObj = {
-            firstName: faker.name.firstName(),
-            lastName: faker.name.lastName()
-        };
-
-        testFunc = function() {
-            return {
-                fullName: testObj.firstName + ' ' + testObj.lastName
-            }
-        }
+    it('I can freeze an object', () => {
+        const literalStub = deepFreeze(testObj);
+        expect(literalStub).to.be.frozen;
     });
 
-
-    it ('I can freeze an object', () => {
-        const obj = deepFreeze(testObj);
-        try {
-            obj.firstName = 'rebilly.com';
-        }catch(err) {
-            expect(err).to.exist;
-        }
+    it('I can freeze a function', () => {
+        const functionStub = deepFreeze(testFunc);
+        expect(functionStub).to.be.frozen;
     });
 
-    it ('I can freeze a function', () => {
-        const obj =  deepFreeze(testFunc);
-        try {
-            obj.prototype.get = function() {
-                return
-            }
-        }catch(err) {
-            expect(err).to.exist;
-        }
-    });
+    it('I cannot modify the objects after they were frozen', () => {
+        const literalStub = deepFreeze(testObj);
+        const functionStub = deepFreeze(testFunc);
+        expect(() => literalStub.firstName = faker.name.firstName()).to.throw(TypeError);
+        expect(() => functionStub.prototype.something = true).to.throw(TypeError);
+    })
 });
 
