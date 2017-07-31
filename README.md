@@ -61,13 +61,13 @@ import {RebillyErrors} from 'rebilly-js-sdk';
 #### Error Types
 | Type | Status Code | Description |
 |---|---|---|
-| `RebillyRequestError` | `-` | Generic error when no response is available |
-| `RebillyForbiddenError` | `401` | Indicates an invalid API key or expired session token |
-| `RebillyNotFoundError` | `404` | Requested resource was not found |
-| `RebillyMethodNotAllowedError` | `405` | Request method not allowed on this resource |
-| `RebillyInvalidOperationError` | `409` | Requested operation was invalid or triggered a conflict |
-| `RebillyValidationError` | `422` | The request payload triggered a validation error (see error details) |
-| `RebillyTimeoutError` | `-` | The request timed out |
+| `RebillyRequestError` | `-` | Generic error when no response is available. |
+| `RebillyTimeoutError` | `-` | The request timed out. |
+| `RebillyForbiddenError` | `401` | Indicates an invalid API key or expired session token. |
+| `RebillyNotFoundError` | `404` | Requested resource was not found. |
+| `RebillyMethodNotAllowedError` | `405` | Request method not allowed on this resource. |
+| `RebillyInvalidOperationError` | `409` | Requested operation was invalid or triggered a conflict. |
+| `RebillyValidationError` | `422` | The request payload triggered a validation error (see error details). |
 
 ### Configuration
 The library authentication can be provided by the `apiKey` or a session token (JWT). All instantiation parameters are *optional*.
@@ -86,7 +86,7 @@ const api = RebillyAPI({apiKey: 'secret-api-key', sandbox: true, timeout: 10000}
 | `version` | `string` | Define the version of the API to use. Defaults to `v2.1`. This configuration does not apply to `RebillyExperimentalAPI`. |
 
 ### Collections and Members
-All resource calls except CSV or PDF downloads return either Members or Collections. Members are returned by all methods other than `getAll` which is reserved to Collections. A collection contains a list of members. Both types are **immutable** (frozen) objects that can return a JSON version of their member properties.
+All resource calls except CSV or PDF downloads return either Members or Collections. Members are returned by all methods other than `getAll`, which returns a Collection. A collection contains a list of members. Both types are **immutable** (frozen) objects that can return a JSON representation of their member properties.
 
 Example: 
 ```js
@@ -97,7 +97,7 @@ collection.items.forEach(member => {
 ```
 
 #### Collection
-A collection is a list of member entity, e.g. a list of customers or a list of transactions. Each collection exposes standard properties:
+A collection is a list of member entities, e.g. a list of customers or a list of transactions. Each collection exposes standard properties:
 
 | Property | Description |
 |---|---|
@@ -118,7 +118,7 @@ A member is a single resource entity, e.g. a customer or a transaction. Each mem
 | `getJSON()` | Returns a JSON representation of the member fields that can be mutated. |
 
 ## Rebilly Experimental API
-The Rebilly Experimental Reports API is available as part of this library. Unlike the main API, it can be modified with backward incompatible changes to the spec. It is used mainly for reporting and requests with heavy computational loads like statistics.
+The Rebilly Experimental Reports API is available as a secondary API within the library. Unlike the main API, it can introduce backward incompatible changes to the API specification. It is used mainly for reporting and requests with heavy computational loads like dashboard statistics.
 
 ```js
 import RebillyAPI, {RebillyExperimentalAPI} from 'rebilly-js-sdk';
