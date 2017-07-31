@@ -1,3 +1,5 @@
+import {csvHeader} from '../request-headers';
+
 export default function TrackingResource({apiHandler}) {
     return {
         async getAllApiLogs({limit = null, offset = null, sort = null, filter = null, q = null, criteria = null} = {}) {
@@ -10,6 +12,21 @@ export default function TrackingResource({apiHandler}) {
                 criteria
             };
             return await apiHandler.getAll(`tracking/api`, params);
+        },
+
+        async downloadApiLogsCSV({limit = null, offset = null, sort = null, filter = null, q = null, criteria = null} = {}) {
+            const config = {
+                params: {
+                    limit,
+                    offset,
+                    sort,
+                    filter,
+                    q,
+                    criteria
+                },
+                headers: csvHeader
+            };
+            return await apiHandler.download(`tracking/api`, config);
         },
 
         async getApiLog({id}) {

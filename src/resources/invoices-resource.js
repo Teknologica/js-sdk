@@ -1,4 +1,4 @@
-import {pdfHeader} from '../request-headers';
+import {pdfHeader, csvHeader} from '../request-headers';
 
 export default function InvoicesResource({apiHandler}) {
     return {
@@ -25,6 +25,22 @@ export default function InvoicesResource({apiHandler}) {
                 responseType: 'arraybuffer'
             };
             return await apiHandler.download(`invoices/${id}`, config);
+        },
+
+        async downloadCSV({limit = null, offset = null, sort = null, expand = null, filter = null, q = null, criteria = null} = {}) {
+            const config = {
+                params: {
+                    limit,
+                    offset,
+                    sort,
+                    expand,
+                    filter,
+                    q,
+                    criteria
+                },
+                headers: csvHeader
+            };
+            return await apiHandler.download(`invoices`, config);
         },
 
         async create({id = '', data}) {
@@ -74,7 +90,5 @@ export default function InvoicesResource({apiHandler}) {
         async deleteLeadSource({id}) {
             return await apiHandler.delete(`invoices/${id}/lead-source`);
         }
-
-        //todo: getPDF
     };
 };

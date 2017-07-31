@@ -204,7 +204,7 @@ export default function createApiHandler({options}) {
     function processError(error) {
         if (error.response) {
             switch (Number(error.response.status)) {
-                case 401: //forbidden
+                case 401: //unauthorized
                     throw new Errors.RebillyForbiddenError(error);
                 case 404: //not found
                     throw new Errors.RebillyNotFoundError(error);
@@ -219,11 +219,8 @@ export default function createApiHandler({options}) {
                     throw new Errors.RebillyRequestError(error);
             }
         }
-        else if (error.request) { //5xx errors without a response
-            if (error.code === 'ECONNABORTED') {
-                throw new Errors.RebillyTimeoutError(error);
-            }
-            throw new Errors.RebillyRequestError(error);
+        else if (error.code === 'ECONNABORTED') {
+            throw new Errors.RebillyTimeoutError(error);
         }
         else {
             throw new Errors.RebillyRequestError(error);
@@ -337,7 +334,6 @@ export default function createApiHandler({options}) {
                 }
             }
             catch(error) {
-                //TODO use a debug call instead of a console, e.g. debug('wrong call')
                 if (error.name === 'RebillyNotFoundError') {
                     return wrapRequest(instance.put(url, data));
                 }

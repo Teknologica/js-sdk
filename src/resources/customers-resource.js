@@ -1,3 +1,5 @@
+import {csvHeader} from '../request-headers';
+
 export default function CustomersResource({apiHandler}) {
     return {
         async getAll({limit = null, offset = null, sort = null, expand = null, filter = null, q = null, criteria = null} = {}) {
@@ -11,6 +13,22 @@ export default function CustomersResource({apiHandler}) {
                 criteria
             };
             return await apiHandler.getAll(`customers`, params);
+        },
+
+        async downloadCSV({limit = null, offset = null, sort = null, expand = null, filter = null, q = null, criteria = null} = {}) {
+            const config = {
+                params: {
+                    limit,
+                    offset,
+                    sort,
+                    expand,
+                    filter,
+                    q,
+                    criteria
+                },
+                headers: csvHeader
+            };
+            return await apiHandler.download(`customers`, config);
         },
 
         async get({id}) {
