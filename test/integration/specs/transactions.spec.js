@@ -23,6 +23,7 @@ describe('when using the transactions resource', () => {
     let sharedData;
 
     before(async () => {
+        try {
         /**
          * create a new customer, a new website and get a list of organizations
          */
@@ -62,6 +63,9 @@ describe('when using the transactions resource', () => {
                 gatewayAccountId: gatewayAccount.fields.id
             }
         };
+        } catch (err) {
+            console.log(err);
+        }
     });
 
     it('I can create a transaction without an ID', async () => {
