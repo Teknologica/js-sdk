@@ -120,7 +120,7 @@ describe('when using the subscriptions resource', () => {
         expect(SecondSubscriptionCancel.response.status).to.be.equal(201);
     });
 
-    it('I can switch a subscription by its ID', async() => {
+    it.skip('I can switch a subscription by its ID', async() => {
         const sharedData = await prepareStub();
         const data = createSubscriptionSwitchData({planId: sharedData.planId, websiteId: sharedData.websiteId });
         const subscriptionSwitch = await apiInstance.subscriptions.switch({id: testIds.with, data});

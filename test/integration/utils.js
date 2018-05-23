@@ -467,10 +467,10 @@ export function createPlanData(withId = false) {
     let plan = {
         name: faker.commerce.productName(),
         currency: 'USD',
-        setupAmount: faker.finance.amount(),
+        setupAmount: Math.round(faker.finance.amount()),
         recurringPeriodUnit: 'month',
         recurringPeriodLength: 1,
-        recurringAmount: faker.finance.amount()
+        recurringAmount: Math.round(faker.finance.amount())
     };
     if (withId) {
         plan.id = faker.random.uuid();
